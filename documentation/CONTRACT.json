@@ -1,0 +1,19 @@
+// Data Object
+{
+  "party": String,
+  "receipt": {
+  	"items": [{
+	  "item": String,
+	  "cost": Number
+	}],
+  	"subTotal": Number,
+  	"tax": Number,
+  	"total": Number,
+  	"tip": Number,
+  	"grandTotal": Number
+  },
+  "diners": [{
+  	"diner": String,
+  	"itemIndex": [Number]
+  }]
+}
