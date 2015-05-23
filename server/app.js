@@ -2,17 +2,16 @@
 * @Author: hal
 * @Date:   2015-05-22 10:53:35
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-22 14:19:09
+* @Last Modified time: 2015-05-22 17:24:06
 */
 
+// set up server variables
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var express = require('express');
 var bodyParser = require('body-parser');
-
-var api = require('./routes/api');
-
+var bill = require('./api/bill/index');
 var app = express();
 
 app.set('port', (process.env.PORT || 3000));
@@ -22,9 +21,9 @@ app.set('port', (process.env.PORT || 3000));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/', express.static(path.join(__dirname, 'public')));
-app.use('/', express.static(path.join(__dirname, 'views')));
-app.use('/api', api);
+
+app.use('/api/bill', bill);
+app.use('/*', express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
