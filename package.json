@@ -1,0 +1,34 @@
+{
+  "name": "evenstevens",
+  "version": "0.1.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/decentralizedsaxophone/evenstevens.git"
+  },
+  "author": "Johnny Nguyen, Ron Tsui, Nathan Bailey, Mike Harris",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/decentralizedsaxophone/evenstevens/issues"
+  },
+  "homepage": "https://github.com/decentralizedsaxophone/evenstevens",
+  "dependencies": {
+    "body-parser": "^1.12.4",
+    "express": "^4.12.4",
+    "morgan": "^1.5.3",
+    "redis": "^0.12.1",
+    "serve-favicon": "^2.2.1",
+    "socket.io": "^1.3.5"
+  },
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "install": "^0.1.8",
+    "karma": "^0.12.32",
+    "karma-chrome-launcher": "^0.1.12",
+    "mocha": "^2.2.5",
+    "npm": "^2.10.1"
+  }
+}
