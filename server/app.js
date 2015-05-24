@@ -1,8 +1,8 @@
 /*
 * @Author: hal
 * @Date:   2015-05-22 10:53:35
-* @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-05-25 15:03:46
+* @Last Modified by:   Johnny Nguyen
+* @Last Modified time: 2015-05-25 15:32:17
 */
 
 // set up server variables
@@ -24,7 +24,11 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+<<<<<<< HEAD
 app.use('/api/bills', bill);
+=======
+app.use('/api/bill', bill);
+>>>>>>> Implements input of username and accepts image
 app.use('/', express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
