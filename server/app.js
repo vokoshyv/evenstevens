@@ -1,8 +1,8 @@
 /*
 * @Author: hal
 * @Date:   2015-05-22 10:53:35
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-23 12:10:56
+* @Last Modified by:   vokoshyv
+* @Last Modified time: 2015-05-25 15:02:25
 */
 
 // set up server variables
@@ -13,6 +13,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var bill = require('./api/bill/index');
 var app = express();
+
+
 
 app.set('port', (process.env.PORT || 3000));
 
