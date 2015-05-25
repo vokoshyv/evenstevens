@@ -27,7 +27,7 @@
     "grandTotal": 34.80
   },
   "diners": [{
-    "diner": tom,
+    "diner": "tom",
     "itemIndex": []
   }]
 }
