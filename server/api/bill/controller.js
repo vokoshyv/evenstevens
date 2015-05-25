@@ -2,14 +2,13 @@
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
 * @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-05-25 11:36:43
+* @Last Modified time: 2015-05-25 11:38:03
 */
 
 'use strict';
 
 var client = require('../../db.js')
 var redis = require('redis');
-// console.log('haha');
 
 client.set('vege', 'carrots', redis.print);
 client.get('vege', function(error, value){
