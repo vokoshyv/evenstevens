@@ -1,0 +1,33 @@
+// Dummy data that simulates receipt itemization post
+// OCR and parsing
+
+
+// party object that will be passed in during create
+// controller function
+{
+  "billName": "tomparty",
+  "receipt": {
+    "items": [
+    {
+      "item": "Hamburger",
+      "cost": 9.73
+    }, 
+    {
+      "item": "Hot Dog",
+      "cost": 7.42
+    }, 
+    {
+      "item": "Cheeseburger",
+      "cost": 10.52
+    }],
+    "subTotal": 27.67,
+    "tax": 2.63,
+    "total": 30.30,
+    "tip": 4.50,
+    "grandTotal": 34.80
+  },
+  "diners": [{
+    "diner": tom,
+    "itemIndex": []
+  }]
+}
