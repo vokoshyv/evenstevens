@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-23 17:37:11
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-05-25 14:36:58
 */
 
 'use strict';
@@ -55,15 +55,19 @@ var CameraButton = React.createClass({
     
     reader.readAsDataURL(file);
     console.log(reader);
+    
   },
   render: function() {
     return (
+      <div>
       <form onSubmit={this.handleSubmit} encType="multipart/form-data">
         <label className="myLabel">
         <input type="file" accept="image/*;capture=camera" onChange={this.handleFile} style={{display:"none"}} />
-          <span>My Label</span>
+          <span>Take a picture of receipt</span>
         </label>
       </form>
+      <img src={this.state.data_uri} />
+      </div>
     );
   }
 });
