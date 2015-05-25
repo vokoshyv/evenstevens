@@ -1,11 +1,13 @@
-// Data Object
+// Data Objects
+
+// party object stored in Redis database
 {
-  "party": String,
+  "billName": String,
   "receipt": {
   	"items": [{
 	  "item": String,
 	  "cost": Number
-	}],
+    }],
   	"subTotal": Number,
   	"tax": Number,
   	"total": Number,
@@ -15,5 +17,16 @@
   "diners": [{
   	"diner": String,
   	"itemIndex": [Number]
+  }]
+}
+
+// update object sent out from clients upon any interaction
+// will also be received by every client to update their
+// current party object
+{
+  "billName": String, 
+  "diners" [{
+    "diner" String,
+    "itemIndex": [Number]
   }]
 }
