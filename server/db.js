@@ -2,7 +2,7 @@
 * @Author: vokoshyv
 * @Date:   2015-05-23 16:42:04
 * @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-05-23 17:06:21
+* @Last Modified time: 2015-05-25 10:38:44
 */
 
 'use strict';
