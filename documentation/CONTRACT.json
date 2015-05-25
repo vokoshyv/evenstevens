@@ -30,3 +30,9 @@
     "itemIndex": [Number]
   }]
 }
+
+// initial POST request
+{
+  "billName": String, 
+  "receipt": data
+}
