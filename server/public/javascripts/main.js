@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-25 15:34:19
+* @Last Modified time: 2015-05-25 15:35:06
 */
 
 'use strict';
