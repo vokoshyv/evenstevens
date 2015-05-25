@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-05-25 14:36:58
+* @Last Modified by:   Johnny Nguyen
+* @Last Modified time: 2015-05-25 15:35:33
 */
 
 'use strict';
@@ -28,9 +28,9 @@ var InputForm = React.createClass({
     return (
       <form className ="inputForm" onSubmit={this.handleInput}>
         <input type="text" placeholder="Enter your name" ref="name" />
-      <input type="submit" value="Keep it even" />
-      <div className ="errorBox"> {this.state.message}</div>
-    </form>
+        <input type="submit" value="Keep it even" />
+        <div className ="errorBox"> {this.state.message}</div>
+      </form>
     );
   }
 });
@@ -41,6 +41,21 @@ var CameraButton = React.createClass({
   },
   handleSubmit: function(e)  {  
     e.preventDefault();
+
+    //post request from http://stackoverflow.com/questions/166221/how-can-i-upload-files-asynchronously
+    $.ajax({
+      url: '/api/bills/' + , // insert billName here
+      type: 'POST',
+      success: successHandler,
+      error: errorHandler,
+      // Form data
+      data: formData, // create formData object here
+      //Options to tell jQuery not to process data or worry about content-type.
+      cache: false,
+      contentType: false,
+      processData: false
+    });
+
   },
   handleFile: function(e) {
     var self = this;
@@ -57,10 +72,16 @@ var CameraButton = React.createClass({
     console.log(reader);
     
   },
+  successHandler: function() {
+    //POST upload success handler
+  },
+  errorHandler: function() {
+    //POST upload error handler
+  },
   render: function() {
     return (
       <div>
-      <form onSubmit={this.handleSubmit} encType="multipart/form-data">
+      <form onSubmit={this.handleSubmit} enctype="multipart/form-data">
         <label className="myLabel">
         <input type="file" accept="image/*;capture=camera" onChange={this.handleFile} style={{display:"none"}} />
           <span>Take a picture of receipt</span>
