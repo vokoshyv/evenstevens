@@ -2,12 +2,33 @@
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
 * @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-05-25 11:09:17
+* @Last Modified time: 2015-05-25 11:36:43
 */
 
 'use strict';
 
 var client = require('../../db.js')
+var redis = require('redis');
+// console.log('haha');
+
+client.set('vege', 'carrots', redis.print);
+client.get('vege', function(error, value){
+
+    if (error){
+      throw error;
+    }
+
+    console.log('The vegetable is = ' + value);
+})
+ 
+client.get('fruit', function(error, value){
+
+    if (error){
+      throw error;
+    }
+
+    console.log('The fruit is = ' + value);
+})
 
 exports.show = function(req, res) {
   // This wil likely be a socket interaction
