@@ -1,8 +1,8 @@
 /*
 * @Author: hal
 * @Date:   2015-05-22 10:53:35
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-25 15:54:41
+* @Last Modified by:   Michael Harris
+* @Last Modified time: 2015-05-25 19:46:45
 */
 
 // set up server variables
@@ -17,7 +17,7 @@ var app = express();
 app.set('port', (process.env.PORT || 3000));
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -56,9 +56,6 @@ app.use(function(err, req, res, next) {
   });
 });
 
-// Start server
-app.listen(app.get('port'), function () {
-  console.log('Server started: http://localhost:' + app.get('port') + '/');
-});
+var socketServer = require('./socketServer')(app);
 
 module.exports = app;
