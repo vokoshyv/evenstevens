@@ -2,13 +2,15 @@
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
 * @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-05-25 17:21:45
+* @Last Modified time: 2015-05-26 15:33:09
 */
 
 'use strict';
 
 var client = require('../../db.js')
 var redis = require('redis');
+
+
 
 
 exports.show = function(req, res) {
