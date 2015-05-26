@@ -1,8 +1,6 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-* @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-05-25 17:21:45
 */
 
 'use strict';
@@ -34,6 +32,16 @@ exports.show = function(req, res) {
     // (via socket or http response)
   })
 
+
+})
+
+exports.show = function(req, res) {
+  // This wil likely be a socket interaction
+  // From individualized URLs, send back the party object
+  // 
+  // 
+  var billname = req.params.billname;
+  return res.json(201, {billname: billname});
 };
 
 exports.create = function(req, res) {
@@ -46,6 +54,10 @@ exports.create = function(req, res) {
     // GO JOHNNY GO - we'll help
   
   // 3) Puts those items into the party object 
+  
+
+  console.log(req.body);
+  res.sendStatus(200);
   
   var tomparty = {
     "billName": "tomparty",
@@ -85,8 +97,6 @@ exports.create = function(req, res) {
   
   // 5) Returns back to the client an individualized url 
   // for the party members to go back to. 
-  // HERE YOU GO: "http://www.evenstevens.com/tomparty"
-
 
 };
 

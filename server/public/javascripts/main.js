@@ -1,12 +1,74 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-25 15:35:33
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-05-26 14:51:21
 */
 
 'use strict';
 
+var name;
+
+function resize (file, maxWidth, maxHeight, fn) {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function (event) {
+        var dataUrl = event.target.result;
+ 
+        var image = new Image();
+        image.src = dataUrl;
+        image.onload = function () {
+            var resizedDataUrl = resizeImage(image, maxWidth, maxHeight, 0.7);
+            fn(resizedDataUrl);
+        };
+    };
+};
+ 
+function resizeImage(image, maxWidth, maxHeight, quality) {
+    var canvas = document.createElement('canvas');
+ 
+    var width = image.width;
+    var height = image.height;
+ 
+    if (width > height) {
+        if (width > maxWidth) {
+            height = Math.round(height * maxWidth / width);
+            width = maxWidth;
+        }
+    } else {
+        if (height > max_height) {
+            width = Math.round(width * maxHeight / height);
+            height = maxHeight;
+        }
+    }
+ 
+    canvas.width = width;
+    canvas.height = height;
+ 
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(image, 0, 0, width, height);
+    return canvas.toDataURL("image/jpeg", quality);
+};
+
+function sendImage(dataUrl){
+  console.log(dataUrl);
+  $.ajax({
+    url: '/api/bills/' + name,
+    type: 'POST',
+    data: JSON.stringify({data:dataUrl}),
+    contentType: "application/json",
+    success: successHandler,
+    error: errorHandler,
+  });
+};
+
+function successHandler(){
+  console.log("yay");
+}
+
+function errorHandler(){
+  console.log("boo");
+}
 
 var InputForm = React.createClass({
   getInitialState: function(){
@@ -36,59 +98,31 @@ var InputForm = React.createClass({
 });
 
 var CameraButton = React.createClass({
-  getInitialState: function(){
-    return { data_uri: null };
+  getInitialState: function () {
+      return {};
   },
-  handleSubmit: function(e)  {  
-    e.preventDefault();
-
-    //post request from http://stackoverflow.com/questions/166221/how-can-i-upload-files-asynchronously
-    $.ajax({
-      url: '/api/bills/' + , // insert billName here
-      type: 'POST',
-      success: successHandler,
-      error: errorHandler,
-      // Form data
-      data: formData, // create formData object here
-      //Options to tell jQuery not to process data or worry about content-type.
-      cache: false,
-      contentType: false,
-      processData: false
-    });
-
-  },
-  handleFile: function(e) {
+  _onChange: function (e) {
+    var files = e.target.files;
     var self = this;
-    var reader = new FileReader();
-    var file = e.target.files[0];
-
-    reader.onload = function(upload) {
-      self.setState({
-        data_uri: upload.target.result,
-      });
-    }
-    
-    reader.readAsDataURL(file);
-    console.log(reader);
-    
-  },
-  successHandler: function() {
-    //POST upload success handler
-  },
-  errorHandler: function() {
-    //POST upload error handler
+    var maxWidth = this.props.maxWidth;
+    var maxHeight = this.props.maxHeight;
+    resize(files[0], maxWidth, maxHeight, function (resizedDataUrl) {
+      sendImage(resizedDataUrl);
+      self.setState({ dataUrl: resizedDataUrl });
+    });
   },
   render: function() {
+    var image;
+    var dataUrl = this.state.dataUrl;
+    if (dataUrl) {
+      image = <img src={dataUrl} />
+    }
+
     return (
-      <div>
-      <form onSubmit={this.handleSubmit} enctype="multipart/form-data">
-        <label className="myLabel">
-        <input type="file" accept="image/*;capture=camera" onChange={this.handleFile} style={{display:"none"}} />
-          <span>Take a picture of receipt</span>
-        </label>
-      </form>
-      <img src={this.state.data_uri} />
-      </div>
+    <div>
+        <input ref="upload" type="file" capture="camera" accept="image/*" onChange={ this._onChange } />
+        { image }
+    </div>
     );
   }
 });
@@ -101,24 +135,19 @@ var App= React.createClass({
     };
   },
   handleInputSubmit: function(input){
-    // do something with input.name here
-    // Send to server
+    name = input.name;
     this.setState({ 
       showNameBtn   : false,
       showCameraBtn : true
     }); 
     return; 
   },
-  sendImage: function(imagePath){
-    console.log(imagePath);
-    return;
-  },
   render: function() {
     return (
       <div className ="container">
         <h1>Even Stevens</h1>
         { this.state.showNameBtn ? <InputForm onInputSubmit = {this.handleInputSubmit}/> : null }
-        { this.state.showCameraBtn ? <CameraButton  />: null }
+        { this.state.showCameraBtn ? <CameraButton maxHeight={500} maxWidth={500}  />: null }
       </div>
     );
   }
