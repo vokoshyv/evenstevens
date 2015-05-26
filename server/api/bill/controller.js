@@ -1,14 +1,7 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-<<<<<<< HEAD
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-26 14:58:40
-=======
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-05-25 20:37:38
->>>>>>> Sends base 64 image to server
-*/
+
 
 'use strict';
 

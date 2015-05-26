@@ -1,14 +1,13 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-05-25 20:48:54
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-05-26 11:45:46
 */
 
 'use strict';
 
 var name;
-var imageData;
 
 var InputForm = React.createClass({
   getInitialState: function(){
@@ -41,42 +40,34 @@ var CameraButton = React.createClass({
   getInitialState: function(){
     return { data_uri: null };
   },
-  // handleSubmit: function(e)  {  
-  //   e.preventDefault();
-
-  //   //post request from http://stackoverflow.com/questions/166221/how-can-i-upload-files-asynchronously
-  //   $.ajax({
-  //     url: '/api/bills/' + , // insert billName here
-  //     type: 'POST',
-  //     success: successHandler,
-  //     error: errorHandler,
-  //     // Form data
-  //     data: formData, // create formData object here
-  //     //Options to tell jQuery not to process data or worry about content-type.
-  //     cache: false,
-  //     contentType: false,
-  //     processData: false
-  //   });
-
-  // },
   handleFile: function(e) {
     var self = this;
     var reader = new FileReader();
     var file = e.target.files[0];
 
     reader.onload = function(upload) {
-      self.setState({
-        data_uri: upload.target.result,
+      self.setState({data_uri: upload.target.result});
+      var data = upload.target.result.replace("data:"+ file.type +";base64,", '');
+      $.ajax({
+        url: '/api/bills/' + name,
+        type: 'POST',
+        data: JSON.stringify({data:data}),
+        contentType: "application/json",
+        success: self.successHandler,
+        error: self.errorHandler,
       });
-      var image = upload.target.result;
-      self.props.onImageCapture({image:image});
     }
-
     reader.readAsDataURL(file);
-
- 
-    
+    return;  
   },
+  successHandler: function(){
+    console.log("success");
+
+  },
+  errorHandler: function(){
+    console.log("err");
+  },
+
   render: function() {
     return (
       <div>
@@ -100,52 +91,19 @@ var App= React.createClass({
     };
   },
   handleInputSubmit: function(input){
-    // do something with input.name here
-    // Send to server
     name = input.name;
-
     this.setState({ 
       showNameBtn   : false,
       showCameraBtn : true
     }); 
     return; 
   },
-  sendData: function(data){
-     
-    console.log(data);
-
-    $.ajax({
-      url: '/api/bills/' + name, // insert billName here
-      type: 'POST',
-      dataType: 'json',
-      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-      success: this.successHandler,
-      error: this.errorHandler,
-      // Form data
-      data: data.image,
-      //Options to tell jQuery not to process data or worry about content-type.
-      cache: false,
-      processData: false
-    });
-    return;
-  },
-
-  successHandler: function() {
-    //POST upload success handler
-    console.log("good");
-    return;
-  },
-  errorHandler: function() {
-    //POST upload error handler
-    console.log("bad");
-    return;
-  },
   render: function() {
     return (
       <div className ="container">
         <h1>Even Stevens</h1>
         { this.state.showNameBtn ? <InputForm onInputSubmit = {this.handleInputSubmit}/> : null }
-        { this.state.showCameraBtn ? <CameraButton onImageCapture = {this.sendData} />: null }
+        { this.state.showCameraBtn ? <CameraButton  />: null }
       </div>
     );
   }
