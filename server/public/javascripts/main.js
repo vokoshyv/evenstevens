@@ -1,13 +1,12 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-26 14:51:21
 */
 
 'use strict';
 
 var name;
+
 
 function resize (file, maxWidth, maxHeight, fn) {
     var reader = new FileReader();
@@ -136,6 +135,7 @@ var App= React.createClass({
   },
   handleInputSubmit: function(input){
     name = input.name;
+
     this.setState({ 
       showNameBtn   : false,
       showCameraBtn : true
