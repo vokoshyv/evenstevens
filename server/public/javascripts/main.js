@@ -1,12 +1,14 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-25 15:35:33
+* @Last Modified by:   Michael Harris
+* @Last Modified time: 2015-05-25 19:50:40
 */
 
 'use strict';
 
+var socketClient = SocketClient('http://127.0.0.1:3000');
+socketClient.send({value: 'hello'});
 
 var InputForm = React.createClass({
   getInitialState: function(){
@@ -44,7 +46,7 @@ var CameraButton = React.createClass({
 
     //post request from http://stackoverflow.com/questions/166221/how-can-i-upload-files-asynchronously
     $.ajax({
-      url: '/api/bills/' + , // insert billName here
+      url: '/api/bills/' + '', // insert billName here
       type: 'POST',
       success: successHandler,
       error: errorHandler,
