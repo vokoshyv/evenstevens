@@ -4,7 +4,7 @@
 <<<<<<< HEAD
 =======
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-26 15:39:36
+* @Last Modified time: 2015-05-26 15:53:10
 >>>>>>> Sends base 64 image to server
 */
 
@@ -35,10 +35,10 @@ exports.show = function(req, res) {
     }
     // want to parse the object and send it out to clients
     // (via socket or http response)
-  })
+  });
 
 
-})
+};
 
 exports.show = function(req, res) {
   // This wil likely be a socket interaction
