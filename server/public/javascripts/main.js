@@ -1,12 +1,14 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-25 15:35:33
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-05-25 20:48:54
 */
 
 'use strict';
 
+var name;
+var imageData;
 
 var InputForm = React.createClass({
   getInitialState: function(){
@@ -39,24 +41,24 @@ var CameraButton = React.createClass({
   getInitialState: function(){
     return { data_uri: null };
   },
-  handleSubmit: function(e)  {  
-    e.preventDefault();
+  // handleSubmit: function(e)  {  
+  //   e.preventDefault();
 
-    //post request from http://stackoverflow.com/questions/166221/how-can-i-upload-files-asynchronously
-    $.ajax({
-      url: '/api/bills/' + , // insert billName here
-      type: 'POST',
-      success: successHandler,
-      error: errorHandler,
-      // Form data
-      data: formData, // create formData object here
-      //Options to tell jQuery not to process data or worry about content-type.
-      cache: false,
-      contentType: false,
-      processData: false
-    });
+  //   //post request from http://stackoverflow.com/questions/166221/how-can-i-upload-files-asynchronously
+  //   $.ajax({
+  //     url: '/api/bills/' + , // insert billName here
+  //     type: 'POST',
+  //     success: successHandler,
+  //     error: errorHandler,
+  //     // Form data
+  //     data: formData, // create formData object here
+  //     //Options to tell jQuery not to process data or worry about content-type.
+  //     cache: false,
+  //     contentType: false,
+  //     processData: false
+  //   });
 
-  },
+  // },
   handleFile: function(e) {
     var self = this;
     var reader = new FileReader();
@@ -66,22 +68,19 @@ var CameraButton = React.createClass({
       self.setState({
         data_uri: upload.target.result,
       });
+      var image = upload.target.result;
+      self.props.onImageCapture({image:image});
     }
-    
+
     reader.readAsDataURL(file);
-    console.log(reader);
+
+ 
     
-  },
-  successHandler: function() {
-    //POST upload success handler
-  },
-  errorHandler: function() {
-    //POST upload error handler
   },
   render: function() {
     return (
       <div>
-      <form onSubmit={this.handleSubmit} enctype="multipart/form-data">
+      <form onSubmit={this.handleSubmit} encType="multipart/form-data">
         <label className="myLabel">
         <input type="file" accept="image/*;capture=camera" onChange={this.handleFile} style={{display:"none"}} />
           <span>Take a picture of receipt</span>
@@ -103,14 +102,42 @@ var App= React.createClass({
   handleInputSubmit: function(input){
     // do something with input.name here
     // Send to server
+    name = input.name;
+
     this.setState({ 
       showNameBtn   : false,
       showCameraBtn : true
     }); 
     return; 
   },
-  sendImage: function(imagePath){
-    console.log(imagePath);
+  sendData: function(data){
+     
+    console.log(data);
+
+    $.ajax({
+      url: '/api/bills/' + name, // insert billName here
+      type: 'POST',
+      dataType: 'json',
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+      success: this.successHandler,
+      error: this.errorHandler,
+      // Form data
+      data: data.image,
+      //Options to tell jQuery not to process data or worry about content-type.
+      cache: false,
+      processData: false
+    });
+    return;
+  },
+
+  successHandler: function() {
+    //POST upload success handler
+    console.log("good");
+    return;
+  },
+  errorHandler: function() {
+    //POST upload error handler
+    console.log("bad");
     return;
   },
   render: function() {
@@ -118,7 +145,7 @@ var App= React.createClass({
       <div className ="container">
         <h1>Even Stevens</h1>
         { this.state.showNameBtn ? <InputForm onInputSubmit = {this.handleInputSubmit}/> : null }
-        { this.state.showCameraBtn ? <CameraButton  />: null }
+        { this.state.showCameraBtn ? <CameraButton onImageCapture = {this.sendData} />: null }
       </div>
     );
   }
