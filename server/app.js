@@ -1,8 +1,8 @@
 /*
 * @Author: hal
 * @Date:   2015-05-22 10:53:35
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-26 16:00:31
+* @Last Modified by:   vokoshyv
+* @Last Modified time: 2015-05-26 21:23:50
 */
 
 // set up server variables
@@ -56,9 +56,6 @@ app.use(function(err, req, res, next) {
   });
 });
 
-// Start server
-app.listen(app.get('port'), function () {
-  console.log('Server started: http://localhost:' + app.get('port') + '/');
-});
+var socketServer = require('./socketServer')(app);
 
 module.exports = app;
