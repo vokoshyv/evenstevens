@@ -1,73 +1,59 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
+* @Last Modified by:   Johnny Nguyen
+* @Last Modified time: 2015-05-26 20:12:14
 */
 
 'use strict';
 
 var name;
 
-
-function resize (file, maxWidth, maxHeight, fn) {
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function (event) {
-        var dataUrl = event.target.result;
+/**
+ * resizing function
+ */
+// function resize (file, maxWidth, maxHeight, fn) {
+//     var reader = new FileReader();
+//     reader.readAsDataURL(file);
+//     reader.onload = function (event) {
+//         var dataUrl = event.target.result;
+//         var image = new Image();
+//         image.src = dataUrl;
+//         image.onload = function () {
+//             var resizedDataUrl = resizeImage(image, maxWidth, maxHeight, 0.7);
+//             fn(resizedDataUrl);
+//         };
+//     };
+// };
  
-        var image = new Image();
-        image.src = dataUrl;
-        image.onload = function () {
-            var resizedDataUrl = resizeImage(image, maxWidth, maxHeight, 0.7);
-            fn(resizedDataUrl);
-        };
-    };
-};
+/**
+ * resizing function
+ */ 
+// function resizeImage(image, maxWidth, maxHeight, quality) {
+//     var canvas = document.createElement('canvas');
  
-function resizeImage(image, maxWidth, maxHeight, quality) {
-    var canvas = document.createElement('canvas');
+//     var width = image.width;
+//     var height = image.height;
  
-    var width = image.width;
-    var height = image.height;
+//     if (width > height) {
+//       if (width > maxWidth) {
+//         height = Math.round(height * maxWidth / width);
+//         width = maxWidth;
+//       }
+//     } else {
+//       if (height > max_height) {
+//         width = Math.round(width * maxHeight / height);
+//         height = maxHeight;
+//       }
+//     }
  
-    if (width > height) {
-        if (width > maxWidth) {
-            height = Math.round(height * maxWidth / width);
-            width = maxWidth;
-        }
-    } else {
-        if (height > max_height) {
-            width = Math.round(width * maxHeight / height);
-            height = maxHeight;
-        }
-    }
+//     canvas.width = width;
+//     canvas.height = height;
  
-    canvas.width = width;
-    canvas.height = height;
- 
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(image, 0, 0, width, height);
-    return canvas.toDataURL("image/jpeg", quality);
-};
-
-function sendImage(dataUrl){
-  console.log(dataUrl);
-  $.ajax({
-    url: '/api/bills/' + name,
-    type: 'POST',
-    data: JSON.stringify({data:dataUrl}),
-    contentType: "application/json",
-    success: successHandler,
-    error: errorHandler,
-  });
-};
-
-function successHandler(){
-  console.log("yay");
-}
-
-function errorHandler(){
-  console.log("boo");
-}
+//     var ctx = canvas.getContext("2d");
+//     ctx.drawImage(image, 0, 0, width, height);
+//     return canvas.toDataURL("image/jpeg", quality);
+// };
 
 var InputForm = React.createClass({
   getInitialState: function(){
@@ -100,16 +86,25 @@ var CameraButton = React.createClass({
   getInitialState: function () {
       return {};
   },
+
   _onChange: function (e) {
     var files = e.target.files;
-    var self = this;
-    var maxWidth = this.props.maxWidth;
-    var maxHeight = this.props.maxHeight;
-    resize(files[0], maxWidth, maxHeight, function (resizedDataUrl) {
-      sendImage(resizedDataUrl);
-      self.setState({ dataUrl: resizedDataUrl });
-    });
+    var formData = new FormData();
+    var xhr = new XMLHttpRequest();
+
+    formData.append('file', files[0]);    
+    xhr.open('POST', '/api/bills/' + name);
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        console.log('all done: ' + xhr.status);
+      } else {
+        console.log('Something went terribly wrong...');
+      }
+    };
+
+    xhr.send(formData);
   },
+
   render: function() {
     var image;
     var dataUrl = this.state.dataUrl;
@@ -118,10 +113,10 @@ var CameraButton = React.createClass({
     }
 
     return (
-    <div>
+      <div>
         <input ref="upload" type="file" capture="camera" accept="image/*" onChange={ this._onChange } />
         { image }
-    </div>
+      </div>
     );
   }
 });

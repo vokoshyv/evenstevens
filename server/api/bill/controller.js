@@ -8,7 +8,23 @@
 var client = require('../../db.js')
 var redis = require('redis');
 
+var receipt = require('../../utils/receipt');
+// var tesseract = require('../../utils/tesseract');
 
+var path = require('path');
+var fs = require('fs');
+var tesseract = require('node-tesseract');
+var formidable = require('formidable'),
+    util = require('util');
+
+
+/**
+ * [show description]
+ * 
+ * @param  {[type]} req [description]
+ * @param  {[type]} res [description]
+ * @return {[type]}     [description]
+ */
 exports.show = function(req, res) {
   // This wil likely be a socket interaction
   // From individualized URLs, send back the party object
@@ -44,62 +60,82 @@ exports.show = function(req, res) {
   return res.json(201, {billname: billname});
 };
 
+/**
+ * Initial post for receipt image. 
+ * 1. Validate image URI
+ * 2. Save to ~/server/.temp
+ * 3. Parse items from receipt
+ * 4. Save to Redis
+ * 5. Return saved object/emmit socket event
+ *
+ * @param  {[type]} req [description]
+ * @param  {[type]} res [description]
+ * @return {[type]}     [description]
+ */
 exports.create = function(req, res) {
-  // 1) This is the initial function that takes the picture 
-  // the client and tesseracts it. 
-    // GO JOHNNY GO - we'll help
-  
-  // 2) Takes the tesseracted text and parses it into its 
-  // component items
-    // GO JOHNNY GO - we'll help
-  
-  // 3) Puts those items into the party object 
-  
+  var billname = req.params.billname;
+  var form = new formidable.IncomingForm();
 
-  console.log(req.body);
-  res.sendStatus(200);
-  
-  var tomparty = {
-    "billName": "tomparty",
-    "receipt": {
-      "items": [
-      {
-        "item": "Hamburger",
-        "cost": 9.73
-      }, 
-      {
-        "item": "Hot Dog",
-        "cost": 7.42
-      }, 
-      {
-        "item": "Cheeseburger",
-        "cost": 10.52
-      }],
-      "subTotal": 27.67,
-      "tax": 2.63,
-      "total": 30.30,
-      "tip": 4.50,
-      "grandTotal": 34.80
-    },
-    "diners": [{
-      "diner": "tom",
-      "itemIndex": []
-    }]
-  }
-  
-  // 4) Inserts party object into redis database: Key will 
-  // be the billName, and value will be the party object
-  client.hmset('tomparty', {
-    "billName": tomparty.billName,
-    "receipt": JSON.stringify(tomparty.receipt),
-    "diners": JSON.stringify(tomparty.diners)
-  }, redis.print);
-  
-  // 5) Returns back to the client an individualized url 
-  // for the party members to go back to. 
+  form.parse(req, function(err, fields, files) {
+    console.log(files.file.path);
+    fs.readFile(files.file.path, function(err, data) {
+      
+      var newPath = path.join(__dirname + "../../../.temp");
+      fs.writeFile(newPath + '/' + billname + '.jpg', data, function (err) {
+        if (err) console.log(err);
 
+        tesseract.process(newPath + '/' + billname + '.jpg', function(err, text) {
+          if(err) {
+            console.error(err);
+          } else {
+            console.log(text);
+          }
+        });
+      });      
+
+
+
+      // tesseract.process(data, function(err, text) {
+      //   if(err) {
+      //     console.error(err);
+      //   } else {
+      //     console.log(text);
+      //   }
+      // });
+    })
+
+
+    // res.writeHead(200, {'content-type': 'text/plain'});
+    // res.write('received upload:\n\n');
+    // console.log(files);
+
+    // tesseract.process(__dirname + '/imgres.jpg', function(err, text) {
+    //   if(err) {
+    //     console.error(err);
+    //   } else {
+    //     console.log(text);
+    //   }
+    // });
+
+
+
+    // res.end(util.inspect({fields: fields, files: files}));
+  });
+
+
+
+  // var base64 = receipt.isBase64(req.body.data);
+  //receipt.toJPG(receipt.isBase64(req.body.data), billname);
+  // var items = tesseract.parse('/path/to/image');
+  // res.json(200, users);
 };
 
+/**
+ * [update description]
+ * @param  {[type]} req [description]
+ * @param  {[type]} res [description]
+ * @return {[type]}     [description]
+ */
 exports.update = function(req, res) {
   // This will most assuredly be a socket interaction
   // 1) Update the party object inside the database based 
