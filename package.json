@@ -26,7 +26,13 @@
   },
   "devDependencies": {
     "chai": "^2.3.0",
+    "gulp": "^3.8.11",
+    "gulp-jshint": "^1.11.0",
+    "gulp-livereload": "^3.8.0",
+    "gulp-open": "^0.3.2",
+    "gulp-shell": "^0.4.1",
     "install": "^0.1.8",
+    "jshint-stylish": "^2.0.0",
     "karma": "^0.12.32",
     "karma-chrome-launcher": "^0.1.12",
     "mocha": "^2.2.5",
