@@ -2,11 +2,11 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:53:40
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-27 15:29:26
+* @Last Modified time: 2015-05-27 16:21:58
 */
 
 var React = require('react');
-var AppActions = require('../actions/AppActions')
+var AppActions = require('../actions/AppActions');
 
 var NameInputForm = React.createClass({
   getInitialState: function(){
@@ -34,7 +34,7 @@ var NameInputForm = React.createClass({
   render: function() {
 
     if(this.props.userName.length > 0) {
-      return null;
+      return (<div>Hi {this.props.userName} </div>);
     }
 
     return (

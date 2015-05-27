@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 14:23:20
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-27 15:31:46
+* @Last Modified time: 2015-05-27 16:39:19
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -12,16 +12,16 @@ var assign = require('object-assign');
 var CHANGE_EVENT = 'change';
 
 var _userName = "";
-var _imgPath = "";
+var _imageFile = null;
 
 
 var setName = function(name) {
   _userName = name;
-  console.log(name);
 };
 
-var setImgPath = function(path) {
-  _imgPath = path;
+var setImageFile = function(file) {
+  _imageFile = file;
+  console.log(_imageFile);
 }
 
 
@@ -32,8 +32,8 @@ var AppStore = assign({}, EventEmitter.prototype, {
     return _userName;
   },
 
-  getImgPath: function() {
-    return _imgPath;
+  getImageFile: function() {
+    return _imageFile;
   },
 
   addChangeListener: function(callback) {
@@ -49,6 +49,7 @@ var AppStore = assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function(action) {
   var name;
+  var files;
 
   switch(action.actionType) {
     case 'ADD_USER':
@@ -56,6 +57,15 @@ AppDispatcher.register(function(action) {
       if (name !== '') {
         setName(name);
         AppStore.emitChange();
+      }
+      break;
+    case 'HANDLE_IMAGE':
+      file = action.payload;
+      if(action.length > 0) {
+        setImageFile(files[0]);
+        AppStore.emitChange();
+      } else {
+        console.log('boo no file');
       }
       break;
 

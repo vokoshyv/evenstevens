@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:46:34
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-27 15:17:44
+* @Last Modified time: 2015-05-27 16:24:17
 */
 
 /** 
@@ -17,7 +17,8 @@ var AppStore = require('../stores/AppStore');
 
 var getAppState = function() {
   return {
-    userName: AppStore.getUserName()
+    userName: AppStore.getUserName(),
+    imageFile: AppStore.getImageFile()
     // receiptItems : ReceiptStore.getAll(),
     // nameInput: ReceiptStore.nameNotInput().
     // showCameraBtn: ReceiptStore.imageNotInput()
@@ -41,6 +42,7 @@ var EvenStevensApp = React.createClass({
       <div>
         <h1>Even Stevens</h1>
         <NameInputForm userName={this.state.userName} />
+        <CameraImageCapture imageFile={this.state.imageFile} />
       </div>
     );
   },

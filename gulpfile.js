@@ -1,8 +1,8 @@
 /* 
 * @Author: vokoshyv
 * @Date:   2015-05-26 17:12:39
-* @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-05-27 15:27:47
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-05-27 16:04:45
 */
 
 'use strict';
@@ -35,7 +35,7 @@ gulp.task('browserify', function() {
   b.add('server/public/javascripts/main.js');
   return b.bundle()
     .pipe(source('bundle.js'))
-    .pipe(gulp.dest('server/public/javascripts/dist/'))
+    .pipe(gulp.dest('server/public/dist/'))
 });
 
 gulp.task('scripts', function(){

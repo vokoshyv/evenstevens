@@ -2,10 +2,11 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:52:07
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-27 13:51:24
+* @Last Modified time: 2015-05-27 16:30:16
 */
 
 var React = require('react');
+var AppActions = require('../actions/AppActions');
 
 var CameraImageCapture = React.createClass({
 
@@ -32,6 +33,9 @@ var CameraImageCapture = React.createClass({
   },
 
   _onChange: function (e) {
+
+      AppActions.handleImage(e.target.files);
+
     var files = e.target.files;
     var formData = new FormData();
     var xhr = new XMLHttpRequest();
