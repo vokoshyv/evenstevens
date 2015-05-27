@@ -1,8 +1,8 @@
 /* 
 * @Author: vokoshyv
 * @Date:   2015-05-26 17:12:39
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-27 12:35:29
+* @Last Modified by:   vokoshyv
+* @Last Modified time: 2015-05-27 15:27:47
 */
 
 'use strict';
@@ -94,7 +94,7 @@ gulp.task('openInBrowser', function(){
 gulp.task('watch', function(){
   livereload.listen();
 
-  gulp.watch(paths.scripts, ['scripts']);
+  gulp.watch(paths.scripts, ['scripts', 'browserify']);
   gulp.watch(paths.server, ['server']);
   gulp.watch(paths.styles, ['styles']);
   gulp.watch(paths.billRoute, ['billRoute']);
