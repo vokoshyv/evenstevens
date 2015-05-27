@@ -1,8 +1,13 @@
 /* 
 * @Author: vokoshyv
 * @Date:   2015-05-26 17:12:39
+<<<<<<< HEAD
 * @Last Modified by:   vokoshyv
 * @Last Modified time: 2015-05-27 20:06:51
+=======
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-05-27 12:35:29
+>>>>>>> Adds browserify to gulp file and begins Flux refactor
 */
 
 'use strict';
@@ -17,6 +22,7 @@ var gulp = require('gulp'),
     // added
     browserify = require('browserify'),
     source = require('vinyl-source-stream'),
+<<<<<<< HEAD
     reactify = require('reactify'),
     // for cleaning out files
     clean = require('gulp-clean'),
@@ -26,6 +32,14 @@ var gulp = require('gulp'),
 // set up paths 
 var paths = {
   scripts: ['server/public/javascripts/*.js','server/public/javascripts/**/*.js'],
+=======
+    reactify = require('reactify');
+
+
+// set up paths 
+var paths = {
+  scripts: '[server/public/javascripts/*.js, server/public/javascripts/**/*.js]', 
+>>>>>>> Adds browserify to gulp file and begins Flux refactor
   server: 'server/*.js', 
   styles: 'server/public/stylesheets/*.css',
   billRoute: 'server/api/bill/*.js', 
@@ -38,7 +52,11 @@ gulp.task('browserify', function() {
   b.add('server/public/javascripts/main.js');
   return b.bundle()
     .pipe(source('bundle.js'))
+<<<<<<< HEAD
     .pipe(gulp.dest('server/public/dist/'))
+=======
+    .pipe(gulp.dest('server/public/javascripts/dist/'))
+>>>>>>> Adds browserify to gulp file and begins Flux refactor
 });
 
 gulp.task('scripts', function(){
@@ -114,4 +132,8 @@ gulp.task('watch', function(){
 
 })
 
+<<<<<<< HEAD
 gulp.task('default', ['clearDist', 'browserify', 'watch', 'startServer', 'openInBrowser']);
+=======
+gulp.task('default', ['browserify', 'watch', 'startServer', 'openInBrowser']);
+>>>>>>> Adds browserify to gulp file and begins Flux refactor

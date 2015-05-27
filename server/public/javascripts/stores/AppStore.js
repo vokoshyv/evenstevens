@@ -2,7 +2,11 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 14:23:20
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-27 17:11:01
+<<<<<<< HEAD
+* @Last Modified time: 2015-05-27 20:29:36
+=======
+* @Last Modified time: 2015-05-27 14:38:15
+>>>>>>> Adds browserify to gulp file and begins Flux refactor
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -11,9 +15,9 @@ var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 
+
 var _userName = "";
 var _imageFile = null;
-
 
 var setName = function(name) {
   _userName = name;
@@ -22,8 +26,6 @@ var setName = function(name) {
 var setImageFile = function(file) {
   _imageFile = file;
 }
-
-
 
 var AppStore = assign({}, EventEmitter.prototype, {
 
@@ -72,3 +74,4 @@ AppDispatcher.register(function(action) {
 });
 
 module.exports = AppStore;
+

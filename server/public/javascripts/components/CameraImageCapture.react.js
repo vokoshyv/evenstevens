@@ -2,7 +2,8 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:52:07
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-27 17:57:41
+<<<<<<< HEAD
+* @Last Modified time: 2015-05-27 20:32:22
 */
 
 var React = require('react');
@@ -15,7 +16,6 @@ var CameraImageCapture = React.createClass({
   },
   _handleImage: function (e) {
     AppActions.handleImage( { file:e.target.files[0], userName: this.props.userName});
-
   },
 
   render: function() {
