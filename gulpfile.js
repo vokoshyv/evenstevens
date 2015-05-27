@@ -2,7 +2,7 @@
 * @Author: vokoshyv
 * @Date:   2015-05-26 17:12:39
 * @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-05-26 20:27:40
+* @Last Modified time: 2015-05-26 21:04:16
 */
 
 'use strict';
@@ -24,3 +24,68 @@ var paths = {
   html: 'server/public/index.html'
 }
 
+gulp.task('scripts', function(){
+  return gulp.src([
+    path.scripts
+  ])
+  .pipe(jshint())
+  .pipe(jshint.reporter(stylish))
+  .pipe(livereload());
+});
+
+gulp.task('server', function(){
+  return gulp.src([
+    paths.server
+  ])
+  .pipe(jshint())
+  .pipe(jshint.reporter(stylish));
+});
+
+gulp.task('styles', function(){
+  return gulp.src([
+    paths.styles
+  ])
+  .pipe(livereload());
+});
+
+gulp.task('billRoute', function(){
+  return gulp.src([
+    paths.billRoute
+  ])
+  .pipe(jshint())
+  .pipe(jshint.reporter(stylish))
+  .pipe(livereload());
+});
+
+gulp.task('html', function(){
+  return gulp.src([
+    paths.html
+  ])
+  .pipe(livereload());
+});
+
+gulp.task('startServer', shell.task([
+  //'redis-server', 
+  'nodemon server/app.js'
+]));
+
+gulp.task('openInBrowser', function(){
+  var options = {
+    url: 'http://localhost:3000'
+  };
+  gulp.src('./server/public/index.html')
+  .pipe(open('', options));
+});
+
+gulp.task('watch', function(){
+  livereload.listen();
+
+  gulp.watch(paths.scripts, ['scripts']);
+  gulp.watch(paths.server, ['server']);
+  gulp.watch(paths.styles, ['styles']);
+  gulp.watch(paths.billRoute, ['billRoute']);
+  gulp.watch(paths.html, ['html']);
+
+})
+
+gulp.task('default', ['watch', 'startServer', 'openInBrowser']);
