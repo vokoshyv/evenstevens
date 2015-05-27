@@ -30,10 +30,10 @@ exports.show = function(req, res) {
     }
     // want to parse the object and send it out to clients
     // (via socket or http response)
-  })
+  });
 
 
-})
+};
 
 exports.show = function(req, res) {
   // This wil likely be a socket interaction
