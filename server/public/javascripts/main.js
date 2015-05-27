@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-26 20:12:14
+* @Last Modified by:   vokoshyv
+* @Last Modified time: 2015-05-26 21:24:16
 */
 
 'use strict';
@@ -55,6 +55,9 @@ var name;
 //     return canvas.toDataURL("image/jpeg", quality);
 // };
 
+var socketClient = SocketClient('http://127.0.0.1:3000');
+socketClient.send({value: 'hello'});
+
 var InputForm = React.createClass({
   getInitialState: function(){
     return {message: ""};
@@ -83,8 +86,27 @@ var InputForm = React.createClass({
 });
 
 var CameraButton = React.createClass({
-  getInitialState: function () {
-      return {};
+
+  getInitialState: function(){
+    return { data_uri: null };
+  },
+  handleSubmit: function(e)  {  
+    e.preventDefault();
+
+    //post request from http://stackoverflow.com/questions/166221/how-can-i-upload-files-asynchronously
+    $.ajax({
+      url: '/api/bills/' + '', // insert billName here
+      type: 'POST',
+      success: successHandler,
+      error: errorHandler,
+      // Form data
+      data: formData, // create formData object here
+      //Options to tell jQuery not to process data or worry about content-type.
+      cache: false,
+      contentType: false,
+      processData: false
+    });
+
   },
 
   _onChange: function (e) {
