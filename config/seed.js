@@ -2,35 +2,40 @@
 * @Author: hal
 * @Date:   2015-05-22 14:23:06
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-26 15:45:19
+* @Last Modified time: 2015-05-28 14:33:15
 */
 
 'use strict';
 
-var tomparty = {
-  "billName": "tomparty",
-  "receipt": {
-    "items": [
-    {
-      "item": "Hamburger",
-      "cost": 9.73
-    }, 
-    {
-      "item": "Hot Dog",
-      "cost": 7.42
-    }, 
-    {
-      "item": "Cheeseburger",
-      "cost": 10.52
-    }],
-    "subTotal": 27.67,
-    "tax": 2.63,
-    "total": 30.30,
-    "tip": 4.50,
-    "grandTotal": 34.80
-  },
-  "diners": [{
-    "diner": "tom",
-    "itemIndex": []
-  }]
+exports.bill = function() {
+  return {
+    billName: "tom",
+    receipt: {
+      items: [{
+        item: 'Roasted Duck over Rice',
+        cost: 10.20
+      }, {
+        item: 'Coke',
+        cost: 1.80
+      }, {
+        item: 'Crab Meat Fried Rice',
+        cost: 10.20
+      }, {
+        item: 'Wonton Soup',
+        cost: 8.50
+      }, {
+        item: 'Hot Tea',
+        cost: 10.20
+      }],
+      subTotal: 41.85,
+      tax: 3.66,
+      total: 45.51,
+      tip: 6.28,
+      grandTotal: 51.79
+    },
+    diners: [{
+      diner: 'tom',
+      itemIndex: []
+    }]
+  }
 }
