@@ -1,24 +1,24 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-* @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-05-26 21:25:50
+* @Last Modified by:   Johnny Nguyen
+* @Last Modified time: 2015-05-27 16:22:30
 */
 
 'use strict';
 
-var client = require('../../db.js')
-var redis = require('redis');
-
-var receipt = require('../../utils/receipt');
-// var tesseract = require('../../utils/tesseract');
-
 var path = require('path');
 var fs = require('fs');
+var util = require('util');
+var formidable = require('formidable');
+var redis = require('redis');
+var client = require('../../db.js')
+var receipt = require('../../utils/receipt');
 var tesseract = require('node-tesseract');
-var formidable = require('formidable'),
-    util = require('util');
+var Promise = require("bluebird");
 
+Promise.promisifyAll(fs);
+Promise.promisifyAll(tesseract);
 
 /**
  * [show description]
@@ -77,59 +77,14 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
   var billname = req.params.billname;
   var form = new formidable.IncomingForm();
+  var receiptPath = path.join(__dirname, '../../.temp/', billname + '.jpg');
 
   form.parse(req, function(err, fields, files) {
-    console.log(files.file.path);
-    fs.readFile(files.file.path, function(err, data) {
-      
-      var newPath = path.join(__dirname + "../../../.temp");
-      fs.writeFile(newPath + '/' + billname + '.jpg', data, function (err) {
-        if (err) console.log(err);
-
-        tesseract.process(newPath + '/' + billname + '.jpg', function(err, text) {
-          if(err) {
-            console.error(err);
-          } else {
-            console.log(text);
-          }
-        });
-      });      
-
-
-
-      // tesseract.process(data, function(err, text) {
-      //   if(err) {
-      //     console.error(err);
-      //   } else {
-      //     console.log(text);
-      //   }
-      // });
+    receipt.parse(receiptPath, files.file.path)
+    .then(function(text) {
+      console.log('from controller: ', text);
     })
-
-
-    // res.writeHead(200, {'content-type': 'text/plain'});
-    // res.write('received upload:\n\n');
-    // console.log(files);
-
-    // tesseract.process(__dirname + '/imgres.jpg', function(err, text) {
-    //   if(err) {
-    //     console.error(err);
-    //   } else {
-    //     console.log(text);
-    //   }
-    // });
-
-
-
-    // res.end(util.inspect({fields: fields, files: files}));
   });
-
-
-
-  // var base64 = receipt.isBase64(req.body.data);
-  //receipt.toJPG(receipt.isBase64(req.body.data), billname);
-  // var items = tesseract.parse('/path/to/image');
-  // res.json(200, users);
 };
 
 /**
@@ -166,3 +121,8 @@ exports.update = function(req, res) {
   })
 
 };
+
+function handleError(res, err) {
+  res.status(500).send(err);
+  throw new Error('something bad happened');
+}
