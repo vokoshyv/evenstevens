@@ -5,8 +5,8 @@
   "billName": String,
   "receipt": {
   	"items": [{
-	  "item": String,
-	  "cost": Number
+  	  "item": String,
+  	  "cost": Number
     }],
   	"subTotal": Number,
   	"tax": Number,
