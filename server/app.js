@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 10:53:35
 * @Last Modified by:   Michael Harris
-* @Last Modified time: 2015-05-28 19:20:44
+* @Last Modified time: 2015-05-28 19:23:50
 */
 
 // set up server variables
@@ -28,6 +28,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('*', function (req, res) {
   res.sendfile('public/index.html', {root: __dirname});
 });
+
+// app.use('/api/bills/', function(req, res){ socketServer.newRoom(req, res, bill); });
+// app.use('/api/bills', bill);
+
+// app.use('/', express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -60,6 +65,8 @@ app.use(function(err, req, res, next) {
   });
 });
 
+// start socket server
+console.log('app.js initiate socketServer STEP 1');
 var socketServer = require('./socketServer')(app);
 
 module.exports = app;
