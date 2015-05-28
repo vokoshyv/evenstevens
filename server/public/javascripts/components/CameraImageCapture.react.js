@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:52:07
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-27 20:38:00
+* @Last Modified time: 2015-05-27 20:46:27
 */
 
 var React = require('react');
@@ -18,11 +18,8 @@ var CameraImageCapture = React.createClass({
   },
   render: function() {
     var image;
-    // var dataUrl = this.state.dataUrl;
-    // if (dataUrl) {
-    //   image = <img src={dataUrl} />
-    // }
- 
+   
+
     if(this.props.imageBeingProcessed) {
       return ( <img src="images/hex-loader2.gif"/> );
     }
