@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-27 20:17:05
+* @Last Modified time: 2015-05-28 14:46:16
 */
 
 'use strict';
@@ -16,6 +16,9 @@ var client = require('../../db.js')
 var receipt = require('../../utils/receipt');
 var tesseract = require('node-tesseract');
 var Promise = require("bluebird");
+
+// seed for DB to test integration
+var seed = require('../../../config/seed').bill();
 
 Promise.promisifyAll(fs);
 Promise.promisifyAll(tesseract);
@@ -79,12 +82,21 @@ exports.create = function(req, res) {
   var form = new formidable.IncomingForm();
   var receiptPath = path.join(__dirname, '../../.temp/', billName + '.jpg');
 
-  form.parse(req, function(err, fields, files) {
-    receipt.parse(receiptPath, files.file.path, billName)
-    .then(function(text) {
-      console.log('from controller: ', text);
-    })
-  });
+  // save seed to DB and return JSON on success
+  // [redis code here]
+  console.log(seed);
+
+  ////////////////////////////////////////////////
+  // block below parses uploaded receipt image  //
+  ////////////////////////////////////////////////
+  // form.parse(req, function(err, fields, files) {
+  //   receipt.parse(receiptPath, files.file.path, billName)
+  //   .then(function(text) {
+  //     console.log('from controller: ', text);
+         // save seed to DB and return JSON on success
+         // [redis code here]
+  //   })
+  // });
 };
 
 /**
