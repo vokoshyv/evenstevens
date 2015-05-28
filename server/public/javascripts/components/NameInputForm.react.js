@@ -2,8 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:53:40
 * @Last Modified by:   Nathan Bailey
-<<<<<<< HEAD
-* @Last Modified time: 2015-05-27 20:31:06
+* @Last Modified time: 2015-05-27 20:37:50
 */
 
 var React = require('react');
@@ -32,7 +31,7 @@ var NameInputForm = React.createClass({
   render: function() {
 
     if(this.props.userName.length > 0) {
-      return (<div>Hi {this.props.userName} </div>);
+      return null;
     }
 
     return (

@@ -2,8 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:52:07
 * @Last Modified by:   Nathan Bailey
-<<<<<<< HEAD
-* @Last Modified time: 2015-05-27 20:32:22
+* @Last Modified time: 2015-05-27 20:38:00
 */
 
 var React = require('react');
@@ -17,20 +16,26 @@ var CameraImageCapture = React.createClass({
   _handleImage: function (e) {
     AppActions.handleImage( { file:e.target.files[0], userName: this.props.userName});
   },
-
   render: function() {
     var image;
     // var dataUrl = this.state.dataUrl;
     // if (dataUrl) {
     //   image = <img src={dataUrl} />
     // }
+ 
+    if(this.props.imageBeingProcessed) {
+      return ( <img src="images/hex-loader2.gif"/> );
+    }
 
     if(this.props.userName.length === 0) {
       return null;
     }
 
+
+
     return (
       <div>
+        <div>Hi {this.props.userName} </div>
         <input ref="upload" type="file" capture="camera" accept="image/*" onChange={ this._handleImage } />
         { image }
       </div>

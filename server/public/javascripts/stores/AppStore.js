@@ -2,11 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 14:23:20
 * @Last Modified by:   Nathan Bailey
-<<<<<<< HEAD
-* @Last Modified time: 2015-05-27 20:29:36
-=======
-* @Last Modified time: 2015-05-27 14:38:15
->>>>>>> Adds browserify to gulp file and begins Flux refactor
+* @Last Modified time: 2015-05-27 20:36:08
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -17,14 +13,14 @@ var CHANGE_EVENT = 'change';
 
 
 var _userName = "";
-var _imageFile = null;
+var _processingImg = false;
 
 var setName = function(name) {
   _userName = name;
 };
 
-var setImageFile = function(file) {
-  _imageFile = file;
+var setBeingProcessed = function(bool) {
+  _processingImg = bool;
 }
 
 var AppStore = assign({}, EventEmitter.prototype, {
@@ -33,8 +29,8 @@ var AppStore = assign({}, EventEmitter.prototype, {
     return _userName;
   },
 
-  getImageFile: function() {
-    return _imageFile;
+  getBeingProcessed: function() {
+    return _processingImg;
   },
 
   addChangeListener: function(callback) {
@@ -61,9 +57,9 @@ AppDispatcher.register(function(action) {
       }
       break;
 
-    case 'HANDLE_IMAGE':
-      file = action.payload;
-      setImageFile(file);
+    case 'PROCESSING_IMAGE':
+      bool = action.payload;
+      setBeingProcessed(bool);
       AppStore.emitChange();
       break;
 
