@@ -4,3 +4,6 @@
 node_modules
 dump.rbd
 server/.temp
+
+# adding in dist folder
+server/public/dist/*.js

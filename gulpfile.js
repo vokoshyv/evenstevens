@@ -1,8 +1,8 @@
 /* 
 * @Author: vokoshyv
 * @Date:   2015-05-26 17:12:39
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-27 16:04:45
+* @Last Modified by:   vokoshyv
+* @Last Modified time: 2015-05-27 20:06:51
 */
 
 'use strict';
@@ -17,12 +17,15 @@ var gulp = require('gulp'),
     // added
     browserify = require('browserify'),
     source = require('vinyl-source-stream'),
-    reactify = require('reactify');
-
+    reactify = require('reactify'),
+    // for cleaning out files
+    clean = require('gulp-clean'),
+    // for delaying a pipe stream
+    wait = require('gulp-wait');
 
 // set up paths 
 var paths = {
-  scripts: '[server/public/javascripts/*.js, server/public/javascripts/**/*.js]', 
+  scripts: ['server/public/javascripts/*.js','server/public/javascripts/**/*.js'],
   server: 'server/*.js', 
   styles: 'server/public/stylesheets/*.css',
   billRoute: 'server/api/bill/*.js', 
@@ -44,6 +47,7 @@ gulp.task('scripts', function(){
   )
   .pipe(jshint())
   .pipe(jshint.reporter(stylish))
+  .pipe(wait(7000))
   .pipe(livereload());
 });
 
@@ -87,19 +91,27 @@ gulp.task('openInBrowser', function(){
   var options = {
     url: 'http://localhost:3000'
   };
-  gulp.src('./server/public/index.html')
-  .pipe(open('', options));
+  setTimeout(function(){
+    gulp.src('./server/public/index.html')
+    .pipe(open('', options));
+  }, 7000)
+});
+
+gulp.task('clearDist', function(){
+  return gulp.src('server/public/dist/bundle.js', {read: false})
+  .pipe(clean());
 });
 
 gulp.task('watch', function(){
+  console.log('reached here');
   livereload.listen();
 
-  gulp.watch(paths.scripts, ['scripts', 'browserify']);
   gulp.watch(paths.server, ['server']);
   gulp.watch(paths.styles, ['styles']);
   gulp.watch(paths.billRoute, ['billRoute']);
   gulp.watch(paths.html, ['html']);
+  gulp.watch(paths.scripts, ['clearDist', 'browserify', 'scripts']);
 
 })
 
-gulp.task('default', ['browserify', 'watch', 'startServer', 'openInBrowser']);
+gulp.task('default', ['clearDist', 'browserify', 'watch', 'startServer', 'openInBrowser']);
