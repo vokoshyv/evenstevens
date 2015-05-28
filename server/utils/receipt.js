@@ -3,6 +3,7 @@
 var fs = require('fs');
 var tesseract = require('node-tesseract');
 var Promise = require("bluebird");
+var bill = require('../api/bill/model').billModel();
 
 Promise.promisifyAll(fs);
 
@@ -12,14 +13,14 @@ Promise.promisifyAll(fs);
  * @param   {JPEG}     file   Uploaded receipt image
  * @return  {Promise}         Returns parsed receipt items or error
  */
-exports.parse = function(path, file) {
+exports.parse = function(path, file, billName) {
   return new Promise(function(resolve, reject) {
     readFile(file)
     .then(function(data) {
       return writeFile(path, data);
     })
     .then(function() {
-      return process(path);
+      return process(path, billName);
     })
     .then(function(text) {
       resolve(text);
@@ -67,46 +68,61 @@ var writeFile = function(path, file) {
  * @param   {JPEG}     file   Uploaded receipt image
  * @return  {Promise}         Returns parsed receipt items or error
  */
-var process = function(path) {
+var process = function(path, billName) {
   return new Promise(function(resolve, reject) {
     tesseract.process(path, function(err, text) {
       if (err) {
         reject(err);
       } else {
-        var items = findItems(text);        
-
-        resolve(items);  
+        console.log(text);
+        resolve(findItems(text, billName));
       }
     });
   });
 }
 
-var findItems = function(text) {
+var findItems = function(text, billName) {
   var receipt = text.split('\n');
   var costRegex = /^\$?\d+(,\d{3})*(\.\d*)?$/;
-  var items = [];
-  
-  receipt.forEach(function(line, i) {
-    var line = line.split(' ');
-    var cost = line.pop();
-    var quanity = parseIntline.shift();
-    var description = line.join(' ');
 
-    if (parseInt(quanity) && cost.search(costRegex) >= 0) {
-      while (quanity--) {
-        items.push({
+  bill.billName = billName;
+  bill.diners.push({diner: billName, itemIndex: []});
+  
+  for (var i = 0; i < receipt.length; i++) {
+    var line = receipt[i].split(' ');
+    var cost = line.pop();
+    console.log('cost: ', cost)
+    //continue if line doesn't have a cost
+    if (cost.search(costRegex) < 0) {
+      continue;
+    }
+
+    //if first position is a number, assume line item
+    if (!isNaN(line[0])) {
+      var quanity = parseInt(line.shift());
+
+      while(quanity--) {
+        bill.receipt.items.push({
           quanity: 1,
-          description: description,
-          cost: parseInt(cost)
+          description: line.join(' '),
+          cost: cost
         });
       }
     }
-  });
 
-  return items;
+    if (line.indexOf("SubTotal")) {
+      bill.receipt.subTotal = cost;
+    }
+
+    if (line.indexOf("Tax")) {
+      bill.receipt.tax = cost;
+    }
+
+    if (line.indexOf("Total")) {
+      bill.receipt.total = cost;
+    }
+
+    return bill;
+  }  
 }
-
-
-
-
 
