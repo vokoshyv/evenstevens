@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:46:34
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-27 16:24:17
+* @Last Modified time: 2015-05-27 17:57:16
 */
 
 /** 
@@ -42,7 +42,7 @@ var EvenStevensApp = React.createClass({
       <div>
         <h1>Even Stevens</h1>
         <NameInputForm userName={this.state.userName} />
-        <CameraImageCapture imageFile={this.state.imageFile} />
+        <CameraImageCapture imageFile={this.state.imageFile} userName={this.state.userName} />
       </div>
     );
   },
