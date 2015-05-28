@@ -4,7 +4,6 @@
     <title>Even Stevens</title>
     <!-- Not present in the tutorial. Just for basic styling. -->
     <link rel="stylesheet" href="stylesheets/main.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.0/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.0/JSXTransformer.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
@@ -13,8 +12,10 @@
   <body>
     <div id="content">
     </div>
+    <script type="text/javascript" src="dist/bundle.js"></script>
     <script type="text/javascript" src="javascripts/socketClient.js"></script>
-    <script type="text/jsx;harmony=true" src="javascripts/main.js"></script>
+ 
+
     <!-- Used by gulp's livereload. Needs to be stripped out for production -->
     <!-- <script src="//localhost:3000/livereload.js"></script> -->
   </body>

@@ -1,8 +1,8 @@
 /* 
 * @Author: vokoshyv
 * @Date:   2015-05-26 17:12:39
-* @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-05-26 21:04:16
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-05-27 16:04:45
 */
 
 'use strict';
@@ -13,21 +13,35 @@ var gulp = require('gulp'),
     livereload = require('gulp-livereload'),
     open = require('gulp-open'),
     shell = require('gulp-shell'),
-    stylish = require('jshint-stylish');
+    stylish = require('jshint-stylish'),
+    // added
+    browserify = require('browserify'),
+    source = require('vinyl-source-stream'),
+    reactify = require('reactify');
+
 
 // set up paths 
 var paths = {
-  scripts: 'server/public/javascripts/*.js', 
+  scripts: '[server/public/javascripts/*.js, server/public/javascripts/**/*.js]', 
   server: 'server/*.js', 
   styles: 'server/public/stylesheets/*.css',
   billRoute: 'server/api/bill/*.js', 
   html: 'server/public/index.html'
 }
 
+gulp.task('browserify', function() {
+  var b = browserify();
+  b.transform(reactify);
+  b.add('server/public/javascripts/main.js');
+  return b.bundle()
+    .pipe(source('bundle.js'))
+    .pipe(gulp.dest('server/public/dist/'))
+});
+
 gulp.task('scripts', function(){
-  return gulp.src([
-    path.scripts
-  ])
+  return gulp.src(
+    paths.scripts
+  )
   .pipe(jshint())
   .pipe(jshint.reporter(stylish))
   .pipe(livereload());
@@ -80,7 +94,7 @@ gulp.task('openInBrowser', function(){
 gulp.task('watch', function(){
   livereload.listen();
 
-  gulp.watch(paths.scripts, ['scripts']);
+  gulp.watch(paths.scripts, ['scripts', 'browserify']);
   gulp.watch(paths.server, ['server']);
   gulp.watch(paths.styles, ['styles']);
   gulp.watch(paths.billRoute, ['billRoute']);
@@ -88,4 +102,4 @@ gulp.task('watch', function(){
 
 })
 
-gulp.task('default', ['watch', 'startServer', 'openInBrowser']);
+gulp.task('default', ['browserify', 'watch', 'startServer', 'openInBrowser']);
