@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 14:23:20
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-27 16:39:19
+* @Last Modified time: 2015-05-27 17:11:01
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -21,7 +21,6 @@ var setName = function(name) {
 
 var setImageFile = function(file) {
   _imageFile = file;
-  console.log(_imageFile);
 }
 
 
@@ -53,23 +52,21 @@ AppDispatcher.register(function(action) {
 
   switch(action.actionType) {
     case 'ADD_USER':
-      name = action.name.trim();
+      name = action.payload.trim();
       if (name !== '') {
         setName(name);
         AppStore.emitChange();
       }
       break;
+
     case 'HANDLE_IMAGE':
       file = action.payload;
-      if(action.length > 0) {
-        setImageFile(files[0]);
-        AppStore.emitChange();
-      } else {
-        console.log('boo no file');
-      }
+      setImageFile(file);
+      AppStore.emitChange();
       break;
 
-    default:
+    default: 
+      console.log("ruh roh, you fell all the way through the switch :( ")
 
   }
 });
