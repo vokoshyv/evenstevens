@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-27 16:22:30
+* @Last Modified time: 2015-05-27 20:17:05
 */
 
 'use strict';
@@ -75,12 +75,12 @@ exports.show = function(req, res) {
  * @return {[type]}     [description]
  */
 exports.create = function(req, res) {
-  var billname = req.params.billname;
+  var billName = req.params.billName;
   var form = new formidable.IncomingForm();
-  var receiptPath = path.join(__dirname, '../../.temp/', billname + '.jpg');
+  var receiptPath = path.join(__dirname, '../../.temp/', billName + '.jpg');
 
   form.parse(req, function(err, fields, files) {
-    receipt.parse(receiptPath, files.file.path)
+    receipt.parse(receiptPath, files.file.path, billName)
     .then(function(text) {
       console.log('from controller: ', text);
     })
