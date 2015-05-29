@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
 * @Last Modified by:   Michael Harris
-* @Last Modified time: 2015-05-28 19:25:34
+* @Last Modified time: 2015-05-28 19:26:53
 */
 'use strict';
 
@@ -54,6 +54,8 @@ var name;
 //     return canvas.toDataURL("image/jpeg", quality);
 // };
 
+var SocketClient = require('../javascripts/socketClient');
+
 console.log('main.js initiate socketClient');
 var socketClient = SocketClient('http://7c534c2c.ngrok.com');
 
@@ -84,6 +86,17 @@ setTimeout(function(){
 //     }
 //   ]
 // });
+
+var React = require('react');
+
+var EvenStevensApp = require('./components/eStevensApp.react.js')
+
+React.render(
+  <EvenStevensApp />,
+  document.getElementById('content')
+);
+
+
 
 var InputForm = React.createClass({
   getInitialState: function(){
