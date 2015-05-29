@@ -1,8 +1,8 @@
 /* 
 * @Author: vokoshyv
 * @Date:   2015-05-26 17:12:39
-* @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-05-27 20:06:51
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-05-27 20:55:21
 */
 
 'use strict';
@@ -47,7 +47,7 @@ gulp.task('scripts', function(){
   )
   .pipe(jshint())
   .pipe(jshint.reporter(stylish))
-  .pipe(wait(7000))
+  .pipe(wait(4000))
   .pipe(livereload());
 });
 

@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 14:23:20
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-27 17:11:01
+* @Last Modified time: 2015-05-29 11:06:13
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -11,19 +11,17 @@ var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 
-var _userName = "";
-var _imageFile = null;
 
+var _userName = "";
+var _processingImg = false;
 
 var setName = function(name) {
   _userName = name;
 };
 
-var setImageFile = function(file) {
-  _imageFile = file;
+var setBeingProcessed = function(bool) {
+  _processingImg = bool;
 }
-
-
 
 var AppStore = assign({}, EventEmitter.prototype, {
 
@@ -31,8 +29,8 @@ var AppStore = assign({}, EventEmitter.prototype, {
     return _userName;
   },
 
-  getImageFile: function() {
-    return _imageFile;
+  getBeingProcessed: function() {
+    return _processingImg;
   },
 
   addChangeListener: function(callback) {
@@ -59,16 +57,22 @@ AppDispatcher.register(function(action) {
       }
       break;
 
-    case 'HANDLE_IMAGE':
-      file = action.payload;
-      setImageFile(file);
+    case 'PROCESSING_IMAGE':
+      bool = action.payload;
+      setBeingProcessed(bool);
+      AppStore.emitChange();
+      break;
+
+    case 'RECEIPT_LOADED':
+      setBeingProcessed(false);
       AppStore.emitChange();
       break;
 
     default: 
-      console.log("ruh roh, you fell all the way through the switch :( ")
+    return;
 
   }
 });
 
 module.exports = AppStore;
+

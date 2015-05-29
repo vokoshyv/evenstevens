@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-* @Last Modified by:   Michael Harris
-* @Last Modified time: 2015-05-28 17:31:37
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-05-29 14:38:30
 */
 
 'use strict';
@@ -94,6 +94,9 @@ exports.create = function(req, res) {
   // save seed to DB and return JSON on success
   // [redis code here]
   console.log(seed);
+
+
+  res.status(200).json(seed); 
 
   ////////////////////////////////////////////////
   // block below parses uploaded receipt image  //

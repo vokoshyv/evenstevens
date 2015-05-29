@@ -1,8 +1,8 @@
 /*
 * @Author: hal
 * @Date:   2015-05-22 10:53:35
-* @Last Modified by:   Michael Harris
-* @Last Modified time: 2015-05-29 10:44:03
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-05-29 14:39:07
 */
 
 // set up server variables
@@ -34,7 +34,7 @@ app.use('/api/bills', bill);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('*', function (req, res) {
-  res.sendfile('public/index.html', {root: __dirname});
+  res.sendFile('public/index.html', {root: __dirname});
 });
 
 // catch 404 and forward to error handler

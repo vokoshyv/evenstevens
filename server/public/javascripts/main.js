@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
-* @Last Modified by:   Michael Harris
-* @Last Modified time: 2015-05-29 10:45:02
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-05-29 14:41:59
 */
 'use strict';
 
@@ -68,61 +68,31 @@ socket.emit('userJoin', {billname: billname});
 socket.emit('userFirstRun', {billname: billname});
 
 var React = require('react');
-
-var EvenStevensApp = require('./components/eStevensApp.react.js');
-
-React.render(
-  <EvenStevensApp />,
-  document.getElementById('content')
-);
- 
-
-var InputForm = React.createClass({
-  getInitialState: function(){
-    return {message: ""};
-  },
-  handleInput: function(e){
-    e.preventDefault();
-    var name = React.findDOMNode(this.refs.name).value.trim();
-    if(!name) {
-      this.setState({message:"Please enter your name"});
-      return;
-    }
-    this.setState({message:""});
-    this.props.onInputSubmit({name:name});
-    React.findDOMNode(this.refs.name).value = '';
-    return;
-  },
-  render: function() {
-    return (
-      <form className ="inputForm" onSubmit={this.handleInput}>
-        <input type="text" placeholder="Enter your name" ref="name" />
-        <input type="submit" value="Keep it even" />
-        <div className ="errorBox"> {this.state.message}</div>
-      </form>
-    );
-  }
-});
-
-// uncomment when browserify is configured
-// var React = require('react');
-// 
-// var eStevensApp = require('./components/eStevensApp.react')
-// 
-// 
-
-var React = require('react');
 var Router = require('react-router');
 var DefaultRoute = Router.DefaultRoute;
 var Link = Router.Link;
 var Route = Router.Route;
 var RouteHandler = Router.RouteHandler;
 
-var EvenStevensApp = require('./components/eStevensApp.react.js')
+var ReceiptList = require('./components/ReceiptList.react');
+var SubmitReceipt = require('./components/SubmitReceipt.react');
+
+var App = React.createClass({
+  render: function() {
+    return (
+      <div className ="container">
+      <h1 id="brand"> Even Stevens </h1>
+      <RouteHandler />
+      </div>
+    );
+  }
+});
+
 
 var routes = (
-  <Route handler={EvenStevensApp} path="/">
-    <Route path="/:bill" handler={EvenStevensApp}/>
+  <Route handler={App} path="/">
+    <DefaultRoute handler = {SubmitReceipt} />
+    <Route name="billPage" path="/:bill" handler={ReceiptList}/>
   </Route>
 );
 

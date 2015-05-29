@@ -2,11 +2,10 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-27 17:42:21
+* @Last Modified time: 2015-05-29 11:06:22
 */
 
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var AppStore = require('../stores/AppStore');
+var AppDispatcher = require('../dispatcher/AppDispatcher'); 
 
 var AppActions = {
   addUser: function(userName) {
@@ -23,20 +22,28 @@ var AppActions = {
     var xhr = new XMLHttpRequest();
 
     formData.append('file', file);    
-    xhr.open('POST', '/api/bills/' + AppStore.getUserName()); // this might go against the flux...
+    xhr.open('POST', '/api/bills/' + name); // this might go against the flux...
     xhr.onload = function () {
       if (xhr.status === 200) {
         console.log('all done: ' + xhr.status);
+
+        AppDispatcher.dispatch({
+          actionType: 'RECEIPT_LOADED',
+          payload: xhr.responseText
+        });
+
       } else {
         console.log('Something went terribly wrong...');
       }
     };
 
     xhr.send(formData);
+    
     AppDispatcher.dispatch({
-      actionType: 'HANDLE_IMAGE',
-      payload: file
+      actionType: 'PROCESSING_IMAGE',
+      payload: true
     });
+
   }
 
 
