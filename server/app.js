@@ -1,8 +1,8 @@
 /*
 * @Author: hal
 * @Date:   2015-05-22 10:53:35
-* @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-05-26 21:23:50
+* @Last Modified by:   Johnny Nguyen
+* @Last Modified time: 2015-05-28 17:26:05
 */
 
 // set up server variables
@@ -23,7 +23,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api/bills', bill);
-app.use('/', express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('*', function (req, res) {
+  res.sendfile('public/index.html', {root: __dirname});
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
