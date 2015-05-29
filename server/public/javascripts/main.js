@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
 * @Last Modified by:   Michael Harris
-* @Last Modified time: 2015-05-29 01:24:38
+* @Last Modified time: 2015-05-29 10:45:02
 */
 'use strict';
 
@@ -52,23 +52,20 @@
 //     return canvas.toDataURL("image/jpeg", quality);
 // };
 
-
-// var SocketClient = require('../javascripts/socketClient');
-// console.log('main.js initiate socketClient');
-// var socketClient = SocketClient('http://7c534c2c.ngrok.com');
-
 var socket = io.connect('localhost:3000');
 var url = window.location.href.split('/');
 var billname = url[url.length-1];
 
-socket.on('dataFromServer', function (data) {
+socket.on('fromServerInitialData', function (data) {
   console.log('Server to Client', data);
 });
 
-socket.emit('standardUserFirstRun', {billname: billname});
-socket.emit('standardUserSecondRun', {billname: billname});
+socket.on('fromServerUpdate', function (data) {
+  console.log('Server to Client', data);
+});
 
-
+socket.emit('userJoin', {billname: billname});
+socket.emit('userFirstRun', {billname: billname});
 
 var React = require('react');
 
@@ -79,7 +76,6 @@ React.render(
   document.getElementById('content')
 );
  
-
 
 var InputForm = React.createClass({
   getInitialState: function(){
@@ -133,13 +129,4 @@ var routes = (
 Router.run(routes, Router.HistoryLocation, function (Handler) {
   React.render(<Handler />, document.getElementById('content'));
 });
-
-//var socketClient = SocketClient('http://127.0.0.1:3000');
-
- 
-
-
-
-
-
       
