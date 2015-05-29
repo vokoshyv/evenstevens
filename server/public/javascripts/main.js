@@ -1,13 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
-<<<<<<< HEAD
 * @Last Modified by:   Michael Harris
-* @Last Modified time: 2015-05-29 15:46:58
-=======
-* @Last Modified by:   Michael Harris
-* @Last Modified time: 2015-05-29 15:26:36
->>>>>>> (feat) Add update data event with dummy data to trigger update event on server
+* @Last Modified time: 2015-05-29 15:47:49
 */
 'use strict';
 
@@ -47,12 +42,6 @@ var RouteHandler = Router.RouteHandler;
 // Components for two routes
 var ReceiptList = require('./components/ReceiptList.react');
 var SubmitReceipt = require('./components/SubmitReceipt.react');
-var EvenStevensApp = require('./components/eStevensApp.react.js');
-
-React.render(
-  <EvenStevensApp />,
-  document.getElementById('content')
-);
 
 // Main container component, all other components nest inside
 var App = React.createClass({
