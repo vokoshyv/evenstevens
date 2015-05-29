@@ -2,7 +2,7 @@
 * @Author: Michael Harris
 * @Date:   2015-05-25 19:12:12
 * @Last Modified by:   Michael Harris
-* @Last Modified time: 2015-05-28 15:00:51
+* @Last Modified time: 2015-05-28 16:45:16
 */
 
 'use strict';
@@ -42,7 +42,7 @@ module.exports = function(app){
 
   obj.io.of('/').on('connection', function (socket) {
     console.log('connection (socket.io)');
-    obj.io.to(obj.room).emit('dataFromServer', {test:'helloworld'});
+    // obj.io.to(obj.room).emit('dataFromServer', {test:'helloworld'});
 
     // ---------------------- data from client
     socket.on('dataFromClient', function(data) {
