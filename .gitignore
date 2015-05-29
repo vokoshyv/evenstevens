@@ -2,7 +2,8 @@
 ###################
 
 node_modules
-dump.rbd
+dump.rdb
+*.rdb
 server/.temp
 
 # adding in dist folder
