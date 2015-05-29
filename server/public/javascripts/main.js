@@ -1,8 +1,13 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-29 15:03:17
+<<<<<<< HEAD
+* @Last Modified by:   Michael Harris
+* @Last Modified time: 2015-05-29 15:46:58
+=======
+* @Last Modified by:   Michael Harris
+* @Last Modified time: 2015-05-29 15:26:36
+>>>>>>> (feat) Add update data event with dummy data to trigger update event on server
 */
 'use strict';
 
@@ -22,6 +27,14 @@ socket.on('fromServerUpdate', function (data) {
 socket.emit('userJoin', {billname: billname});
 socket.emit('userFirstRun', {billname: billname});
 
+// var updateData = {
+//   "diners": [{
+//     "diner": 0,
+//     "itemIndex": [0, 4, 2]
+//   }]
+// };
+
+// socket.emit('userUpdate', {billname: billname, updateData: updateData } );
 
 // React requires
 var React = require('react');
@@ -34,6 +47,12 @@ var RouteHandler = Router.RouteHandler;
 // Components for two routes
 var ReceiptList = require('./components/ReceiptList.react');
 var SubmitReceipt = require('./components/SubmitReceipt.react');
+var EvenStevensApp = require('./components/eStevensApp.react.js');
+
+React.render(
+  <EvenStevensApp />,
+  document.getElementById('content')
+);
 
 // Main container component, all other components nest inside
 var App = React.createClass({
