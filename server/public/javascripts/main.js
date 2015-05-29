@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
 * @Last Modified by:   Michael Harris
-* @Last Modified time: 2015-05-28 19:26:53
+* @Last Modified time: 2015-05-28 19:32:27
 */
 'use strict';
 
@@ -68,24 +68,6 @@ setTimeout(function(){
   var data = {clientData:'someOtherData'};
   socketClient.send(data);
 }, 4000);
-
-// 
-// socketClient.send({partyname: 'tomsParty', 
-//   "diners": [
-//     {
-//       "diner": "tom",
-//       "itemIndex": [0, 1, 2]
-//     },
-//     {
-//       "diner": "ron",
-//       "itemIndex": [3,4]
-//     },
-//     {
-//       "diner": "bob",
-//       "itemIndex": [5, 6]
-//     }
-//   ]
-// });
 
 var React = require('react');
 
