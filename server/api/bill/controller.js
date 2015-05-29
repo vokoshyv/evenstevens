@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
 * @Last Modified by:   Michael Harris
-* @Last Modified time: 2015-05-28 17:14:30
+* @Last Modified time: 2015-05-28 17:31:37
 */
 
 'use strict';
@@ -135,14 +135,14 @@ exports.update = function(req, res) {
   var newDiners = [{
     "diner": "tom", 
     "itemIndex": [0, 2, 3]
-  }]
-
+  }];
+ 
   client.hmset('tomparty', {
     "diners": JSON.stringify(newDiners)
-  })
-
+  });
+ 
 };
-
+ 
 function handleError(res, err) {
   res.status(500).send(err);
   throw new Error('something bad happened');
