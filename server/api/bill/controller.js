@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
 * @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-05-29 19:58:59
+* @Last Modified time: 2015-05-29 19:59:18
 */
 
 'use strict';
@@ -12,7 +12,7 @@ var fs = require('fs');
 var util = require('util');
 var formidable = require('formidable');
 var redis = require('redis');
-var client = require('../../db.js')
+var redisDB = require('../../db.js')
 var bill = require('../../utils/bill');
 var tesseract = require('node-tesseract');
 var Promise = require("bluebird");
