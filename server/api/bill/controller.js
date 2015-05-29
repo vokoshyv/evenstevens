@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-29 15:04:20
+* @Last Modified by:   Michael Harris
+* @Last Modified time: 2015-05-29 15:24:31
 */
 
 'use strict';
@@ -31,7 +31,8 @@ Promise.promisifyAll(tesseract);
  * @return {[type]}     [description]
  */
 // exports.show = function(req, res, next) {
-exports.show = function(req, res, socketServer) {
+// exports.show = function(req, res, socketServer) {
+exports.show = function(billName) {
   console.log('controller.js show() redirect to query string STEP 3.1');
 
   // var ss = socketServer();
@@ -47,8 +48,8 @@ exports.show = function(req, res, socketServer) {
   // return res.json(201, {billname: billname});
   // return res.sendFile(path.join(__dirname, 'public'));
 
-  var billname = req.url.split('/')[1];
-  return res.redirect(301, 'http://7c534c2c.ngrok.com/?billname='+billname);
+  // var billname = req.url.split('/')[1];
+  // return res.redirect(301, 'http://localhost:3000/?billname='+billname);
 
   // This wil likely be a socket interaction
   // From individualized URLs, send back the party object
@@ -118,32 +119,30 @@ exports.create = function(req, res) {
  * @param  {[type]} res [description]
  * @return {[type]}     [description]
  */
-exports.update = function(req, res) {
-  // This will most assuredly be a socket interaction
-  // 1) Update the party object inside the database based 
-  // on new diners array with either new diners or items
-  // having been selected
-  // 2) Use socket to send update object out to all clients;
-  // I think this will happen through a broadcasting socket
-  // 3) Whether to send out the entire party object or just
-  // the update object: will have to make a decision
-  
-  // {
-  //   "billName": String, 
-  //   "diners" [{
-  //     "diner" String,
-  //     "itemIndex": [Number]
-  //   }]
-  // }
+exports.update = function(data) {
+  console.log('controller.update() ');
 
-  var newDiners = [{
-    "diner": "tom", 
-    "itemIndex": [0, 2, 3]
-  }];
- 
-  client.hmset('tomparty', {
-    "diners": JSON.stringify(newDiners)
-  });
+  // 1. update redis database with user's new data
+  // db update code
+
+  // client.hmset('tomparty', {
+  //   "diners": JSON.stringify(newDiners)
+  // });
+
+  // 2. get the diners object from the database
+
+  // dummy data
+  var dinersObject = {
+    billname: data.billname,
+    diners: [
+      {diner: 'tom', itemIndex: [0, 4] },
+      {diner: 'tim', itemIndex: [2, 3] },
+      {diner: 'jim', itemIndex: [1] }
+    ]
+  };
+
+  // 3. return diners object
+  return dinersObject;
  
 };
  

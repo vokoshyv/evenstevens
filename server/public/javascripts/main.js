@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-29 15:03:17
+* @Last Modified by:   Michael Harris
+* @Last Modified time: 2015-05-29 15:47:49
 */
 'use strict';
 
@@ -22,6 +22,14 @@ socket.on('fromServerUpdate', function (data) {
 socket.emit('userJoin', {billname: billname});
 socket.emit('userFirstRun', {billname: billname});
 
+// var updateData = {
+//   "diners": [{
+//     "diner": 0,
+//     "itemIndex": [0, 4, 2]
+//   }]
+// };
+
+// socket.emit('userUpdate', {billname: billname, updateData: updateData } );
 
 // React requires
 var React = require('react');

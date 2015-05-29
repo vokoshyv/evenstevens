@@ -1,8 +1,8 @@
 /*
 * @Author: hal
 * @Date:   2015-05-22 10:53:35
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-29 15:00:00
+* @Last Modified by:   Michael Harris
+* @Last Modified time: 2015-05-29 15:25:25
 */
 
 // set up server variables
@@ -16,6 +16,7 @@ var app = express();
 var http = require('http');
 var server = http.createServer(app);
 var io = require('socket.io')(server);
+var controller = require('./api/bill/controller');
 
 var port = process.env.PORT || 3000;
 app.set('port', port);
@@ -70,15 +71,16 @@ app.use(function(err, req, res, next) {
 // });
 
 // start socket server
-// console.log('app.js initiate socketServer STEP 1');
+// console.log(3'app.js initiate socketServer STEP 1');
 // var socketServer = require('./socketServer')(app);
 
 var sockets = {};
 
 var namespace = '/';
 io.of(namespace).on('connection', function(socket){
-  socket.on('userJoin', function(data) { onUserJoin(socket, data) });
-  socket.on('userFirstRun', function(data) { onUserFirstRun(socket, data) });
+  socket.on('userJoin',           function(data) { onUserJoin(socket, data); });
+  socket.on('userFirstRun',       function(data) { onUserFirstRun(socket, data); });
+  socket.on('userUpdate',         function(data) { onUserUpdate(socket, data); });
   socket.on('disconnect', onDisconnect);
 });
 
@@ -86,23 +88,27 @@ var socketLog = function(socket, data) {
   console.log('SOCKET / connection', socket.id, socket.rooms, data);
 };
 
+// client sends billname to join room
 var onUserJoin = function (socket, data) {
-  socket.join(data.billname);
+  var room = data.billname;
+  if (room !== undefined && room !== '') {
+    socket.join(data.billname);
+  }
 };
 
+// client requesting initial data from server
 var onUserFirstRun = function (socket, data) {
   socketLog(socket, data);
   // Run controller show based off of whole party object (receipt in database)
   io.to(data.billname).emit('fromServerInitialData', {dataFromServer: 'broadcast'});
 };
 
-// socket.on('fromServerUpdate', function (data) {
-//   console.log('Server to Client', data);
-// });
-
-
-
-
+// client updated its data and sent it to server, handled here
+var onUserUpdate = function (socket, data) {
+  socketLog(socket, data);
+  var updateData = controller.update(data); // save changes to data base
+  io.to(data.billname).emit('fromServerUpdate', updateData); // broadcast changes to everyone
+};
 
 var onDisconnect = function (socket) {
 };
