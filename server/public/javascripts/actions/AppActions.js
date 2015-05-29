@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-27 21:59:44
+* @Last Modified time: 2015-05-28 17:15:01
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
@@ -37,6 +37,11 @@ var AppActions = {
       actionType: 'PROCESSING_IMAGE',
       payload: true
     });
+
+    setTimeout(function(){   AppDispatcher.dispatch({
+      actionType: 'UPDATE_RECEIPT',
+      payload: true
+    });}, 10000);
   }
 
 

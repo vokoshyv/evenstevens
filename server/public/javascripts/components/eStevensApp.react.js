@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:46:34
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-27 20:55:47
+* @Last Modified time: 2015-05-28 17:13:25
 */
 
 /** 
@@ -12,8 +12,10 @@
 
 var NameInputForm = require('./NameInputForm.react');
 var CameraImageCapture = require('./CameraImageCapture.react');
+var ReceiptList = require('./ReceiptList.react');
 var React = require('react');
 var AppStore = require('../stores/AppStore');
+var ReceiptStore = require('../stores/ReceiptStore');
 var Navbar= require('react-bootstrap').Navbar;
 var Nav = require('react-bootstrap').Nav;
 var NavItem = require('react-bootstrap').NavItem;
@@ -21,11 +23,8 @@ var NavItem = require('react-bootstrap').NavItem;
 var getAppState = function() {
   return {
     userName: AppStore.getUserName(),
-    imageBeingProcessed: AppStore.getBeingProcessed()
-
-    // receiptItems : ReceiptStore.getAll(),
-    // nameInput: ReceiptStore.nameNotInput().
-    // showCameraBtn: ReceiptStore.imageNotInput()
+    imageBeingProcessed: AppStore.getBeingProcessed(),
+    receiptItems: ReceiptStore.getReceiptItems()
   }
 };
 
@@ -36,15 +35,13 @@ var EvenStevensApp = React.createClass({
   },
   componentDidMount: function() {
     AppStore.addChangeListener(this._onChange);
+    ReceiptStore.addChangeListener(this._onChange);
   },
 
   componentWillUnmount: function() {
     AppStore.removeChangeListener(this._onChange);
+    ReceiptStore.removeChangeListener(this._onChange);
   },
-
-
-
-
 
 
   render: function() {
@@ -60,6 +57,7 @@ var EvenStevensApp = React.createClass({
       <div className = "container">
         <NameInputForm userName={this.state.userName} />
         <CameraImageCapture imageBeingProcessed={this.state.imageBeingProcessed} userName={this.state.userName} />
+        <ReceiptList receiptItems={this.state.receiptItems} />
         </div>
       </div>
     );

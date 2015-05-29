@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 14:23:20
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-27 20:36:08
+* @Last Modified time: 2015-05-28 17:16:42
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -63,8 +63,13 @@ AppDispatcher.register(function(action) {
       AppStore.emitChange();
       break;
 
+    case 'UPDATE_RECEIPT':
+      setBeingProcessed(false);
+      AppStore.emitChange();
+      break;
+
     default: 
-      console.log("ruh roh, you fell all the way through the switch :( ")
+    return;
 
   }
 });
