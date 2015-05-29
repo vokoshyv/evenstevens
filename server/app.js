@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 10:53:35
 * @Last Modified by:   Michael Harris
-* @Last Modified time: 2015-05-29 01:25:55
+* @Last Modified time: 2015-05-29 10:44:03
 */
 
 // set up server variables
@@ -36,13 +36,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('*', function (req, res) {
   res.sendfile('public/index.html', {root: __dirname});
 });
-
-// app.use('/api/bills/', function(req, res){ socketServer.newRoom(req, res, bill); });
-// app.use('/api/bills', bill);
-
-// app.use('/api/bills', function(req, res, cb) {bill(req, res, function(){ return io;}) });
-
-// app.use('/', express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -88,9 +81,8 @@ var sockets = {};
 
 var namespace = '/';
 io.of(namespace).on('connection', function(socket){
-  socket.on('primaryUserFirstRun',  function(data) { onPrimaryUserFirstRun(socket, data) });
-  socket.on('standardUserFirstRun', function(data) { onStandardUserFirstRun(socket, data) });
-  socket.on('standardUserSecondRun', function(data) { onStandardUserSecondRun(socket, data) });
+  socket.on('userJoin', function(data) { onUserJoin(socket, data) });
+  socket.on('userFirstRun', function(data) { onUserFirstRun(socket, data) });
   socket.on('disconnect', onDisconnect);
 });
 
@@ -98,17 +90,23 @@ var socketLog = function(socket, data) {
   console.log('SOCKET / connection', socket.id, socket.rooms, data);
 };
 
-var onPrimaryUserFirstRun = function (socket) {
-};
-
-var onStandardUserFirstRun = function (socket, data) {
+var onUserJoin = function (socket, data) {
   socket.join(data.billname);
 };
 
-var onStandardUserSecondRun = function (socket, data) {
+var onUserFirstRun = function (socket, data) {
   socketLog(socket, data);
-  io.to(data.billname).emit('dataFromServer', {dataFromServer: 'broadcast'});
+  // Run controller show based off of whole party object (receipt in database)
+  io.to(data.billname).emit('fromServerInitialData', {dataFromServer: 'broadcast'});
 };
+
+// socket.on('fromServerUpdate', function (data) {
+//   console.log('Server to Client', data);
+// });
+
+
+
+
 
 var onDisconnect = function (socket) {
 };
