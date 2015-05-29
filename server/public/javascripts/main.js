@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-29 14:39:25
+* @Last Modified time: 2015-05-29 14:41:59
 */
 'use strict';
 
@@ -66,50 +66,6 @@ socket.on('fromServerUpdate', function (data) {
 
 socket.emit('userJoin', {billname: billname});
 socket.emit('userFirstRun', {billname: billname});
-
-var React = require('react');
-
-var EvenStevensApp = require('./components/eStevensApp.react.js');
-
-React.render(
-  <EvenStevensApp />,
-  document.getElementById('content')
-);
- 
-
-var InputForm = React.createClass({
-  getInitialState: function(){
-    return {message: ""};
-  },
-  handleInput: function(e){
-    e.preventDefault();
-    var name = React.findDOMNode(this.refs.name).value.trim();
-    if(!name) {
-      this.setState({message:"Please enter your name"});
-      return;
-    }
-    this.setState({message:""});
-    this.props.onInputSubmit({name:name});
-    React.findDOMNode(this.refs.name).value = '';
-    return;
-  },
-  render: function() {
-    return (
-      <form className ="inputForm" onSubmit={this.handleInput}>
-        <input type="text" placeholder="Enter your name" ref="name" />
-        <input type="submit" value="Keep it even" />
-        <div className ="errorBox"> {this.state.message}</div>
-      </form>
-    );
-  }
-});
-
-// uncomment when browserify is configured
-// var React = require('react');
-// 
-// var eStevensApp = require('./components/eStevensApp.react')
-// 
-// 
 
 var React = require('react');
 var Router = require('react-router');
