@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
 * @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-05-29 19:57:24
+* @Last Modified time: 2015-05-29 19:58:39
 */
 
 'use strict';
@@ -95,9 +95,20 @@ exports.create = function(req, res) {
 
   // save seed to DB and return JSON on success
   // [redis code here]
-  // console.log(seed);
+  
+  // Ron's redis code to input seed party object into redis database
+  
 
-  // res.status(200).json(seed); 
+
+  redisDB.hmset(seed.billName, {
+    "billName": seed.billName,
+    "receipt": JSON.stringify(seed.receipt),
+    "diners": JSON.stringify(seed.diners)
+  }, redis.print);
+  console.log(seed);
+
+  res.sendStatus(200);
+
 
   ////////////////////////////////////////////////
   // block below parses uploaded receipt image  //
