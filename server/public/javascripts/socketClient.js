@@ -2,26 +2,35 @@
 * @Author: Michael Harris
 * @Date:   2015-05-25 16:46:01
 * @Last Modified by:   Michael Harris
-* @Last Modified time: 2015-05-25 19:40:43
+* @Last Modified time: 2015-05-28 16:36:47
 */
 
 'use strict';
-console.log('Running socketClient.js ...');
+
+// var socketClient = require("./");
+
+console.log('socketClient.js Loading');
+var billname = window.location.href.split('billname=')[1];
+console.log(window.location.href);
+
 var SocketClient = function(uri){
   var obj = {};
   obj.socket = io.connect(uri);
+  obj.room = billname;
 
-  obj.onDataFromServer = function(dataObject){
-    console.log('onDataFromServer()', dataObject);
+  // send data to server
+  obj.send = function(data){
+    data.billname = obj.room;
+    console.log('Client to Server', data);
+    obj.socket.emit('dataFromClient', data);
   };
 
-  obj.send = function(dataObject){
-    console.log('socketClient.send()');
-    obj.socket.emit('dataFromClient', dataObject);
-  };
-
-  // setup custom event callbacks
-  obj.socket.on('dataFromServer', obj.onDataFromServer);
+   // ---------------------- data from server
+  obj.socket.on('dataFromServer', function (data) {
+    console.log('Server to Client', data);
+  });
 
   return obj;
 };
+
+module.exports = SocketClient;

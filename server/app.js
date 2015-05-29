@@ -1,8 +1,8 @@
 /*
 * @Author: hal
 * @Date:   2015-05-22 10:53:35
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-28 17:26:05
+* @Last Modified by:   Michael Harris
+* @Last Modified time: 2015-05-29 10:44:03
 */
 
 // set up server variables
@@ -14,7 +14,15 @@ var bodyParser = require('body-parser');
 var bill = require('./api/bill/index');
 var app = express();
 
-app.set('port', (process.env.PORT || 3000));
+var http = require('http');
+var server = http.createServer(app);
+var io = require('socket.io')(server);
+
+var port = process.env.PORT || 3000;
+app.set('port', port);
+server.listen(port, function () {
+  console.log('Server listening on port', port);
+});
 
 // uncomment after placing your favicon in /public
 app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -60,6 +68,47 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var socketServer = require('./socketServer')(app);
+// Start server
+// app.listen(app.get('port'), function () {
+//   console.log('Server started: http://localhost:' + app.get('port') + '/');
+// });
+
+// start socket server
+// console.log('app.js initiate socketServer STEP 1');
+// var socketServer = require('./socketServer')(app);
+
+var sockets = {};
+
+var namespace = '/';
+io.of(namespace).on('connection', function(socket){
+  socket.on('userJoin', function(data) { onUserJoin(socket, data) });
+  socket.on('userFirstRun', function(data) { onUserFirstRun(socket, data) });
+  socket.on('disconnect', onDisconnect);
+});
+
+var socketLog = function(socket, data) {
+  console.log('SOCKET / connection', socket.id, socket.rooms, data);
+};
+
+var onUserJoin = function (socket, data) {
+  socket.join(data.billname);
+};
+
+var onUserFirstRun = function (socket, data) {
+  socketLog(socket, data);
+  // Run controller show based off of whole party object (receipt in database)
+  io.to(data.billname).emit('fromServerInitialData', {dataFromServer: 'broadcast'});
+};
+
+// socket.on('fromServerUpdate', function (data) {
+//   console.log('Server to Client', data);
+// });
+
+
+
+
+
+var onDisconnect = function (socket) {
+};
 
 module.exports = app;

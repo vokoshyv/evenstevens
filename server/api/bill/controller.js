@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-28 14:46:16
+* @Last Modified by:   Michael Harris
+* @Last Modified time: 2015-05-28 17:31:37
 */
 
 'use strict';
@@ -30,7 +30,26 @@ Promise.promisifyAll(tesseract);
  * @param  {[type]} res [description]
  * @return {[type]}     [description]
  */
-exports.show = function(req, res) {
+// exports.show = function(req, res, next) {
+exports.show = function(req, res, socketServer) {
+  console.log('controller.js show() redirect to query string STEP 3.1');
+
+  // var ss = socketServer();
+  // console.log('controller.js show() set socketServer.room STEP 3.1', ss.room);
+
+
+
+  // This wil likely be a socket interaction
+  // From individualized URLs, send back the party object
+  // 
+  // 
+  // var billname = req.params.billname;
+  // return res.json(201, {billname: billname});
+  // return res.sendFile(path.join(__dirname, 'public'));
+
+  var billname = req.url.split('/')[1];
+  return res.redirect(301, 'http://7c534c2c.ngrok.com/?billname='+billname);
+
   // This wil likely be a socket interaction
   // From individualized URLs, send back the party object
   
@@ -52,17 +71,7 @@ exports.show = function(req, res) {
     // want to parse the object and send it out to clients
     // (via socket or http response)
   });
-
-
-};
-
-exports.show = function(req, res) {
-  // This wil likely be a socket interaction
-  // From individualized URLs, send back the party object
-  // 
-  // 
-  var billname = req.params.billname;
-  return res.json(201, {billname: billname});
+  // next();
 };
 
 /**
@@ -122,18 +131,18 @@ exports.update = function(req, res) {
   //     "itemIndex": [Number]
   //   }]
   // }
-  
+
   var newDiners = [{
     "diner": "tom", 
     "itemIndex": [0, 2, 3]
-  }]
-
+  }];
+ 
   client.hmset('tomparty', {
     "diners": JSON.stringify(newDiners)
-  })
-
+  });
+ 
 };
-
+ 
 function handleError(res, err) {
   res.status(500).send(err);
   throw new Error('something bad happened');

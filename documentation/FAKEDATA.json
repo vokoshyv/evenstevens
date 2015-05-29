@@ -17,6 +17,18 @@
       "cost": 7.42
     }, 
     {
+      "item": "Coke",
+      "cost": 2.42
+    }, 
+    {
+      "item": "Salad",
+      "cost": 4.45
+    }, 
+    {
+      "item": "Water",
+      "cost": 8.25
+    }, 
+    {
       "item": "Cheeseburger",
       "cost": 10.52
     }],
