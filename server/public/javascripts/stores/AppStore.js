@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 14:23:20
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-28 17:16:42
+* @Last Modified time: 2015-05-29 11:06:13
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -63,7 +63,7 @@ AppDispatcher.register(function(action) {
       AppStore.emitChange();
       break;
 
-    case 'UPDATE_RECEIPT':
+    case 'RECEIPT_LOADED':
       setBeingProcessed(false);
       AppStore.emitChange();
       break;

@@ -1,6 +1,19 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 13:19:09
-* @Last Modified by:   hal
-* @Last Modified time: 2015-05-22 13:21:03
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-05-29 14:09:46
 */
+
+
+.bill-details ul {
+  list-style: none;
+}
+
+#content { 
+margin-top:30px;
+}
+
+#brand { 
+  text-align:center;
+}

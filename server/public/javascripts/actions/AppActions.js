@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-28 17:15:01
+* @Last Modified time: 2015-05-29 11:06:22
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
@@ -26,6 +26,12 @@ var AppActions = {
     xhr.onload = function () {
       if (xhr.status === 200) {
         console.log('all done: ' + xhr.status);
+
+        AppDispatcher.dispatch({
+          actionType: 'RECEIPT_LOADED',
+          payload: xhr.responseText
+        });
+
       } else {
         console.log('Something went terribly wrong...');
       }
@@ -38,10 +44,6 @@ var AppActions = {
       payload: true
     });
 
-    setTimeout(function(){   AppDispatcher.dispatch({
-      actionType: 'UPDATE_RECEIPT',
-      payload: true
-    });}, 10000);
   }
 
 

@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
-* @Last Modified by:   Michael Harris
-* @Last Modified time: 2015-05-29 10:45:02
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-05-29 14:39:25
 */
 'use strict';
 
@@ -118,11 +118,25 @@ var Link = Router.Link;
 var Route = Router.Route;
 var RouteHandler = Router.RouteHandler;
 
-var EvenStevensApp = require('./components/eStevensApp.react.js')
+var ReceiptList = require('./components/ReceiptList.react');
+var SubmitReceipt = require('./components/SubmitReceipt.react');
+
+var App = React.createClass({
+  render: function() {
+    return (
+      <div className ="container">
+      <h1 id="brand"> Even Stevens </h1>
+      <RouteHandler />
+      </div>
+    );
+  }
+});
+
 
 var routes = (
-  <Route handler={EvenStevensApp} path="/">
-    <Route path="/:bill" handler={EvenStevensApp}/>
+  <Route handler={App} path="/">
+    <DefaultRoute handler = {SubmitReceipt} />
+    <Route name="billPage" path="/:bill" handler={ReceiptList}/>
   </Route>
 );
 
