@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-28 17:33:12
+* @Last Modified time: 2015-05-28 19:10:21
 */
 
 // uncomment when browserify is configured
@@ -23,12 +23,9 @@ var RouteHandler = Router.RouteHandler;
 
 var EvenStevensApp = require('./components/eStevensApp.react.js')
 
-var Bill = require('./components/bill.react.js');
-var Test = require('./components/test.react.js');
-
 var routes = (
   <Route handler={EvenStevensApp} path="/">
-    <Route path="/:bill" handler={Bill}/>
+    <Route path="/:bill" handler={EvenStevensApp}/>
   </Route>
 );
 
