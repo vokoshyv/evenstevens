@@ -1,9 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:23:06
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-29 19:39:18
->>>>>>> (feat) Begins to add more detail to receipt store
+* @Last Modified by:   vokoshyv
+* @Last Modified time: 2015-05-29 19:57:56
 */
 
 'use strict';
