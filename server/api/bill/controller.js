@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-29 14:38:30
+* @Last Modified by:   Johnny Nguyen
+* @Last Modified time: 2015-05-29 15:04:20
 */
 
 'use strict';
@@ -13,7 +13,7 @@ var util = require('util');
 var formidable = require('formidable');
 var redis = require('redis');
 var client = require('../../db.js')
-var receipt = require('../../utils/receipt');
+var bill = require('../../utils/bill');
 var tesseract = require('node-tesseract');
 var Promise = require("bluebird");
 
@@ -53,32 +53,34 @@ exports.show = function(req, res, socketServer) {
   // This wil likely be a socket interaction
   // From individualized URLs, send back the party object
   
-  // var billname = req.params.billname;
+  var billName = req.params.billName;
   // return res.json(201, {billname: billname});
   
   // Pretending that is is a HTTP request, I would pull off
   // the URL from the req.params and use it to search the 
   // redis database for a corresponding key
-  client.hgetall('tomparty', function(error, object){
-    if (error){
-      throw error;
-    }
-    if (object){
-      console.log("Here's the billName property: " + object.billName);
-      console.log("Here's the receipt property: " + object.receipt);
-      console.log("Here's the diners property: " + object.diners);
-    }
-    // want to parse the object and send it out to clients
-    // (via socket or http response)
-  });
-  // next();
+
+  // client.hgetall('tomparty', function(error, object){
+  //   if (error){
+  //     throw error;
+  //   }
+  //   if (object){
+  //     console.log("Here's the billName property: " + object.billName);
+  //     console.log("Here's the receipt property: " + object.receipt);
+  //     console.log("Here's the diners property: " + object.diners);
+  //   }
+  //   // want to parse the object and send it out to clients
+  //   // (via socket or http response)
+  // });
+
+  return res.status(201).json({billName: billName});  
 };
 
 /**
- * Initial post for receipt image. 
+ * Initial post for bill image. 
  * 1. Validate image URI
  * 2. Save to ~/server/.temp
- * 3. Parse items from receipt
+ * 3. Parse items from bill
  * 4. Save to Redis
  * 5. Return saved object/emmit socket event
  *
@@ -88,13 +90,12 @@ exports.show = function(req, res, socketServer) {
  */
 exports.create = function(req, res) {
   var billName = req.params.billName;
+  var billPath = path.join(__dirname, '../../.temp/', billName + '.jpg');
   var form = new formidable.IncomingForm();
-  var receiptPath = path.join(__dirname, '../../.temp/', billName + '.jpg');
 
   // save seed to DB and return JSON on success
   // [redis code here]
-  console.log(seed);
-
+  // console.log(seed);
 
   res.status(200).json(seed); 
 
