@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-29 17:46:59
+* @Last Modified by:   vokoshyv
+* @Last Modified time: 2015-05-29 19:56:53
 */
 
 'use strict';
@@ -61,20 +61,19 @@ exports.show = function(billName) {
   // the URL from the req.params and use it to search the 
   // redis database for a corresponding key
 
-  // client.hgetall('tomparty', function(error, object){
-  //   if (error){
-  //     throw error;
-  //   }
-  //   if (object){
-  //     console.log("Here's the billName property: " + object.billName);
-  //     console.log("Here's the receipt property: " + object.receipt);
-  //     console.log("Here's the diners property: " + object.diners);
-  //   }
-  //   // want to parse the object and send it out to clients
-  //   // (via socket or http response)
-  // });
-
-  return res.status(201).json({billName: billName});  
+  redisDB.hgetall('tomparty', function(error, object){
+    if (error){
+      throw error;
+    }
+    if (object){
+      console.log("Here's the billName property: " + object.billName);
+      console.log("Here's the receipt property: " + object.receipt);
+      console.log("Here's the diners property: " + object.diners);
+    }
+    // want to parse the object and send it out to clients
+    // (via socket or http response)
+  });
+  // next();
 };
 
 /**
@@ -120,30 +119,33 @@ exports.create = function(req, res) {
  * @param  {[type]} res [description]
  * @return {[type]}     [description]
  */
-exports.update = function(data) {
-  console.log('controller.update() ');
 
-  // 1. update redis database with user's new data
-  // db update code
+exports.update = function(req, res) {
+  // This will most assuredly be a socket interaction
+  // 1) Update the party object inside the database based 
+  // on new diners array with either new diners or items
+  // having been selected
+  // 2) Use socket to send update object out to all clients;
+  // I think this will happen through a broadcasting socket
+  // 3) Whether to send out the entire party object or just
+  // the update object: will have to make a decision
+  
+  // {
+  //   "billName": String, 
+  //   "diners" [{
+  //     "diner" String,
+  //     "itemIndex": [Number]
+  //   }]
+  // }
 
-  // client.hmset('tomparty', {
-  //   "diners": JSON.stringify(newDiners)
-  // });
+  var newDiners = [{
+    "diner": "tom", 
+    "itemIndex": [0, 2, 3]
+  }]
 
-  // 2. get the diners object from the database
-
-  // dummy data
-  var dinersObject = {
-    billname: data.billname,
-    diners: [
-      {diner: 'tom', itemIndex: [0, 4] },
-      {diner: 'tim', itemIndex: [2, 3] },
-      {diner: 'jim', itemIndex: [1] }
-    ]
-  };
-
-  // 3. return diners object
-  return dinersObject;
+  redisDB.hmset('tomparty', {
+    "diners": JSON.stringify(newDiners)
+  });
  
 };
  
