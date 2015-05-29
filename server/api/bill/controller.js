@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
 * @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-05-29 19:58:39
+* @Last Modified time: 2015-05-29 19:58:59
 */
 
 'use strict';
@@ -35,10 +35,9 @@ Promise.promisifyAll(tesseract);
 exports.show = function(billName) {
   console.log('controller.js show() redirect to query string STEP 3.1');
 
-  // var ss = socketServer();
-  // console.log('controller.js show() set socketServer.room STEP 3.1', ss.room);
-
-
+  //Access database
+  //Acquire party object
+  //Return party object
 
   // This wil likely be a socket interaction
   // From individualized URLs, send back the party object
@@ -96,18 +95,34 @@ exports.create = function(req, res) {
   // save seed to DB and return JSON on success
   // [redis code here]
   
-  // Ron's redis code to input seed party object into redis database
-  
+  redisDB.keys("*", function(err, availKeys){
+    if (err){
+      throw error;
+    }
+
+    if (availKeys.indexOf(billName) > -1){
+      var counter = 0;
+      var work = billName + counter.toString();
+
+      while (availKeys.indexOf(work) > -1){
+        counter++;
+        work = billName + counter.toString();
+      }
+      billName = work;
+    }
+
+    redisDB.hmset(billName, {
+      "billName": seed.billName,
+      "receipt": JSON.stringify(seed.receipt),
+      "diners": JSON.stringify(seed.diners)
+    }, redis.print);
 
 
-  redisDB.hmset(seed.billName, {
-    "billName": seed.billName,
-    "receipt": JSON.stringify(seed.receipt),
-    "diners": JSON.stringify(seed.diners)
-  }, redis.print);
-  console.log(seed);
+    res.status(200).json({billName: billName});
+  })
 
-  res.sendStatus(200);
+
+
 
 
   ////////////////////////////////////////////////
