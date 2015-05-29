@@ -2,7 +2,7 @@
 * @Author: vokoshyv
 * @Date:   2015-05-23 16:42:04
 * @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-05-25 11:35:28
+* @Last Modified time: 2015-05-28 19:40:25
 */
 
 'use strict';
@@ -10,7 +10,7 @@
 
 // set up redis database
 var redis = require('redis');
-var client = redis.createClient(6379, '127.0.0.1');
+var redisDB = redis.createClient(6379, '127.0.0.1');
 
 
 // client.set('vege', 'radish', redis.print);
@@ -34,4 +34,4 @@ var client = redis.createClient(6379, '127.0.0.1');
 //     console.log('The fruit is = ' + value);
 // })
 
-module.exports = client;
+module.exports = redisDB;
