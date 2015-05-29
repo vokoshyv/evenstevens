@@ -2,11 +2,9 @@
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
 * @Last Modified by:   Michael Harris
-* @Last Modified time: 2015-05-28 19:32:27
+* @Last Modified time: 2015-05-29 01:24:38
 */
 'use strict';
-
-var name;
 
 /**
  * resizing function
@@ -54,30 +52,33 @@ var name;
 //     return canvas.toDataURL("image/jpeg", quality);
 // };
 
-var SocketClient = require('../javascripts/socketClient');
 
-console.log('main.js initiate socketClient');
-var socketClient = SocketClient('http://7c534c2c.ngrok.com');
+// var SocketClient = require('../javascripts/socketClient');
+// console.log('main.js initiate socketClient');
+// var socketClient = SocketClient('http://7c534c2c.ngrok.com');
 
-setTimeout(function(){
-  var data = {clientData:'someNewData'};
-  socketClient.send(data);
-}, 2000);
+var socket = io.connect('localhost:3000');
+var url = window.location.href.split('/');
+var billname = url[url.length-1];
 
-setTimeout(function(){
-  var data = {clientData:'someOtherData'};
-  socketClient.send(data);
-}, 4000);
+socket.on('dataFromServer', function (data) {
+  console.log('Server to Client', data);
+});
+
+socket.emit('standardUserFirstRun', {billname: billname});
+socket.emit('standardUserSecondRun', {billname: billname});
+
+
 
 var React = require('react');
 
-var EvenStevensApp = require('./components/eStevensApp.react.js')
+var EvenStevensApp = require('./components/eStevensApp.react.js');
 
 React.render(
   <EvenStevensApp />,
   document.getElementById('content')
 );
-
+ 
 
 
 var InputForm = React.createClass({
