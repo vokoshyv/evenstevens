@@ -2,17 +2,18 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-28 15:08:02
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-29 13:26:08
+* @Last Modified time: 2015-05-29 19:39:49
 */
 
 var React = require('react');
 var UserStore = require('../stores/AppStore');
 var ReceiptStore = require('../stores/ReceiptStore');
+var ReceiptItem = require('./ReceiptItem.react');
 
 
 var getReceiptState = function() {
   return {
-     receiptObj: ReceiptStore.getReceiptItems()
+     receiptObj: ReceiptStore.getReceiptObj()
   }
 };
 
@@ -32,31 +33,34 @@ var ReceiptList = React.createClass({
   },
 
   render: function(){
-    
+    if (Object.keys(this.state.receiptObj).length < 1) {
+      return null;
+    }
+
+    var allItems = this.state.receiptObj.receipt.items;
+    var items = [];
+    console.log("allItems ", allItems);
+
+    for(var key in allItems) {
+      var isClaimed = true;
+      items.push(<ReceiptItem key={key} item={allItems[key]} isClaimed={isClaimed} />);
+    }
+    console.log("items array ", items);
 
     return (
       <div className = "bill-details">
-      <h2>Bill for {this.state.receiptObj.billName} </h2>
-      <ul> 
-        <li> {this.state.receiptObj.receipt.items[0].item} {this.state.receiptObj.receipt.items[0].cost} </li>
-        <li> {this.state.receiptObj.receipt.items[1].item} {this.state.receiptObj.receipt.items[1].cost} </li>
-        <li> {this.state.receiptObj.receipt.items[2].item} {this.state.receiptObj.receipt.items[2].cost} </li>
-        <li> {this.state.receiptObj.receipt.items[3].item} {this.state.receiptObj.receipt.items[3].cost} </li>    
-      </ul>
-      <ul>
-          <li>Subtotal   : {this.state.receiptObj.receipt.subTotal} </li>
-          <li>Tax        : {this.state.receiptObj.receipt.tax} </li>
-          <li>Total      : {this.state.receiptObj.receipt.total} </li>
-          <li>Tip        : {this.state.receiptObj.receipt.tip} </li>
-          <li>Grand Total: {this.state.receiptObj.receipt.grandTotal} </li>
-      </ul>
-       </div>);
-  },
-
-    // <li> {this.state.receiptObj.items[1]}</li>
-        // <li> {this.state.receiptObj.items[2]}</li>
-        // <li> {this.state.receiptObj.items[3]}</li>
-        // <li> {this.state.receiptObj.items[4]}</li>  
+        <h4>Receipt for {this.state.receiptObj.billName}</h4>
+        <ul id="item-list">{items}</ul>
+        <ul id="totals-list">
+          <li>Subtotal    <span className="u-pull-right">{this.state.receiptObj.receipt.subTotal}</span></li>
+          <li>Tax         <span className="u-pull-right">{this.state.receiptObj.receipt.tax}</span></li>
+          <li>Total       <span className="u-pull-right">{this.state.receiptObj.receipt.total}</span></li>
+          <li>Tip         <span className="u-pull-right">{this.state.receiptObj.receipt.tip}</span></li>
+          <li>Grand Total <span className="u-pull-right">{this.state.receiptObj.receipt.grandTotal}</span></li>
+        </ul>
+      </div> 
+    );
+  }, 
   _onChange: function() {
     this.setState(getReceiptState());
   }

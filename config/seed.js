@@ -1,8 +1,9 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:23:06
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-29 17:31:43
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-05-29 19:39:18
+>>>>>>> (feat) Begins to add more detail to receipt store
 */
 
 'use strict';
@@ -35,7 +36,7 @@ exports.bill = function() {
     },
     diners: [{
       diner: 'tom',
-      itemIndex: []
+      itemIndex: [0,3]
     }]
   }
 }
