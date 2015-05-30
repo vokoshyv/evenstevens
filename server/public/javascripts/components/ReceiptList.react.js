@@ -2,18 +2,20 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-28 15:08:02
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-29 19:39:49
+* @Last Modified time: 2015-05-30 16:51:07
 */
 
 var React = require('react');
-var UserStore = require('../stores/AppStore');
+var UserStore = require('../stores/UserStore');
 var ReceiptStore = require('../stores/ReceiptStore');
 var ReceiptItem = require('./ReceiptItem.react');
 
 
 var getReceiptState = function() {
   return {
-     receiptObj: ReceiptStore.getReceiptObj()
+    billName: ReceiptStore.getBillName(),
+    receiptObj: ReceiptStore.getReceiptObj(),
+    currentUserName: UserStore.getUserName()
   }
 };
 
@@ -45,11 +47,12 @@ var ReceiptList = React.createClass({
       var isClaimed = true;
       items.push(<ReceiptItem key={key} item={allItems[key]} isClaimed={isClaimed} />);
     }
-    console.log("items array ", items);
+    console.log("Items in ReceiptList Component", items);
 
     return (
       <div className = "bill-details">
-        <h4>Receipt for {this.state.receiptObj.billName}</h4>
+        <h4 className ="centered">{this.state.billName + "'s receipt"}</h4>
+        <p className ="centered">{"Currently claiming for " + this.state.currentUserName} </p>
         <ul id="item-list">{items}</ul>
         <ul id="totals-list">
           <li>Subtotal    <span className="u-pull-right">{this.state.receiptObj.receipt.subTotal}</span></li>

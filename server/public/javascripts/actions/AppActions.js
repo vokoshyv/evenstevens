@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-02 15:56:13
+* @Last Modified time: 2015-06-02 16:02:04
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
@@ -21,15 +21,16 @@ var AppActions = {
     var xhr = new XMLHttpRequest();
 
     formData.append('file', file);    
-    xhr.open('POST', '/api/bills/' + name); // this might go against the flux...
+    xhr.open('POST', '/api/bills/' + name); 
     xhr.onload = function () {
       if (xhr.status === 200) {
-        console.log('all done: ' + xhr.status);
+        console.log('response ' + xhr.status);
 
-        //Add connect to socket and other logic
+        var billName = JSON.parse(xhr.responseText).billName;
+        
         AppDispatcher.dispatch({
-          actionType: 'ROOM_LOADED',
-          payload: xhr.responseText
+          actionType: 'BILL_NAME_LOADED',
+          payload: billName
         });
       } else {
         console.log('Something went terribly wrong...');
@@ -38,8 +39,9 @@ var AppActions = {
 
     xhr.send(formData);
     
+    // This triggers a loading animation
     AppDispatcher.dispatch({
-      actionType: 'PROCESSING_IMAGE',
+      actionType: 'TOGGLE_LOADING_VIEW',
       payload: true
     });
   }

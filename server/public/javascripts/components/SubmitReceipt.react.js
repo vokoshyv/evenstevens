@@ -2,14 +2,15 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-29 10:19:44
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-29 15:25:06
+* @Last Modified time: 2015-05-30 16:39:59
 */
 
 var React = require('react');
-var UserStore = require('../stores/AppStore');
+var UserStore = require('../stores/UserStore');
 var ReceiptStore = require('../stores/ReceiptStore');
 var NameInputForm = require('./NameInputForm.react');
 var CameraImageCapture = require('./CameraImageCapture.react');
+var LoadingView = require('./LoadingView.react');
 var Router = require('react-router');
 
 
@@ -17,7 +18,8 @@ var Router = require('react-router');
 var getSubmitState = function() {
   return {
      userName: UserStore.getUserName(),
-     imageBeingProcessed: UserStore.getBeingProcessed(),
+     billName: ReceiptStore.getBillName(),
+     isLoading: UserStore.getIsLoading()
   }
 };
 
@@ -41,9 +43,11 @@ var SubmitReceipt = React.createClass({
   // Render the row!
   render: function(){
     return (<div className = "row"> 
-      <NameInputForm  userName={this.state.userName} />
-      <CameraImageCapture imageBeingProcessed={this.state.imageBeingProcessed} userName={this.state.userName}  />
-      </div>);
+      <NameInputForm userName={this.state.userName} />
+      <CameraImageCapture isLoading={this.state.isLoading}  userName={this.state.userName} />
+      <LoadingView isLoading={this.state.isLoading} />
+      </div>
+      );
   },
   // This method is called when changes occur in the store, 
   // pulling data to update the state, which flows into the
@@ -52,12 +56,12 @@ var SubmitReceipt = React.createClass({
     var self = this;
     // Once receipt is loaded, this triggers a transition
     // to receipt list route
-    if(ReceiptStore.receiptIsLoaded()) {
-      this.transitionTo('/'+this.state.userName);
-    } else {
-      this.setState(getSubmitState());
-
-    }
+    this.setState(getSubmitState());
+    console.log("bill ", this.state.billName);
+    if(this.state.billName.length > 0) {
+      console.log("transit!")
+      this.transitionTo('/'+this.state.billName);
+    } 
   }
 
 });
