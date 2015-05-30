@@ -73,6 +73,8 @@ var process = function(path, billName) {
       if (err) {
         reject(err);
       } else {
+        console.log('raw text: ', text);
+
         var bill = require('../api/bill/model').billModel();
         bill.billName = billName;
         bill.diners.push({diner: billName, itemIndex: []});      
@@ -114,7 +116,6 @@ var postProcess = function(bill, text) {
 
     //assume total if cost and first element is not a number 
     parseTotals(bill, item, cost);
-    console.log('i: ', i);
   }  
 
   checkTotals(bill);
@@ -134,7 +135,7 @@ var parseItems = function(bill, item, cost) {
   while(quanity--) {
     bill.receipt.items.push({
       description: item.join(' '),
-      cost: cost
+      cost: cost / quanity
     });
   }
 }

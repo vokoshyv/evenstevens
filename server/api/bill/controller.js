@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-* @Last Modified by:   Michael Harris
-* @Last Modified time: 2015-05-29 15:24:31
+* @Last Modified by:   Johnny Nguyen
+* @Last Modified time: 2015-05-29 17:46:59
 */
 
 'use strict';
@@ -98,19 +98,20 @@ exports.create = function(req, res) {
   // [redis code here]
   // console.log(seed);
 
-  res.status(200).json(seed); 
+  // res.status(200).json(seed); 
 
   ////////////////////////////////////////////////
   // block below parses uploaded receipt image  //
   ////////////////////////////////////////////////
-  // form.parse(req, function(err, fields, files) {
-  //   receipt.parse(receiptPath, files.file.path, billName)
-  //   .then(function(text) {
-  //     console.log('from controller: ', text);
-         // save seed to DB and return JSON on success
-         // [redis code here]
-  //   })
-  // });
+  form.parse(req, function(err, fields, files) {
+    bill.parse(billPath, files.file.path, billName)
+    .then(function(text) {
+      console.log('parsed text: ', require('util').inspect(text, false, null));
+      // console.log('from controller: ', text);
+      //    save seed to DB and return JSON on success
+      //    [redis code here]
+    })
+  });
 };
 
 /**
