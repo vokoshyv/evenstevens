@@ -1,9 +1,9 @@
 {
   "name": "evenstevens",
   "version": "0.1.0",
-  "main": "app.js",
+  "main": "server/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ../../bin/jest.js"
   },
   "repository": {
     "type": "git",
@@ -47,5 +47,9 @@
     "npm": "^2.10.1",
     "reactify": "^1.1.1",
     "vinyl-source-stream": "^1.1.0"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/preprocessor.js",
+    "unmockedModulePathPatterns": ["<rootDir>/node_modules/react"]
   }
 }
