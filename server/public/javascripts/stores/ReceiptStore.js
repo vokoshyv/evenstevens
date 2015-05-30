@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-28 15:15:14
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-29 12:02:57
+* @Last Modified time: 2015-05-29 19:26:43
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -13,19 +13,21 @@ var CHANGE_EVENT = 'change';
 
 var _receipt = {};
 var _isLoaded = false;
+var _items = [];
+var _diners = [];
 
-var _updateReceipt = function(updatedReceipt){
-  _toggleLoaded();
+var _setReceipt = function(updatedReceipt){
+  _isLoaded = true;
   _receipt = updatedReceipt;
+  _items = updatedReceipt.receipt.items;
+  console.log("_items: ",_items);
 };
 
-var _toggleLoaded = function(){
-  _isLoaded = !_isLoaded;
-};
+
 
 
 var ReceiptStore = assign({}, EventEmitter.prototype, {
-  getReceiptItems: function() {
+  getReceiptObj: function() {
     return _receipt;
   },
   receiptIsLoaded: function(){
@@ -51,11 +53,10 @@ AppDispatcher.register(function(action) {
   switch(action.actionType) {
     case 'RECEIPT_LOADED': 
       var receipt = action.payload;
-      console.log(receipt);
-      _updateReceipt(JSON.parse(receipt));
+      _setReceipt(JSON.parse(receipt));
       ReceiptStore.emitChange();
     break;
-
+    
     default: 
   }
 });
