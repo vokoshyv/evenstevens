@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 14:23:20
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-29 11:06:13
+* @Last Modified time: 2015-05-29 20:01:40
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -10,8 +10,6 @@ var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
-
-
 var _userName = "";
 var _processingImg = false;
 

@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
-* @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-05-29 20:25:58
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-02 15:56:13
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
@@ -28,7 +28,7 @@ var AppActions = {
 
         //Add connect to socket and other logic
         AppDispatcher.dispatch({
-          actionType: 'RECEIPT_LOADED',
+          actionType: 'ROOM_LOADED',
           payload: xhr.responseText
         });
       } else {
@@ -42,10 +42,7 @@ var AppActions = {
       actionType: 'PROCESSING_IMAGE',
       payload: true
     });
-
   }
-
-
 }
 
 module.exports = AppActions;

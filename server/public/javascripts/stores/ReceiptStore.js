@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-28 15:15:14
-* @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-05-29 20:11:38
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-02 15:53:35
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -21,9 +21,6 @@ var _setReceipt = function(updatedReceipt){
   _receipt = updatedReceipt;
   console.log("_items: ",_items);
 };
-
-
-
 
 var ReceiptStore = assign({}, EventEmitter.prototype, {
   getReceiptObj: function() {
@@ -55,7 +52,7 @@ AppDispatcher.register(function(action) {
       _setReceipt(JSON.parse(receipt));
       ReceiptStore.emitChange();
     break;
-    
+
     default: 
   }
 });

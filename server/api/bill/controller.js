@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-* @Last Modified by:   user
-* @Last Modified time: 2015-06-02 15:18:54
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-02 15:55:40
 */
 
 'use strict';
@@ -78,13 +78,10 @@ exports.create = function(req, res) {
       "billName": seed.billName,
       "receipt": JSON.stringify(seed.receipt),
       "diners": JSON.stringify(seed.diners)
-    }, redis.print);
+      }, redis.print);
 
-    res.status(200).json({billName: billName});
-  })
-
-
-
+      res.status(200).json({billName: billName});
+    });
 
 
   ////////////////////////////////////////////////
