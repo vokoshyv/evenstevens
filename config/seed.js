@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 14:23:06
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-28 14:33:15
+* @Last Modified time: 2015-05-29 17:31:43
 */
 
 'use strict';
@@ -25,7 +25,7 @@ exports.bill = function() {
         cost: 8.50
       }, {
         item: 'Hot Tea',
-        cost: 10.20
+        cost: .95
       }],
       subTotal: 41.85,
       tax: 3.66,
