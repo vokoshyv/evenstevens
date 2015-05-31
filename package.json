@@ -1,6 +1,7 @@
 {
   "name": "evenstevens",
   "version": "0.1.0",
+  "description": "Even Stevens: Interactive Bill Splitting",
   "main": "server/app.js",
   "scripts": {
     "test": "node ../../bin/jest.js"
