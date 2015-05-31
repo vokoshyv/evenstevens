@@ -44,7 +44,7 @@ var readFile = function(file) {
   .catch(function(err) {
     return err;
   });
-}
+};
 
 /**
  * Writes to bill image to disk.
@@ -60,7 +60,7 @@ var writeFile = function(path, file) {
   .catch(function(err) {
     return err;
   });
-}
+};
 
 /**
  * Process bill items to JSON object
@@ -79,12 +79,12 @@ var process = function(path, billName) {
         bill.billName = billName;
         bill.diners.push({diner: billName, itemIndex: []});      
         
-        postProcess(bill, text)
+        postProcess(bill, text);
         resolve(bill);
       }
     });
   });
-}
+};
 
 /**
  * Initializes bill processing. 
@@ -121,7 +121,7 @@ var postProcess = function(bill, text) {
   checkTotals(bill);
 
   return bill;
-}
+};
 
 /**
  * Parse receipt for ordered items.
@@ -132,13 +132,13 @@ var postProcess = function(bill, text) {
 var parseItems = function(bill, item, cost) {
   var quanity = parseInt(item.shift());
 
-  while(quanity--) {
+  for (var i = 0; i < quanity; i++) {
     bill.receipt.items.push({
       description: item.join(' '),
       cost: cost / quanity
     });
   }
-}
+};
 
 /**
  * Parse receipt for subTotal, tax, and total.
@@ -161,7 +161,7 @@ var parseTotals = function(bill, item, cost) {
   if (itemString.indexOf('total') !== -1) {
     bill.receipt.total = cost;
   }
-}
+};
 
 /**
  * Sanity check for totals before returning the constructed bill object.
@@ -171,7 +171,7 @@ var checkTotals = function(bill) {
   var receipt = bill.receipt;
 
   if (receipt.subTotal && receipt.tax && !receipt.total) {
-    receipt.total = Number((receipt.subTotal + receipt.tax).toFixed(2));
+    receipt.total = Number((receipt.subTotal + receipt.tax)).toFixed(2);
   }
 
   if (receipt.subTotal + receipt.tax !== receipt.total) {
@@ -181,5 +181,4 @@ var checkTotals = function(bill) {
   if (receipt.total - receipt.tax !== receipt.subTotal) {
     // error;
   }
-}
-
+};
