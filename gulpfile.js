@@ -1,8 +1,8 @@
 /* 
 * @Author: vokoshyv
 * @Date:   2015-05-26 17:12:39
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-27 20:55:21
+* @Last Modified by:   hal
+* @Last Modified time: 2015-05-31 00:25:27
 */
 
 'use strict';
@@ -115,3 +115,10 @@ gulp.task('watch', function(){
 })
 
 gulp.task('default', ['clearDist', 'browserify', 'watch', 'startServer', 'openInBrowser']);
+
+gulp.task('lint', function() {
+  return gulp.src(paths.scripts)
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'))
+    .pipe(jshint.reporter('fail'));
+});

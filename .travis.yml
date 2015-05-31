@@ -7,4 +7,4 @@ before_script:
   - npm install -g nodemon
 services:
   - redis-server
-script: gulp
+script: gulp lint
