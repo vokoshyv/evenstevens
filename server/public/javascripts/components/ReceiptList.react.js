@@ -2,13 +2,14 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-28 15:08:02
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-30 16:51:07
+* @Last Modified time: 2015-05-30 17:03:07
 */
 
 var React = require('react');
 var UserStore = require('../stores/UserStore');
 var ReceiptStore = require('../stores/ReceiptStore');
 var ReceiptItem = require('./ReceiptItem.react');
+var NameInputForm = require('./NameInputForm.react');
 
 
 var getReceiptState = function() {
@@ -41,13 +42,16 @@ var ReceiptList = React.createClass({
 
     var allItems = this.state.receiptObj.receipt.items;
     var items = [];
-    console.log("allItems ", allItems);
+   
 
     for(var key in allItems) {
       var isClaimed = true;
       items.push(<ReceiptItem key={key} item={allItems[key]} isClaimed={isClaimed} />);
     }
-    console.log("Items in ReceiptList Component", items);
+  
+    if (this.state.currentUserName.length === 0) {
+      return ( <NameInputForm userName={this.state.currentUserName} />);
+    }
 
     return (
       <div className = "bill-details">
