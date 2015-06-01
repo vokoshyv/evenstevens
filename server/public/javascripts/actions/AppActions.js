@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-29 15:05:01
+* @Last Modified by:   vokoshyv
+* @Last Modified time: 2015-05-29 20:25:58
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
@@ -26,6 +26,7 @@ var AppActions = {
       if (xhr.status === 200) {
         console.log('all done: ' + xhr.status);
 
+        //Add connect to socket and other logic
         AppDispatcher.dispatch({
           actionType: 'RECEIPT_LOADED',
           payload: xhr.responseText

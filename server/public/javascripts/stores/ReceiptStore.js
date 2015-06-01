@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-28 15:15:14
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-29 19:26:43
+* @Last Modified by:   vokoshyv
+* @Last Modified time: 2015-05-29 20:11:38
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -19,7 +19,6 @@ var _diners = [];
 var _setReceipt = function(updatedReceipt){
   _isLoaded = true;
   _receipt = updatedReceipt;
-  _items = updatedReceipt.receipt.items;
   console.log("_items: ",_items);
 };
 
