@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:23:06
-* @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-05-29 19:57:56
+* @Last Modified by:   hal
+* @Last Modified time: 2015-06-02 21:01:16
 */
 
 'use strict';
@@ -12,6 +12,9 @@ exports.bill = function() {
     billName: "tom",
     receipt: {
       items: [{
+        item: 'Roasted Duck over Rice',
+        cost: 10.20
+      }, {
         item: 'Roasted Duck over Rice',
         cost: 10.20
       }, {
