@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-* @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-05-29 19:59:18
+* @Last Modified by:   user
+* @Last Modified time: 2015-06-01 19:49:31
 */
 
 'use strict';
@@ -30,49 +30,12 @@ Promise.promisifyAll(tesseract);
  * @param  {[type]} res [description]
  * @return {[type]}     [description]
  */
-// exports.show = function(req, res, next) {
-// exports.show = function(req, res, socketServer) {
-exports.show = function(billName) {
-  console.log('controller.js show() redirect to query string STEP 3.1');
-
-  //Access database
-  //Acquire party object
-  //Return party object
-
-  // This wil likely be a socket interaction
-  // From individualized URLs, send back the party object
-  // 
-  // 
-  // var billname = req.params.billname;
-  // return res.json(201, {billname: billname});
-  // return res.sendFile(path.join(__dirname, 'public'));
-
-  // var billname = req.url.split('/')[1];
-  // return res.redirect(301, 'http://localhost:3000/?billname='+billname);
-
-  // This wil likely be a socket interaction
-  // From individualized URLs, send back the party object
-  
-  var billName = req.params.billName;
-  // return res.json(201, {billname: billname});
-  
-  // Pretending that is is a HTTP request, I would pull off
-  // the URL from the req.params and use it to search the 
-  // redis database for a corresponding key
-
-  redisDB.hgetall('tomparty', function(error, object){
-    if (error){
-      throw error;
-    }
-    if (object){
-      console.log("Here's the billName property: " + object.billName);
-      console.log("Here's the receipt property: " + object.receipt);
-      console.log("Here's the diners property: " + object.diners);
-    }
-    // want to parse the object and send it out to clients
-    // (via socket or http response)
+exports.show = function(io, data) {
+  // send the full data object to the clients via sockets
+  redisDB.hgetall(data.billName, function(error, object){
+    if (error) throw error;
+    if (object) io.to(data.billName).emit('fromServerInitialData', object);
   });
-  // next();
 };
 
 /**
@@ -117,7 +80,6 @@ exports.create = function(req, res) {
       "diners": JSON.stringify(seed.diners)
     }, redis.print);
 
-
     res.status(200).json({billName: billName});
   })
 
@@ -146,7 +108,7 @@ exports.create = function(req, res) {
  * @return {[type]}     [description]
  */
 
-exports.update = function(req, res) {
+exports.update = function(io, data) {
   // This will most assuredly be a socket interaction
   // 1) Update the party object inside the database based 
   // on new diners array with either new diners or items
