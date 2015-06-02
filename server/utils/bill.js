@@ -2,7 +2,7 @@
 
 var fs = require('fs');
 var tesseract = require('node-tesseract');
-var Promise = require("bluebird");
+var Promise = require('bluebird');
 
 Promise.promisifyAll(fs);
 
