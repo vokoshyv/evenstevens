@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 10:53:35
 * @Last Modified by:   user
-* @Last Modified time: 2015-06-01 19:51:10
+* @Last Modified time: 2015-06-02 15:32:52
 */
 
 // set up server variables
@@ -106,9 +106,10 @@ var onUserFirstRun = function (socket, data) {
 
 // client updated its data and sent it to server, handled here
 var onUserUpdate = function (socket, data) {
+  // console.log('app.js onUserUpdate()', data);
   socketLog(socket, data);
   var updateData = controller.update(io, data); // save changes to data base
-  io.to(data.billName).emit('fromServerUpdate', updateData); // broadcast changes to everyone
+  // io.to(data.billName).emit('fromServerUpdate', updateData); // broadcast changes to everyone
 };
 
 var onDisconnect = function (socket) {
