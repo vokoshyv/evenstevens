@@ -171,7 +171,7 @@ var checkTotals = function(bill) {
   var receipt = bill.receipt;
 
   if (receipt.subTotal && receipt.tax && !receipt.total) {
-    receipt.total = Number((receipt.subTotal + receipt.tax)).toFixed(2);
+    receipt.total = +(receipt.subTotal + receipt.tax).toFixed(2);
   }
 
   if (receipt.subTotal + receipt.tax !== receipt.total) {
