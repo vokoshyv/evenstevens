@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
 * @Last Modified by:   user
-* @Last Modified time: 2015-06-01 19:20:03
+* @Last Modified time: 2015-06-02 15:26:29
 */
 'use strict';
 
@@ -13,23 +13,39 @@ var billName = url[url.length-1];
 
 socket.on('fromServerInitialData', function (data) {
   console.log('Server to Client', data);
+
+  // -----------------------------------------------
+  // Would normally occur in a tap event for item/list state changes
+  // test run of a data update from the client to server
+  var diners = [
+    {
+      "diner": "tom", 
+      "itemIndex": [0, 4]
+    },
+    {
+      "diner": "tim", 
+      "itemIndex": [1, 2]
+    },
+    {
+      "diner": "jim", 
+      "itemIndex": [3]
+    }
+  ];
+  socket.emit('userUpdate', {billName: billName, updateData: diners } );
+  // -----------------------------------------------
+
 });
 
+// once data is updated on the server, the update data gets broadcasted to all clients, handled here
 socket.on('fromServerUpdate', function (data) {
   console.log('Server to Client', data);
+
+  // TODO: need to update client with new information broadcasted from server
+
 });
 
 socket.emit('userJoin', {billName: billName});
 socket.emit('userFirstRun', {billName: billName});
-
-// var updateData = {
-//   "diners": [{
-//     "diner": 0,
-//     "itemIndex": [0, 4, 2]
-//   }]
-// };
-
-// socket.emit('userUpdate', {billName: billName, updateData: updateData } );
 
 // React requires
 var React = require('react');
