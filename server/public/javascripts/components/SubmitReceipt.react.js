@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-29 10:19:44
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-30 16:39:59
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-01 11:57:05
 */
 
 var React = require('react');
@@ -57,9 +57,7 @@ var SubmitReceipt = React.createClass({
     // Once receipt is loaded, this triggers a transition
     // to receipt list route
     this.setState(getSubmitState());
-    console.log("bill ", this.state.billName);
     if(this.state.billName.length > 0) {
-      console.log("transit!")
       this.transitionTo('/'+this.state.billName);
     } 
   }

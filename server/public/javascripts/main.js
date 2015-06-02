@@ -1,12 +1,18 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
-* @Last Modified by:   user
-* @Last Modified time: 2015-06-02 15:26:29
+<<<<<<< HEAD
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-02 16:05:45
+=======
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-01 11:32:27
+>>>>>>> Client now gets receipt data from socket event, renders to screen
 */
 'use strict';
 
 // This file is the main entry point for browserify
+
 var socket = io.connect('localhost:3000');
 var url = window.location.href.split('/');
 var billName = url[url.length-1];
@@ -39,8 +45,6 @@ socket.on('fromServerInitialData', function (data) {
 // once data is updated on the server, the update data gets broadcasted to all clients, handled here
 socket.on('fromServerUpdate', function (data) {
   console.log('Server to Client', data);
-
-  // TODO: need to update client with new information broadcasted from server
 
 });
 

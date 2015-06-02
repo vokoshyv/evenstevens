@@ -2,16 +2,54 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-02 16:02:04
+* @Last Modified time: 2015-06-02 16:04:12
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
+
+var socket;
 
 var AppActions = {
   addUser: function(userName) {
     AppDispatcher.dispatch({
       actionType: 'ADD_USER',
       payload: userName
+    });
+  },
+  socketEmitUpdate: function(data){
+
+    // sends just diner object
+    // {billname:sdfsdfs
+    //  dinerArray:sdfsdfsd}
+    socket.emit('userUpdate', {data:data});
+    console.log("EMITTING data to server");
+  },
+
+  joinSocketRoom : function(billName, userName) {
+    socket = io.connect('localhost:3000');
+
+    socket.on('fromServerInitialData', function (data) {
+      console.log('Server to Client InitialData ', data);
+
+      AppDispatcher.dispatch({
+        actionType: 'INITIAL_DATA',
+        payload: data.dataFromServer,
+        
+    });
+       // dispatch here
+    });
+
+    socket.on('fromServerUpdate', function(data) {
+      console.log('Server to client update ', data)
+    });
+
+    // This calls server to join room and get receipt data
+    socket.emit('userJoin', {billName: billName, userName:userName});
+
+
+    AppDispatcher.dispatch({
+      actionType: 'BILL_NAME_LOADED',
+      payload: billName
     });
   },
   handleImage: function(userFile) {
@@ -28,10 +66,9 @@ var AppActions = {
 
         var billName = JSON.parse(xhr.responseText).billName;
         
-        AppDispatcher.dispatch({
-          actionType: 'BILL_NAME_LOADED',
-          payload: billName
-        });
+        // Join socket
+        AppActions.joinSocketRoom(billName, name);
+        
       } else {
         console.log('Something went terribly wrong...');
       }

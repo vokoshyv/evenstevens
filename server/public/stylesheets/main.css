@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 13:19:09
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-30 16:41:46
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-01 19:50:54
 */
 
 
@@ -29,5 +29,15 @@ margin-top:30px;
 }
 .centered { 
 text-align:center;
+}
+
+.example-enter {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  color:red;
 }
 

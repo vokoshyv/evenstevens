@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 14:23:20
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-30 16:37:06
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-02 09:52:18
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -11,7 +11,7 @@ var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 
-var _userName = "";
+var _userName = null
 var _billName = "";
 var _isLoading = false;
 

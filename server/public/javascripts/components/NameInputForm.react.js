@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:53:40
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-29 15:24:12
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-02 09:52:44
 */
 
 var React = require('react');
@@ -21,6 +21,10 @@ var NameInputForm = React.createClass({
     if(!name) {
       this.setState({errMessage:"Please enter your name"});
       return;
+      
+    } else if (this.props.joinRoom)  { // join room here if not master client
+        var url = window.location.href.split('/');  
+        AppActions.joinSocketRoom(url[url.length-1],name);
     }
     // clear error message
     this.setState({errMessage:""});
@@ -36,7 +40,7 @@ var NameInputForm = React.createClass({
   render: function() {
     // If userName has previously been input, hide input
     // field
-    if(this.props.userName.length > 0) {
+    if(this.props.userName) {
       return null;
     }
     // Display name input dif

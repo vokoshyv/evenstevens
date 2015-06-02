@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:52:07
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-30 15:47:41
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-02 14:19:59
 */
 
 var React = require('react');
@@ -21,7 +21,7 @@ var CameraImageCapture = React.createClass({
   
     // hide this component while the user is inputing
     // name
-    if(this.props.userName.length === 0 || this.props.isLoading) {
+    if(!this.props.userName || this.props.isLoading) {
       return null;
     }
 
