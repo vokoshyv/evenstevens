@@ -1,8 +1,8 @@
 /*
 * @Author: hal
 * @Date:   2015-05-22 10:53:35
-* @Last Modified by:   Michael Harris
-* @Last Modified time: 2015-05-29 15:25:25
+* @Last Modified by:   user
+* @Last Modified time: 2015-06-01 19:51:10
 */
 
 // set up server variables
@@ -88,11 +88,11 @@ var socketLog = function(socket, data) {
   console.log('SOCKET / connection', socket.id, socket.rooms, data);
 };
 
-// client sends billname to join room
+// client sends billName to join room
 var onUserJoin = function (socket, data) {
-  var room = data.billname;
+  var room = data.billName;
   if (room !== undefined && room !== '') {
-    socket.join(data.billname);
+    socket.join(data.billName);
   }
 };
 
@@ -100,14 +100,15 @@ var onUserJoin = function (socket, data) {
 var onUserFirstRun = function (socket, data) {
   socketLog(socket, data);
   // Run controller show based off of whole party object (receipt in database)
-  io.to(data.billname).emit('fromServerInitialData', {dataFromServer: 'broadcast'});
+  var showData = controller.show(io, data);
+  // io.to(data.billName).emit('fromServerInitialData', showData);
 };
 
 // client updated its data and sent it to server, handled here
 var onUserUpdate = function (socket, data) {
   socketLog(socket, data);
-  var updateData = controller.update(data); // save changes to data base
-  io.to(data.billname).emit('fromServerUpdate', updateData); // broadcast changes to everyone
+  var updateData = controller.update(io, data); // save changes to data base
+  io.to(data.billName).emit('fromServerUpdate', updateData); // broadcast changes to everyone
 };
 
 var onDisconnect = function (socket) {
