@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
 * @Last Modified by:   user
-* @Last Modified time: 2015-06-01 19:49:31
+* @Last Modified time: 2015-06-02 15:18:54
 */
 
 'use strict';
@@ -109,32 +109,12 @@ exports.create = function(req, res) {
  */
 
 exports.update = function(io, data) {
-  // This will most assuredly be a socket interaction
-  // 1) Update the party object inside the database based 
-  // on new diners array with either new diners or items
-  // having been selected
-  // 2) Use socket to send update object out to all clients;
-  // I think this will happen through a broadcasting socket
-  // 3) Whether to send out the entire party object or just
-  // the update object: will have to make a decision
-  
-  // {
-  //   "billName": String, 
-  //   "diners" [{
-  //     "diner" String,
-  //     "itemIndex": [Number]
-  //   }]
-  // }
-
-  var newDiners = [{
-    "diner": "tom", 
-    "itemIndex": [0, 2, 3]
-  }]
-
-  redisDB.hmset('tomparty', {
-    "diners": JSON.stringify(newDiners)
+  // stringify diners object, save it to database, then broadcast updateData to all users
+  redisDB.hmset(data.billName, {
+    "diners": JSON.stringify(data.updateData)
+  }, function(){
+    io.to(data.billName).emit('fromServerUpdate', data); // broadcast changes to everyone
   });
- 
 };
  
 function handleError(res, err) {
