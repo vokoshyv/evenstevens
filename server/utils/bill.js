@@ -14,12 +14,12 @@ Promise.promisifyAll(fs);
  */
 exports.parse = function(path, file, billName) {
   return new Promise(function(resolve, reject) {
-    readFile(file)
+    exports.readFile(file)
     .then(function(data) {
       return writeFile(path, data);
     })
     .then(function() {
-      return process(path, billName);
+      return exports.process(path, billName);
     })
     .then(function(text) {
       resolve(text);
@@ -36,7 +36,7 @@ exports.parse = function(path, file, billName) {
  * @param   {JPEG}     file   Uploaded bill image
  * @return  {Promise}         Returns parsed bill items or error
  */
-var readFile = function(file) {
+exports.readFile = function(file) {
   return fs.readFileAsync(file)
   .then(function(data) {
     return data;
@@ -67,7 +67,7 @@ var writeFile = function(path, file) {
  * @param   {JPEG}     file   Uploaded bill image
  * @return  {Promise}         Returns parsed bill items or error
  */
-var process = function(path, billName) {
+exports.process = function(path, billName) {
   return new Promise(function(resolve, reject) {
     tesseract.process(path, function(err, text) {
       if (err) {
@@ -79,7 +79,7 @@ var process = function(path, billName) {
         bill.billName = billName;
         bill.diners.push({diner: billName, itemIndex: []});      
         
-        postProcess(bill, text);
+        exports.postProcess(bill, text);
         resolve(bill);
       }
     });
@@ -93,7 +93,7 @@ var process = function(path, billName) {
  * @param   {Array}   item   Line item of bill text
  * @param   {Float}   cost   Cost of line item
  */
-var postProcess = function(bill, text) {
+exports.postProcess = function(bill, text) {
   var receipt = text.split('\n');
   var costRegex = /^\$?\d+(,\d{3})*(\.\d*)?.?$/;
   
@@ -110,15 +110,15 @@ var postProcess = function(bill, text) {
 
     //assume ordered item if first element is a number
     if (!isNaN(item[0])) {
-      parseItems(bill, item, cost);
+      exports.parseItems(bill, item, cost);
       continue;
     } 
 
     //assume total if cost and first element is not a number 
-    parseTotals(bill, item, cost);
+    exports.parseTotals(bill, item, cost);
   }  
 
-  checkTotals(bill);
+  exports.checkTotals(bill);
 
   return bill;
 };
@@ -129,7 +129,7 @@ var postProcess = function(bill, text) {
  * @param   {Array}   item   Line item of bill text
  * @param   {Float}   cost   Cost of line item
  */
-var parseItems = function(bill, item, cost) {
+exports.parseItems = function(bill, item, cost) {
   var quanity = parseInt(item.shift());
 
   for (var i = 0; i < quanity; i++) {
@@ -146,7 +146,7 @@ var parseItems = function(bill, item, cost) {
  * @param   {Array}   item   Line item of bill text
  * @param   {Float}   cost   Cost of line item
  */
-var parseTotals = function(bill, item, cost) {
+exports.parseTotals = function(bill, item, cost) {
   var itemString = item.join('').toLowerCase();
   
   //check for 'sub' must come before 'total'
@@ -167,7 +167,7 @@ var parseTotals = function(bill, item, cost) {
  * Sanity check for totals before returning the constructed bill object.
  * @param   {Object}   bill   Bill object
  */
-var checkTotals = function(bill) {
+exports.checkTotals = function(bill) {
   var receipt = bill.receipt;
 
   if (receipt.subTotal && receipt.tax && !receipt.total) {
