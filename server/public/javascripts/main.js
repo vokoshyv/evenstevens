@@ -1,15 +1,15 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
-* @Last Modified by:   Michael Harris
-* @Last Modified time: 2015-05-29 15:47:49
+* @Last Modified by:   user
+* @Last Modified time: 2015-06-01 19:20:03
 */
 'use strict';
 
 // This file is the main entry point for browserify
 var socket = io.connect('localhost:3000');
 var url = window.location.href.split('/');
-var billname = url[url.length-1];
+var billName = url[url.length-1];
 
 socket.on('fromServerInitialData', function (data) {
   console.log('Server to Client', data);
@@ -19,8 +19,8 @@ socket.on('fromServerUpdate', function (data) {
   console.log('Server to Client', data);
 });
 
-socket.emit('userJoin', {billname: billname});
-socket.emit('userFirstRun', {billname: billname});
+socket.emit('userJoin', {billName: billName});
+socket.emit('userFirstRun', {billName: billName});
 
 // var updateData = {
 //   "diners": [{
@@ -29,7 +29,7 @@ socket.emit('userFirstRun', {billname: billname});
 //   }]
 // };
 
-// socket.emit('userUpdate', {billname: billname, updateData: updateData } );
+// socket.emit('userUpdate', {billName: billName, updateData: updateData } );
 
 // React requires
 var React = require('react');
