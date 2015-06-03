@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-* @Last Modified by:   user
-* @Last Modified time: 2015-06-02 15:18:54
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-02 16:28:19
 */
 
 'use strict';
@@ -30,11 +30,11 @@ Promise.promisifyAll(tesseract);
  * @param  {[type]} res [description]
  * @return {[type]}     [description]
  */
-exports.show = function(io, data) {
+exports.show = function(socket, data) {
   // send the full data object to the clients via sockets
   redisDB.hgetall(data.billName, function(error, object){
     if (error) throw error;
-    if (object) io.to(data.billName).emit('fromServerInitialData', object);
+    if (object) socket.emit('fromServerInitialData', object);
   });
 };
 
@@ -78,27 +78,25 @@ exports.create = function(req, res) {
       "billName": seed.billName,
       "receipt": JSON.stringify(seed.receipt),
       "diners": JSON.stringify(seed.diners)
-    }, redis.print);
+      }, redis.print);
 
-    res.status(200).json({billName: billName});
-  })
-
-
-
+      res.status(200).json({billName: billName});
+    });
 
 
   ////////////////////////////////////////////////
   // block below parses uploaded receipt image  //
   ////////////////////////////////////////////////
-  form.parse(req, function(err, fields, files) {
-    bill.parse(billPath, files.file.path, billName)
-    .then(function(text) {
-      console.log('parsed text: ', require('util').inspect(text, false, null));
-      // console.log('from controller: ', text);
-      //    save seed to DB and return JSON on success
-      //    [redis code here]
-    })
-  });
+  // form.parse(req, function(err, fields, files) {
+  //   bill.parse(billPath, files.file.path, billName)
+  //   .then(function(text) {
+  //     console.log('parsed text: ', require('util').inspect(text, false, null));
+  //     // console.log('from controller: ', text);
+  //     //    save seed to DB and return JSON on success
+  //     //    [redis code here]
+  //         res.status(200).json({billName:billName});
+  //   })
+  // });
 };
 
 /**

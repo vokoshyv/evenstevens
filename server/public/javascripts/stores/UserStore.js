@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 14:23:20
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-29 11:06:13
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-02 09:52:18
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -11,26 +11,26 @@ var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 
-
-var _userName = "";
-var _processingImg = false;
+var _userName = null
+var _billName = "";
+var _isLoading = false;
 
 var setName = function(name) {
   _userName = name;
 };
 
-var setBeingProcessed = function(bool) {
-  _processingImg = bool;
-}
+var setLoading = function(bool) {
+  _isLoading = bool;
+};
 
-var AppStore = assign({}, EventEmitter.prototype, {
+var UserStore = assign({}, EventEmitter.prototype, {
 
   getUserName: function() {
     return _userName;
   },
 
-  getBeingProcessed: function() {
-    return _processingImg;
+  getIsLoading: function() {
+    return _isLoading;
   },
 
   addChangeListener: function(callback) {
@@ -47,26 +47,25 @@ var AppStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(action) {
   var name;
   var files;
+  var bool;
+  var billName;
 
   switch(action.actionType) {
     case 'ADD_USER':
       name = action.payload.trim();
       if (name !== '') {
         setName(name);
-        AppStore.emitChange();
+        UserStore.emitChange();
       }
       break;
 
-    case 'PROCESSING_IMAGE':
+    case 'TOGGLE_LOADING_VIEW':
       bool = action.payload;
-      setBeingProcessed(bool);
-      AppStore.emitChange();
+      setLoading(bool);
+      UserStore.emitChange();
       break;
 
-    case 'RECEIPT_LOADED':
-      setBeingProcessed(false);
-      AppStore.emitChange();
-      break;
+
 
     default: 
     return;
@@ -74,5 +73,5 @@ AppDispatcher.register(function(action) {
   }
 });
 
-module.exports = AppStore;
+module.exports = UserStore;
 

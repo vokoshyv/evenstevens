@@ -1,19 +1,24 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-28 15:08:02
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-29 19:39:49
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-02 16:32:14
 */
 
 var React = require('react');
-var UserStore = require('../stores/AppStore');
+var UserStore = require('../stores/UserStore');
 var ReceiptStore = require('../stores/ReceiptStore');
 var ReceiptItem = require('./ReceiptItem.react');
-
+var KeyValueListItem = require('./KeyValueListItem.react');
+var NameInputForm = require('./NameInputForm.react');
+var AppActions = require('../actions/AppActions') ;
 
 var getReceiptState = function() {
   return {
-     receiptObj: ReceiptStore.getReceiptObj()
+    billName: ReceiptStore.getBillName(),
+    items: ReceiptStore.getItems(),
+    totals: ReceiptStore.getTotals(),
+    currentUserName: UserStore.getUserName(),
   }
 };
 
@@ -21,7 +26,6 @@ var ReceiptList = React.createClass({
   getInitialState: function() {
     return getReceiptState();
   },
-
   componentDidMount: function() {
     UserStore.addChangeListener(this._onChange);
     ReceiptStore.addChangeListener(this._onChange);
@@ -33,31 +37,27 @@ var ReceiptList = React.createClass({
   },
 
   render: function(){
-    if (Object.keys(this.state.receiptObj).length < 1) {
-      return null;
+    // if username not set, prompt for username input
+    if (!this.state.currentUserName) {
+      return ( <NameInputForm joinRoom={true} userName={this.state.currentUserName} />);
     }
 
-    var allItems = this.state.receiptObj.receipt.items;
-    var items = [];
-    console.log("allItems ", allItems);
+    var totalListItems = [];
 
-    for(var key in allItems) {
-      var isClaimed = true;
-      items.push(<ReceiptItem key={key} item={allItems[key]} isClaimed={isClaimed} />);
-    }
-    console.log("items array ", items);
-
+    for(var key in this.state.totals) {
+      totalListItems.push(<KeyValueListItem key ={key} title={key} item={this.state.totals[key]} />);
+    }   
+   
     return (
       <div className = "bill-details">
-        <h4>Receipt for {this.state.receiptObj.billName}</h4>
-        <ul id="item-list">{items}</ul>
-        <ul id="totals-list">
-          <li>Subtotal    <span className="u-pull-right">{this.state.receiptObj.receipt.subTotal}</span></li>
-          <li>Tax         <span className="u-pull-right">{this.state.receiptObj.receipt.tax}</span></li>
-          <li>Total       <span className="u-pull-right">{this.state.receiptObj.receipt.total}</span></li>
-          <li>Tip         <span className="u-pull-right">{this.state.receiptObj.receipt.tip}</span></li>
-          <li>Grand Total <span className="u-pull-right">{this.state.receiptObj.receipt.grandTotal}</span></li>
+        <h4 className ="centered">{this.state.billName + "'s receipt"}</h4>
+        <p className ="centered">{"Currently claiming for " + this.state.currentUserName} </p>
+        <ul id="item-list"> {
+            this.state.items.map(function(value, index) {
+              return <ReceiptItem key={index} item={value} isClaimed={false} />;
+            })}
         </ul>
+        <ul id="totals-list"> { totalListItems } </ul>
       </div> 
     );
   }, 
@@ -68,3 +68,10 @@ var ReceiptList = React.createClass({
 });
 
 module.exports = ReceiptList;
+
+
+    // <li>Subtotal    <span className="u-pull-right">{this.state.receiptObj.receipt.subTotal}</span></li>
+    //       <li>Tax         <span className="u-pull-right">{this.state.receiptObj.receipt.tax}</span></li>
+    //       <li>Total       <span className="u-pull-right">{this.state.receiptObj.receipt.total}</span></li>
+    //       <li>Tip         <span className="u-pull-right">{this.state.receiptObj.receipt.tip}</span></li>
+    //       <li>Grand Total <span className="u-pull-right">{this.state.receiptObj.receipt.grandTotal}</span></li>

@@ -1,8 +1,8 @@
 /*
 * @Author: hal
 * @Date:   2015-05-22 10:53:35
-* @Last Modified by:   user
-* @Last Modified time: 2015-06-02 15:32:52
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-02 17:14:36
 */
 
 // set up server variables
@@ -85,24 +85,27 @@ io.of(namespace).on('connection', function(socket){
 });
 
 var socketLog = function(socket, data) {
-  console.log('SOCKET / connection', socket.id, socket.rooms, data);
+  console.log('SOCKET / connection', socket.id, "room ", socket.rooms, data);
 };
 
 // client sends billName to join room
 var onUserJoin = function (socket, data) {
   var room = data.billName;
+  console.log(room);
   if (room !== undefined && room !== '') {
-    socket.join(data.billName);
+    socket.join(data.billName, function(){
+      controller.show(socket, data);
+    });
   }
 };
 
-// client requesting initial data from server
-var onUserFirstRun = function (socket, data) {
-  socketLog(socket, data);
-  // Run controller show based off of whole party object (receipt in database)
-  var showData = controller.show(io, data);
-  // io.to(data.billName).emit('fromServerInitialData', showData);
-};
+// // client requesting initial data from server
+// var onUserFirstRun = function (socket, data) {
+//   // socketLog(socket, data);
+//   // Run controller show based off of whole party object (receipt in database)
+//   var showData = controller.show(socket, data);
+//   // io.to(data.billName).emit('fromServerInitialData', showData);
+// };
 
 // client updated its data and sent it to server, handled here
 var onUserUpdate = function (socket, data) {

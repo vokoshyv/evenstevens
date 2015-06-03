@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:52:07
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-05-29 15:23:43
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-02 14:19:59
 */
 
 var React = require('react');
@@ -18,18 +18,10 @@ var CameraImageCapture = React.createClass({
   // draw dat div
   render: function() {
     var image;
-   
-    // display loading gif while file is being processed by 
-    // the server
-    if(this.props.imageBeingProcessed) {
-      return ( <div className = "u-full-width">
-                <img className="u-max-full-width " src="images/hex-loader2.gif"/>
-              </div> );
-    }
-
+  
     // hide this component while the user is inputing
     // name
-    if(this.props.userName.length === 0) {
+    if(!this.props.userName || this.props.isLoading) {
       return null;
     }
 
@@ -48,6 +40,5 @@ var CameraImageCapture = React.createClass({
 });
 
 module.exports = CameraImageCapture;
-
 
 
