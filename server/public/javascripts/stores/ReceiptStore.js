@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-28 15:15:14
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-02 16:03:18
+* @Last Modified time: 2015-06-02 16:31:24
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -79,8 +79,9 @@ AppDispatcher.register(function(action) {
       break;
     case 'INITIAL_DATA':
       receiptObj = action.payload;
-      setItems(receiptObj.receipt.items);
-      setTotals(receiptObj.receipt);
+      var receipt = JSON.parse(receiptObj.receipt);
+      setItems(receipt.items);
+      setTotals(receipt);
       // setDinners(receiptObj.diners);
       ReceiptStore.emitChange();
       break;

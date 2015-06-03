@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-28 15:08:02
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-02 15:34:00
+* @Last Modified time: 2015-06-02 16:32:14
 */
 
 var React = require('react');
@@ -37,7 +37,6 @@ var ReceiptList = React.createClass({
   },
 
   render: function(){
-
     // if username not set, prompt for username input
     if (!this.state.currentUserName) {
       return ( <NameInputForm joinRoom={true} userName={this.state.currentUserName} />);

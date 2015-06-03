@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-02 16:04:12
+* @Last Modified time: 2015-06-02 17:15:39
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
@@ -29,14 +29,12 @@ var AppActions = {
     socket = io.connect('localhost:3000');
 
     socket.on('fromServerInitialData', function (data) {
-      console.log('Server to Client InitialData ', data);
 
       AppDispatcher.dispatch({
         actionType: 'INITIAL_DATA',
-        payload: data.dataFromServer,
-        
-    });
-       // dispatch here
+        payload: data
+      });
+  
     });
 
     socket.on('fromServerUpdate', function(data) {
@@ -44,7 +42,7 @@ var AppActions = {
     });
 
     // This calls server to join room and get receipt data
-    socket.emit('userJoin', {billName: billName, userName:userName});
+    socket.emit('userJoin', {billName: billName});
 
 
     AppDispatcher.dispatch({
@@ -68,7 +66,7 @@ var AppActions = {
         
         // Join socket
         AppActions.joinSocketRoom(billName, name);
-        
+
       } else {
         console.log('Something went terribly wrong...');
       }
