@@ -1,8 +1,8 @@
 /* 
 * @Author: vokoshyv
 * @Date:   2015-05-26 17:12:39
-* @Last Modified by:   hal
-* @Last Modified time: 2015-05-31 00:25:27
+* @Last Modified by:   vokoshyv
+* @Last Modified time: 2015-06-03 16:35:56
 */
 
 'use strict';
@@ -19,7 +19,7 @@ var gulp = require('gulp'),
     source = require('vinyl-source-stream'),
     reactify = require('reactify'),
     // for cleaning out files
-    clean = require('gulp-clean'),
+    del = require('del'),
     // for delaying a pipe stream
     wait = require('gulp-wait');
 
@@ -97,9 +97,10 @@ gulp.task('openInBrowser', function(){
   }, 7000)
 });
 
-gulp.task('clearDist', function(){
-  return gulp.src('server/public/dist/bundle.js', {read: false})
-  .pipe(clean());
+gulp.task('clearDist', function(cb){
+  del([
+    'server/public/dist/bundle.js'
+    ], cb)
 });
 
 gulp.task('watch', function(){
