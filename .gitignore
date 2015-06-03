@@ -5,6 +5,7 @@ node_modules
 dump.rdb
 *.rdb
 server/.temp
+npm-debug.log
 
 # adding in dist folder
 server/public/dist/*.js

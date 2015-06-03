@@ -1,9 +1,10 @@
 {
   "name": "evenstevens",
   "version": "0.1.0",
+  "description": "Even Stevens: Interactive Bill Splitting",
   "main": "server/app.js",
   "scripts": {
-    "test": "node ../../bin/jest.js"
+    "test": "node node_modules/.bin/jest"
   },
   "repository": {
     "type": "git",
@@ -26,11 +27,13 @@
     "node-tesseract": "^0.2.6",
     "object-assign": "^2.0.0",
     "react": "^0.13.3",
-    "react-router": "^0.13.3",
     "react-bootstrap": "^0.23.0",
+    "react-router": "^0.13.3",
+    "react-tools": "^0.13.3",
     "redis": "^0.12.1",
     "serve-favicon": "^2.2.1",
-    "socket.io": "^1.3.5"
+    "socket.io": "^1.3.5",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "browserify": "^10.2.1",
@@ -50,6 +53,8 @@
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/preprocessor.js",
-    "unmockedModulePathPatterns": ["<rootDir>/node_modules/react"]
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react"
+    ]
   }
 }

@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-02 16:28:19
+* @Last Modified by:   hal
+* @Last Modified time: 2015-06-02 21:05:59
 */
 
 'use strict';
@@ -18,7 +18,7 @@ var tesseract = require('node-tesseract');
 var Promise = require("bluebird");
 
 // seed for DB to test integration
-var seed = require('../../../config/seed').bill();
+var seed = require('../../config/seed').bill();
 
 Promise.promisifyAll(fs);
 Promise.promisifyAll(tesseract);
