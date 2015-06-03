@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-03 12:26:37
+* @Last Modified time: 2015-06-03 15:56:21
 */
 
 'use strict';
@@ -12,7 +12,7 @@ var fs = require('fs');
 var util = require('util');
 var formidable = require('formidable');
 var redis = require('redis');
-var redisDB = require('../../db.js')
+var redisDB = require('../../db.js');
 var bill = require('../../utils/bill');
 var tesseract = require('node-tesseract');
 var Promise = require("bluebird");
@@ -52,7 +52,8 @@ exports.show = function(socket, data) {
  */
 exports.create = function(req, res) {
   var billName = req.params.billName;
-  var billPath = path.join(__dirname, '../../.temp/', billName + '.jpg');
+  var randBillId = makeid();
+  var billPath = path.join(__dirname, '../../.temp/', randBillId + '.jpg');
   var form = new formidable.IncomingForm();
 
   ////////////////////////////////////////////////
@@ -63,16 +64,16 @@ exports.create = function(req, res) {
     .then(function(finalBill) {
       console.log('parsed text: ', require('util').inspect(finalBill, false, null));
 
-      redisDB.keys("*", function(err, availKeys){
-        if (err){
-          throw error;
+      redisDB.keys("*", function(err, availKeys) {
+        if (err) {
+          throw err;
         }
 
-        if (availKeys.indexOf(billName) > -1){
+        if (availKeys.indexOf(billName) > -1) {
           var counter = 0;
           var work = billName + counter.toString();
 
-          while (availKeys.indexOf(work) > -1){
+          while (availKeys.indexOf(work) > -1) {
             counter++;
             work = billName + counter.toString();
           }
@@ -85,13 +86,15 @@ exports.create = function(req, res) {
           "diners": JSON.stringify(finalBill.diners)
         }, redis.print);
 
-        //delete file upload
+        fs.unlink(path.join(__dirname, '../../.temp/' + randBillId + '.jpg'), function(err) {
+          if (err) {
+            throw err;
+          }
+        });
 
         res.status(200).json({billName: billName});
       });
-    
-
-    })
+    });
   });
 };
 
@@ -114,4 +117,15 @@ exports.update = function(io, data) {
 function handleError(res, err) {
   res.status(500).send(err);
   throw new Error('something bad happened');
+}
+
+function makeid() {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < 5; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+
+  return text;
 }
