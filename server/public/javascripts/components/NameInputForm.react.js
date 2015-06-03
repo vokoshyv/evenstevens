@@ -1,18 +1,27 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:53:40
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-02 09:52:44
+* @Last Modified by:   hal
+* @Last Modified time: 2015-06-02 21:07:09
 */
 
 var React = require('react');
 var AppActions = require('../actions/AppActions');
+var validBillName = require('../../../utils/regex').billName();
 
 // This component accepts userName input
 var NameInputForm = React.createClass({
   // initial error message set to empty string
   getInitialState: function(){
-    return {errMessage: ""};
+    return {
+      errMessage: '',
+      billName: ''
+    };
+  },
+  checkSpace: function(e) {
+    if (e.which === 32) {
+      e.preventDefault();
+    }
   },
   handleInput: function(e){
     e.preventDefault();
@@ -26,6 +35,14 @@ var NameInputForm = React.createClass({
         var url = window.location.href.split('/');  
         AppActions.joinSocketRoom(url[url.length-1],name);
     }
+
+    if(name.search(validBillName) === -1) {
+      this.setState({errMessage: "Only alphanumeric characters allowed"});
+      return;
+    }
+
+    this.setState({billName: name});
+
     // clear error message
     this.setState({errMessage:""});
 
@@ -47,7 +64,7 @@ var NameInputForm = React.createClass({
     return (
       <div className = "u-full-width">
       <form className ="inputForm " onSubmit={this.handleInput}>
-        <input className = "u-full-width" type="text" placeholder="Enter your name" ref="name" />
+        <input className = "u-full-width" type="text" placeholder="Enter your name" onKeyPress={this.checkSpace} ref="name" />
         <input className = "u-full-width button-primary" type="submit" value="Keep it even" />
         <div className ="errorBox"> {this.state.errMessage}</div>
       </form>
