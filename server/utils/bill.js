@@ -78,7 +78,7 @@ exports.process = function(path, billName) {
 
         var bill = require('../api/bill/model').billModel();
         bill.billName = billName;
-        bill.diners.push({diner: billName, itemIndex: []});      
+        bill.diners[billName] = [];
         
         exports.postProcess(bill, text);
         resolve(bill);
@@ -99,6 +99,8 @@ exports.postProcess = function(bill, text) {
   
   for (var i = 0; i < receipt.length; i++) {
     var item = receipt[i].split(' ');
+    exports.spaceToDecimal(item);
+
     var cost = item.pop();
     
     //continue if line doesn't have a cost
@@ -124,6 +126,20 @@ exports.postProcess = function(bill, text) {
 };
 
 /**
+ * Replace empty space with decimals in a valid cost value if needed.
+ * @param  {Array}  item  Single line item of receipt.
+ */
+exports.spaceToDecimal = function(item) {
+  var length = item.length;
+  var cost = item[length - 2] + '.' + item[length - 1];
+
+  if (cost.search(costRegex) > -1) {
+    item[length - 2] = cost;
+    item.pop();
+  }
+}
+
+/**
  * Parse receipt for ordered items.
  * @param   {Object}  bill   Bill object
  * @param   {Array}   item   Line item of bill text
@@ -134,7 +150,7 @@ exports.parseItems = function(bill, item, cost) {
 
   for (var i = 0; i < quanity; i++) {
     bill.receipt.items.push({
-      description: item.join(' '),
+      item: item.join(' '),
       cost: cost / quanity
     });
   }

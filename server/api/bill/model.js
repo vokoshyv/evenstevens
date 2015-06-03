@@ -2,7 +2,7 @@
 * @Author: Johnny Nguyen
 * @Date:   2015-05-27 19:34:23
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-27 20:28:29
+* @Last Modified time: 2015-06-03 15:57:44
 */
 
 'use strict';
@@ -18,6 +18,6 @@ exports.billModel = function() {
       tip: 0,
       grandTotal: 0
     },
-    diners: []
-  }
-}
+    diners: {}
+  };
+};
