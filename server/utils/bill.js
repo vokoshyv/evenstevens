@@ -3,6 +3,7 @@
 var fs = require('fs');
 var tesseract = require('node-tesseract');
 var Promise = require('bluebird');
+var costRegex = require('./regex').cost();
 
 Promise.promisifyAll(fs);
 
@@ -95,7 +96,6 @@ exports.process = function(path, billName) {
  */
 exports.postProcess = function(bill, text) {
   var receipt = text.split('\n');
-  var costRegex = /^\$?\d+(,\d{3})*(\.\d*)?.?$/;
   
   for (var i = 0; i < receipt.length; i++) {
     var item = receipt[i].split(' ');
