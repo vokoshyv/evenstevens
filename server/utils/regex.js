@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-06-01 11:04:37
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-02 13:01:57
+* @Last Modified time: 2015-06-03 11:59:38
 */
 
 'use strict';
@@ -23,7 +23,11 @@ exports.cost = function() {
   // )   : end of group
   // ?   : repeat previous token zero or one times
   // .?  : optional character (allow random character incase additional character artifact is added during processing)
-  // $   :  
+  // $   : end of string
+  
+  // regex for "$99 99" or "$99.99" values
+  // return /^\$?\d+(\,\d{3})*((?!.*  )[\.? ]\d*)?.?$/
+  
   return /^\$?\d+(\,\d{3})*(\.\d*)?.?$/
 };
 
