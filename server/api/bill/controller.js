@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-03 09:15:56
+* @Last Modified time: 2015-06-03 12:26:37
 */
 
 'use strict';
@@ -55,48 +55,44 @@ exports.create = function(req, res) {
   var billPath = path.join(__dirname, '../../.temp/', billName + '.jpg');
   var form = new formidable.IncomingForm();
 
-  // save seed to DB and return JSON on success
-  // [redis code here]
-  
-  redisDB.keys("*", function(err, availKeys){
-    if (err){
-      throw error;
-    }
-
-    if (availKeys.indexOf(billName) > -1){
-      var counter = 0;
-      var work = billName + counter.toString();
-
-      while (availKeys.indexOf(work) > -1){
-        counter++;
-        work = billName + counter.toString();
-      }
-      billName = work;
-    }
-
-    redisDB.hmset(billName, {
-      "billName": seed.billName,
-      "receipt": JSON.stringify(seed.receipt),
-      "diners": JSON.stringify(seed.diners)
-      }, redis.print);
-
-      res.status(200).json({billName: billName});
-    });
-
-
   ////////////////////////////////////////////////
   // block below parses uploaded receipt image  //
   ////////////////////////////////////////////////
-  // form.parse(req, function(err, fields, files) {
-  //   bill.parse(billPath, files.file.path, billName)
-  //   .then(function(text) {
-  //     console.log('parsed text: ', require('util').inspect(text, false, null));
-  //     // console.log('from controller: ', text);
-  //     //    save seed to DB and return JSON on success
-  //     //    [redis code here]
-  //         res.status(200).json({billName:billName});
-  //   })
-  // });
+  form.parse(req, function(err, fields, files) {
+    bill.parse(billPath, files.file.path, billName)
+    .then(function(finalBill) {
+      console.log('parsed text: ', require('util').inspect(finalBill, false, null));
+
+      redisDB.keys("*", function(err, availKeys){
+        if (err){
+          throw error;
+        }
+
+        if (availKeys.indexOf(billName) > -1){
+          var counter = 0;
+          var work = billName + counter.toString();
+
+          while (availKeys.indexOf(work) > -1){
+            counter++;
+            work = billName + counter.toString();
+          }
+          billName = work;
+        }
+
+        redisDB.hmset(billName, {
+          "billName": finalBill.billName,
+          "receipt": JSON.stringify(finalBill.receipt),
+          "diners": JSON.stringify(finalBill.diners)
+        }, redis.print);
+
+        //delete file upload
+
+        res.status(200).json({billName: billName});
+      });
+    
+
+    })
+  });
 };
 
 /**

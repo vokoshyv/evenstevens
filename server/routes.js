@@ -2,7 +2,7 @@
 * @Author: Johnny Nguyen
 * @Date:   2015-05-28 19:37:45
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-05-29 12:15:26
+* @Last Modified time: 2015-06-03 15:38:24
 */
 
 'use strict';
@@ -14,11 +14,11 @@ module.exports = function(app) {
   app.use('/api/bills', bill);
 
   app.use('*', function (req, res) {
-    res.sendfile('public/index.html', {root: __dirname});
+    res.sendFile('public/index.html', {root: __dirname});
   });
 
   // app.use('*/*', function (req, res) {
-  //   res.sendfile('public/index.html', {root: __dirname});
+  //   res.sendFile('public/index.html', {root: __dirname});
   // });
 
   // All undefined asset or api routes should return a 404
@@ -28,7 +28,7 @@ module.exports = function(app) {
   // All other routes should redirect to the index.html
   // app.route('/*')
   // .get(function(req, res) {
-  //   res.sendfile(app.get('appPath') + '/index.html');
+  //   res.sendFile(app.get('appPath') + '/index.html');
   // });
 }
 
