@@ -2,14 +2,14 @@
 * @Author: hal
 * @Date:   2015-05-22 14:23:06
 * @Last Modified by:   hal
-* @Last Modified time: 2015-06-02 21:01:16
+* @Last Modified time: 2015-06-03 09:02:59
 */
 
 'use strict';
 
-exports.bill = function() {
+exports.kingOfThai = function() {
   return {
-    billName: "tom",
+    billName: "johnny",
     receipt: {
       items: [{
         item: 'Roasted Duck over Rice',
@@ -36,9 +36,75 @@ exports.bill = function() {
       tip: 6.28,
       grandTotal: 51.79
     },
-    diners: [{
-      diner: 'tom',
-      itemIndex: [0,3]
-    }]
+    diners: {
+      'johnny': [0, 2, 5],
+      'mike': [1],
+      'ron': [4],
+      'nate': [3]
+    }
+  }
+}
+
+exports.pakwan = function() {
+  return {
+    billName: 'johnny',
+    receipt: {
+      items: [{
+        //andy
+        item: 'BIHARI BOTI',
+        cost: 8.99
+      }, {
+        //vince
+        item: 'BIHARI BOTI',
+        cost: 8.99
+      }, {
+        //vince
+        item: 'ONION NAAN',
+        cost: 2.99
+      }, {
+        //johnny
+        item: 'CHICKEN TIKKA MASALA',
+        cost: 8.99
+      }, {
+        //brant
+        item: 'CHICKEN TIKKA MASALA',
+        cost: 8.99
+      }, {
+        //johnny
+        item: 'RICE',
+        cost: 1.99
+      }, {
+        //brant
+        item: 'RICE',
+        cost: 1.99
+      }, {
+        //irfan
+        item: 'CHICKEN ACHAR',
+        cost: 7.99
+      }, {
+        //andy
+        item: 'NAAN',
+        cost: 1
+      }, {
+        //irfan
+        item: 'NAAN',
+        cost: 1
+      }, {
+        item: 'NAAN',
+        cost: 1
+      }],
+      subTotal: 53.92,
+      tax: 4.72,
+      total: 58.64,
+      tip: 0,
+      grandTotal: 0
+    },
+    diners: {
+      'johnny': [3, 5],
+      'irfan': [7, 9],
+      'brant': [4, 6],
+      'vince': [1, 2],
+      'andy': [0, 8]
+    }
   }
 }
