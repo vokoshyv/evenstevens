@@ -1,79 +1,105 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:53:40
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-04 20:10:28
+* @Last Modified by:   Johnny Nguyen
+* @Last Modified time: 2015-06-05 11:34:51
 */
 
 var React = require('react');
 var AppActions = require('../actions/AppActions');
 var validBillName = require('../../../utils/regex').billName();
 
-// This component accepts userName input
+/**
+ * This component accepts billName input
+ */
 var NameInputForm = React.createClass({
-  // initial error message set to empty string
+  /**
+   * Get initial state.
+   */
   getInitialState: function(){
     return {
       errMessage: '',
       billName: ''
     };
   },
-  checkSpace: function(e) {
-    if (e.which === 32) {
+  /**
+   * Performs validation on key press and saves to state.
+   * @param {Event} e The billName input onKeyPress event.
+   */
+  handleKeyPress: function(e) {
+    if (e.key.search(validBillName) === -1) {
+      this.setState({errMessage: "Only alphanumeric characters allowed."});
       e.preventDefault();
+      return;
+    }
+
+    if (e.key !== "Enter") {
+      var billName = e.target.value + e.key;
+
+      if (billName.length > 10) {
+        this.setState({errMessage: "Name must be less than 10 characters."});
+        e.preventDefault();
+        return;
+      }
+      
+      this.setState({billName: e.target.value + e.key});  
     }
   },
-  handleInput: function(e){
+  /**
+   * Submits the form.
+   * @param {Event} e The form onSubmit event.
+   */
+  handleInput: function(e, holler, at, foobar){
     e.preventDefault();
+    
+    var billName = this.state.billName;
     var name = React.findDOMNode(this.refs.name).value.trim();
-    // if input field empty, display error message and return
-    if(!name) {
-      this.setState({errMessage:"Please enter your name"});
-      return;
-      
-    } else if (this.props.joinRoom)  { // join room here if not master client
-        console.log("join dat ish");
-        var url = window.location.href.split('/');  
-        AppActions.joinSocketRoom(url[url.length-1],name);
-    }
-
-    if(name.search(validBillName) === -1) {
-      this.setState({errMessage: "Only alphanumeric characters allowed"});
+    
+    // empty billName validation
+    if (!billName) {
+      this.setState({errMessage:"Please enter your name."});
       return;
     }
 
-    this.setState({billName: name});
+    // join room here if not master client
+    if (this.props.joinRoom)  { 
+      var url = window.location.href.split('/');  
+      AppActions.joinSocketRoom(url[url.length - 1], billName);
+    }
 
     // clear error message
     this.setState({errMessage:""});
 
     // initiate addUser action
-    AppActions.addUser(name);
+    AppActions.addUser(billName);
 
+    ////////////////////////////////////////////////////
+    // NATE: I don't think line is necessary 
     // clear input field
-    React.findDOMNode(this.refs.name).value = '';
+    // React.findDOMNode(this.refs.name).value = '';
+    ////////////////////////////////////////////////////
+    
     return;
   },
-  // Draw dat div
+  /**
+   * Render form HTML for billName.
+   */
   render: function() {
-    // If userName has previously been input, hide input
-    // field
-    if(this.props.userName) {
+    // Hide if billName has previously been input
+    if (this.props.userName) {
       return null;
     }
-    // Display name input dif
+    
     return (
-      <div className="">
-      <form className ="inputForm " onSubmit={this.handleInput}>
-        <input className = "u-full-width" type="text" placeholder="Enter your name" onKeyPress={this.checkSpace} ref="name" />
-        <input className = "u-full-width button-primary" type="submit" value="Keep it even" />
-        <div className ="errorBox"> {this.state.errMessage}</div>
-      </form>
+      <div className = "u-full-width">
+        <form className ="inputForm " onSubmit={this.handleInput}>
+          <input className = "u-full-width" type="text" placeholder="Enter your name" ref="name" onKeyPress={this.handleKeyPress} />
+          <input className = "u-full-width button-primary" type="submit" value="Keep it even" />
+          <div className ="errorBox"> {this.state.errMessage}</div>
+        </form>
       </div>
     );
   }
 });
 
 module.exports = NameInputForm;
-
-       // <input className = "u-full-width btn orange" type="submit" value="Keep it even" />
