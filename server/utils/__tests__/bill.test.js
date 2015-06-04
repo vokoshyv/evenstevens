@@ -2,7 +2,7 @@
 * @Author: Johnny Nguyen
 * @Date:   2015-06-02 13:08:51
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-02 18:29:06
+* @Last Modified time: 2015-06-03 19:01:16
 */
 
 'use strict';
@@ -10,6 +10,7 @@
 jest.dontMock('../bill.js');
 jest.dontMock('../../../node_modules/underscore');
 jest.dontMock('../../api/bill/model');
+jest.dontMock('../regex')
 
 describe('Bill Parsing', function() {
   var bill = require('../bill.js');
@@ -19,7 +20,8 @@ describe('Bill Parsing', function() {
   
   var billModel = require('../../api/bill/model').billModel();
   billModel.billName = 'johnny';
-  billModel.diners.push({diner: 'johnny', itemIndex: []});
+  // billModel.diners.push({diner: 'johnny', itemIndex: []});
+  billModel.diners.johnny = [];
 
   //TODO: 
   var rawBill = "King of Thasui Noodle House\n\
@@ -48,21 +50,21 @@ _ rve: # :>rh Or‘de.3r#\n\
 Total :1»";
 
   var seed = { 
-    billName: 'tsunami',
+    billName: 'johnny',
     receipt:
      { items:
-        [ { description: 'Roasted Duck over Rice', cost: 10.2 },
-          { description: 'Roasted Duck over Rice', cost: 10.2 },
-          { description: 'Coke', cost: 1.8 },
-          { description: 'Crab Meat; Fried Rice ’~', cost: 10.2 },
-          { description: 'Wonton Soup', cost: 8.5 },
-          { description: 'Hot Tea', cost: 0.957 } ],
+        [ { item: 'Roasted Duck over Rice', cost: 10.2 },
+          { item: 'Roasted Duck over Rice', cost: 10.2 },
+          { item: 'Coke', cost: 1.8 },
+          { item: 'Crab Meat; Fried Rice ’~', cost: 10.2 },
+          { item: 'Wonton Soup', cost: 8.5 },
+          { item: 'Hot Tea', cost: 0.957 } ],
       subTotal: 41.85,
       tax: 3.66,
       total: 45.51,
       tip: 0,
       grandTotal: 0 },
-    diners: [ { diner: 'johnny', itemIndex: [] } ] 
+      diners: {johnny: []}
   }
 
   it('expects post process to return valid data object', function() {

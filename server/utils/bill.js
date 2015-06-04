@@ -96,6 +96,7 @@ exports.process = function(path, billName) {
  */
 exports.postProcess = function(bill, text) {
   var receipt = text.split('\n');
+  console.log('receipt: ', receipt);
   
   for (var i = 0; i < receipt.length; i++) {
     var item = receipt[i].split(' ');
@@ -107,7 +108,7 @@ exports.postProcess = function(bill, text) {
     if (cost.search(costRegex) < 0) {
       continue;
     }
-
+    // console.log('cost: ', cost);
     cost = parseFloat(cost);
 
     //assume ordered item if first element is a number
@@ -122,6 +123,8 @@ exports.postProcess = function(bill, text) {
 
   exports.checkTotals(bill);
 
+  console.log('bill: ', require('util').inspect(bill, false, null));
+
   return bill;
 };
 
@@ -132,7 +135,7 @@ exports.postProcess = function(bill, text) {
 exports.spaceToDecimal = function(item) {
   var length = item.length;
   var cost = item[length - 2] + '.' + item[length - 1];
-
+  console.log("spaceToDecimal: ", cost)
   if (cost.search(costRegex) > -1) {
     item[length - 2] = cost;
     item.pop();
