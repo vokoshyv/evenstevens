@@ -37,10 +37,10 @@ exports.kingOfThai = function() {
       grandTotal: 51.79
     },
     diners: {
-      'johnny': [0, 2, 5],
-      'mike': [1],
-      'ron': [4],
-      'nate': [3]
+      'johnny': [true, false, true, false, false, true],
+      'mike':   [false, false, false, false, false, false],
+      'ron':    [false, false, false, false, true, false],
+      'nate':   [false, false, false, true, false, false]
     }
   }
 }
@@ -100,11 +100,11 @@ exports.pakwan = function() {
       grandTotal: 0
     },
     diners: {
-      'johnny': [3, 5],
-      'irfan': [7, 9],
-      'brant': [4, 6],
-      'vince': [1, 2],
-      'andy': [0, 8]
+      'johnny': [false, false, false, true, false, true, false, false, false, false],
+      'irfan':  [false, false, false, false, false, false, false, true, false, true],
+      'brant':  [false, false, false, false, true, false, true, false, false, false],
+      'vince':  [false, true, true, false, false, false, false, false, false, false],
+      'andy':   [true, false, false, false, false, false, false, false, true, false]
     }
   }
 }
