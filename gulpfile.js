@@ -2,7 +2,7 @@
 * @Author: vokoshyv
 * @Date:   2015-05-26 17:12:39
 * @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-06-03 16:35:56
+* @Last Modified time: 2015-06-03 19:44:59
 */
 
 'use strict';
@@ -85,6 +85,10 @@ gulp.task('html', function(){
 gulp.task('startServer', shell.task([
   //'redis-server', 
   'nodemon server/app.js'
+]));
+
+gulp.task('test', shell.task([
+  'npm test'
 ]));
 
 gulp.task('openInBrowser', function(){
