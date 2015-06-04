@@ -65,21 +65,12 @@ app.use(function(err, req, res, next) {
   });
 });
 
-// Start server
-// app.listen(app.get('port'), function () {
-//   console.log('Server started: http://localhost:' + app.get('port') + '/');
-// });
-
-// start socket server
-// console.log(3'app.js initiate socketServer STEP 1');
-// var socketServer = require('./socketServer')(app);
-
 var sockets = {};
 
 var namespace = '/';
 io.of(namespace).on('connection', function(socket){
   socket.on('userJoin',           function(data) { onUserJoin(socket, data); });
-  socket.on('userFirstRun',       function(data) { onUserFirstRun(socket, data); });
+  // socket.on('userFirstRun',       function(data) { onUserFirstRun(socket, data); });
   socket.on('userUpdate',         function(data) { onUserUpdate(socket, data); });
   socket.on('disconnect', onDisconnect);
 });
@@ -91,7 +82,6 @@ var socketLog = function(socket, data) {
 // client sends billName to join room
 var onUserJoin = function (socket, data) {
   var room = data.billName;
-  console.log(room);
   if (room !== undefined && room !== '') {
     socket.join(data.billName, function(){
       controller.show(socket, data);
@@ -99,17 +89,9 @@ var onUserJoin = function (socket, data) {
   }
 };
 
-// // client requesting initial data from server
-// var onUserFirstRun = function (socket, data) {
-//   // socketLog(socket, data);
-//   // Run controller show based off of whole party object (receipt in database)
-//   var showData = controller.show(socket, data);
-//   // io.to(data.billName).emit('fromServerInitialData', showData);
-// };
-
 // client updated its data and sent it to server, handled here
 var onUserUpdate = function (socket, data) {
-  // console.log('app.js onUserUpdate()', data);
+  console.log('app.js onUserUpdate()', data);
   socketLog(socket, data);
   var updateData = controller.update(io, data); // save changes to data base
   // io.to(data.billName).emit('fromServerUpdate', updateData); // broadcast changes to everyone
