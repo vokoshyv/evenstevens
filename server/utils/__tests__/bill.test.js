@@ -2,7 +2,7 @@
 * @Author: Johnny Nguyen
 * @Date:   2015-06-02 13:08:51
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-03 19:01:16
+* @Last Modified time: 2015-06-05 11:14:13
 */
 
 'use strict';
@@ -58,13 +58,13 @@ Total :1»";
           { item: 'Coke', cost: 1.8 },
           { item: 'Crab Meat; Fried Rice ’~', cost: 10.2 },
           { item: 'Wonton Soup', cost: 8.5 },
-          { item: 'Hot Tea', cost: 0.957 } ],
+          { item: 'Hot Tea', cost: 0.96 } ],
       subTotal: 41.85,
       tax: 3.66,
       total: 45.51,
       tip: 0,
       grandTotal: 0 },
-      diners: {johnny: []}
+      diners: {johnny: [false, false, false, false, false, false]}
   }
 
   it('expects post process to return valid data object', function() {
