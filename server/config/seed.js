@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:23:06
-* @Last Modified by:   hal
-* @Last Modified time: 2015-06-03 09:02:59
+* @Last Modified by:   Johnny Nguyen
+* @Last Modified time: 2015-06-05 11:37:19
 */
 
 'use strict';
@@ -37,10 +37,10 @@ exports.kingOfThai = function() {
       grandTotal: 51.79
     },
     diners: {
-      'johnny': [true, false, true, false, false, true],
-      'mike':   [false, false, false, false, false, false],
-      'ron':    [false, false, false, false, true, false],
-      'nate':   [false, false, false, true, false, false]
+      'johnny': [true,  false, true,  false, false, true ],
+      'mike':   [false, true,  false, false, false, false],
+      'ron':    [false, false, false, false, true,  false],
+      'nate':   [false, true,  false, true,  false, false]
     }
   }
 }
@@ -100,11 +100,11 @@ exports.pakwan = function() {
       grandTotal: 0
     },
     diners: {
-      'johnny': [false, false, false, true, false, true, false, false, false, false],
-      'irfan':  [false, false, false, false, false, false, false, true, false, true],
-      'brant':  [false, false, false, false, true, false, true, false, false, false],
-      'vince':  [false, true, true, false, false, false, false, false, false, false],
-      'andy':   [true, false, false, false, false, false, false, false, true, false]
+      'johnny': [false, false, false, true,  false, true,  false, false, false, false, false],
+      'irfan':  [false, false, false, false, false, false, false, true,  false, true,  false],
+      'brant':  [false, false, false, false, true,  false, true,  false, false, false, false],
+      'vince':  [false, true,  true,  false, false, false, false, false, false, false, false],
+      'andy':   [true,  false, false, false, false, false, false, false, true,  false, false]
     }
   }
 }
