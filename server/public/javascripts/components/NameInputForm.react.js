@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:53:40
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-05 11:34:51
+* @Last Modified time: 2015-06-05 11:52:51
 */
 
 var React = require('react');
@@ -27,6 +27,8 @@ var NameInputForm = React.createClass({
    * @param {Event} e The billName input onKeyPress event.
    */
   handleKeyPress: function(e) {
+    this.setState({errMessage: ""});
+
     if (e.key.search(validBillName) === -1) {
       this.setState({errMessage: "Only alphanumeric characters allowed."});
       e.preventDefault();
