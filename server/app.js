@@ -70,7 +70,6 @@ var sockets = {};
 var namespace = '/';
 io.of(namespace).on('connection', function(socket){
   socket.on('userJoin',           function(data) { onUserJoin(socket, data); });
-  // socket.on('userFirstRun',       function(data) { onUserFirstRun(socket, data); });
   socket.on('userUpdate',         function(data) { onUserUpdate(socket, data); });
   socket.on('disconnect', onDisconnect);
 });
@@ -91,10 +90,7 @@ var onUserJoin = function (socket, data) {
 
 // client updated its data and sent it to server, handled here
 var onUserUpdate = function (socket, data) {
-  console.log('app.js onUserUpdate()', data);
-  socketLog(socket, data);
-  var updateData = controller.update(io, data); // save changes to data base
-  // io.to(data.billName).emit('fromServerUpdate', updateData); // broadcast changes to everyone
+  controller.update(io, data);
 };
 
 var onDisconnect = function (socket) {
