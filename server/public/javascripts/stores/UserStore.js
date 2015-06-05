@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 14:23:20
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-04 19:30:12
+* @Last Modified time: 2015-06-04 20:22:07
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -29,9 +29,8 @@ var setLoading = function(bool) {
 var setDiners = function(diners, itemCount) {
   _itemCount = itemCount;
    _diners = diners;
-  if(_diners[_userName]) {
+  if(_diners[_userName] > 0) {
     console.log("duplicate user");
-
   } else {
     var claimedArray = [];
     while(itemCount--) {
@@ -54,7 +53,9 @@ var setDiners = function(diners, itemCount) {
 var setToggleItem = function(itemIndex) {
   _diners[_userName][itemIndex] = !_diners[_userName][itemIndex];
 
-  var isClaimed = _diners[_userName][itemIndex]
+  var isClaimed = _diners[_userName][itemIndex];
+
+
   var claimedNames = _itemToDiner[itemIndex];
 
  if(isClaimed){
@@ -63,6 +64,10 @@ var setToggleItem = function(itemIndex) {
   var index = claimedNames.indexOf(_userName);
   claimedNames.splice(index, 1);
  }
+
+ console.log(isClaimed);
+
+
 };
 
 var UserStore = assign({}, EventEmitter.prototype, {

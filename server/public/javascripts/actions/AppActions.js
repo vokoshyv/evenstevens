@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-04 19:49:42
+* @Last Modified time: 2015-06-04 20:11:43
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
@@ -33,11 +33,12 @@ var AppActions = {
   },
 
   joinSocketRoom : function(billName, userName) {
-
+    console.log("join");
     // grabs current url for socket connection
     var url = window.location.href.split('/');  
-    socket = io.connect(url[2]);
+    socket = io.connect('localhost:3000');
     socket.on('fromServerInitialData', function (data) {
+      console.log("data");
       AppDispatcher.dispatch({
         actionType: 'INITIAL_DATA',
         payload: data

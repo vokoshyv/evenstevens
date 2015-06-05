@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:52:07
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-04 15:39:36
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-06-05 10:27:00
 */
 
 var React = require('react');
@@ -13,7 +13,6 @@ var AppActions = require('../actions/AppActions');
 var CameraImageCapture = React.createClass({
   // Initiate image handler action, passing file and userName
   _handleImage: function (e) {
-    console.log("wtf2");
     AppActions.handleImage( { file:e.target.files[0], userName: this.props.userName});
   },
   // draw dat div

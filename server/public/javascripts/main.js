@@ -2,20 +2,20 @@
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-04 19:50:07
+* @Last Modified time: 2015-06-04 20:12:39
 */
 'use strict';
 // This file is the main entry point for browserify
 
-var socket = io.connect('localhost:3000');
-var url = window.location.href.split('/');
-var billName = url[url.length-1];
-socket.on('fromServerInitialData', function (data) {});
+// var socket = io.connect('localhost:3000');
+// var url = window.location.href.split('/');
+// var billName = url[url.length-1];
+// socket.on('fromServerInitialData', function (data) {});
 
-// once data is updated on the server,
-// the update data gets broadcasted to all clients, handled here
-socket.on('fromServerUpdate', function (data) {});
-socket.emit('userJoin', {billName: billName});
+// // once data is updated on the server,
+// // the update data gets broadcasted to all clients, handled here
+// socket.on('fromServerUpdate', function (data) {});
+// socket.emit('userJoin', {billName: billName});
 
 
 // -----------------------------------------------

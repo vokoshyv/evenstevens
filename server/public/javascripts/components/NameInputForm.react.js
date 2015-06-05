@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:53:40
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-04 19:51:51
+* @Last Modified time: 2015-06-04 20:10:28
 */
 
 var React = require('react');
@@ -32,6 +32,7 @@ var NameInputForm = React.createClass({
       return;
       
     } else if (this.props.joinRoom)  { // join room here if not master client
+        console.log("join dat ish");
         var url = window.location.href.split('/');  
         AppActions.joinSocketRoom(url[url.length-1],name);
     }

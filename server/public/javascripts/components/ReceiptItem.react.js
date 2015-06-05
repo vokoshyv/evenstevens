@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-29 16:00:24
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-04 19:37:52
+* @Last Modified time: 2015-06-04 20:23:53
 */
 
 var React = require('react');
@@ -30,8 +30,12 @@ var ReceiptItem = React.createClass({
     var item = this.props.item;
     var userName = this.props.userName;
     var claimedList = this.props.claimedBy;
-    var claimedBy = claimedList.join(" / ");
-    var indexOfClaimed = claimedList.indexOf(userName);
+    if (claimedList) {
+      var claimedBy = claimedList.join(" / ");
+      var indexOfClaimed = claimedList.indexOf(userName);
+    }
+    
+  
 
     var buttonMessage = "";
 
