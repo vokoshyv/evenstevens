@@ -2,7 +2,7 @@
 * @Author: Johnny Nguyen
 * @Date:   2015-05-29 15:12:30
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-02 20:20:24
+* @Last Modified time: 2015-06-04 16:46:02
 */
 
 jest.dontMock('../NameInputForm.react.js');
@@ -23,31 +23,19 @@ describe('NameInputForm', function() {
       inputs = TestUtils.scryRenderedDOMComponentsWithTag(node, 'input');
 
       node.handleInput = jest.genMockFunction();
-      node.state.errMessage = '';
     });
 
-  it('expects trimmed spaces', function() {
-    inputs[0].getDOMNode().value = ' johnny ';
-    TestUtils.Simulate.submit(form);
-    expect(node.state.errMessage).toEqual('');
-    expect(node.state.billName).toEqual('johnny');
-  });
-
-  it('expects error on inner spaces', function() {
-    inputs[0].getDOMNode().value = ' johnny tsunami ';
-    TestUtils.Simulate.submit(form);
-    expect(node.state.errMessage).toEqual('Only alphanumeric characters allowed');
+  it('expects prevented spaces', function() {
+    TestUtils.Simulate.keyPress(inputs[0], {key: ' '});
+    expect(node.state.errMessage).toEqual('Only alphanumeric characters allowed.');
+    expect(node.state.billName).toEqual('');
   });
 
   it('expects error on non-alphanumeric characters', function() {
-    inputs[0].getDOMNode().value = 'johnny!';
+    node.state.billName = 'johnn';
+    TestUtils.Simulate.keyPress(inputs[0], {key: '!'});
     TestUtils.Simulate.submit(form);
-    expect(node.state.errMessage).toEqual('Only alphanumeric characters allowed');
-  });  
-
-  it('expects error on empty value', function() {
-    inputs[0].getDOMNode().value = '';
-    TestUtils.Simulate.submit(form);
-    expect(node.state.errMessage).toEqual('Please enter your name');
+    expect(node.state.errMessage).toEqual('Only alphanumeric characters allowed.');
+    expect(node.state.billName).toEqual('johnn');
   });
 });

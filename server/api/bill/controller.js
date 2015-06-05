@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-04 19:55:51
+* @Last Modified by:   Johnny Nguyen
+* @Last Modified time: 2015-06-05 11:38:11
 */
 
 'use strict';
@@ -62,7 +62,23 @@ exports.create = function(req, res) {
   form.parse(req, function(err, fields, files) {
     bill.parse(billPath, files.file.path, billName)
     .then(function(finalBill) {
-      console.log('parsed text: ', require('util').inspect(finalBill, false, null));
+      console.log('/**');
+      console.log(' * /////////////////');
+      console.log(' * // parsed text //');
+      console.log(' * /////////////////');
+      console.log(' */')
+      console.log(require('util').inspect(finalBill, false, null));
+      console.log('\n');
+
+      fs.unlink(path.join(__dirname, '../../.temp/' + randBillId + '.jpg'), function(err) {
+        if (err) {
+          throw err;
+        }
+      });
+
+      if (!Object.keys(finalBill).length) {
+        return res.status(202).json({});
+      }
 
       redisDB.keys("*", function(err, availKeys) {
         if (err) {
@@ -86,13 +102,7 @@ exports.create = function(req, res) {
           "diners": JSON.stringify(finalBill.diners)
         }, redis.print);
 
-        fs.unlink(path.join(__dirname, '../../.temp/' + randBillId + '.jpg'), function(err) {
-          if (err) {
-            throw err;
-          }
-        });
-
-        res.status(201).json({billName: billName});
+        return res.status(201).json({billName: billName});
       });
     });
   });
