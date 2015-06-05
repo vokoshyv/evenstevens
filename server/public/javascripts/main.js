@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-01 11:32:27
+* @Last Modified time: 2015-06-04 19:50:07
 */
 'use strict';
 // This file is the main entry point for browserify
@@ -27,6 +27,8 @@ socket.emit('userJoin', {billName: billName});
 // React requires
 var React = require('react');
 var Router = require('react-router');
+var Grid = require('react-bootstrap').Grid;
+var Row = require('react-bootstrap').Row;
 var DefaultRoute = Router.DefaultRoute;
 var Link = Router.Link;
 var Route = Router.Route;
@@ -40,10 +42,12 @@ var SubmitReceipt = require('./components/SubmitReceipt.react');
 var App = React.createClass({
   render: function() {
     return (
-      <div className ="container">
-      <h1 id="brand"> Even Stevens </h1>
-      <RouteHandler />
-      </div>
+         <Grid>
+          <Row>
+            <div className ="brand"><h1> Even Stevens </h1></div>
+            <RouteHandler />
+          </Row>
+        </Grid>
     );
   }
 });

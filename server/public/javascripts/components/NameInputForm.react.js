@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:53:40
-* @Last Modified by:   hal
-* @Last Modified time: 2015-06-02 21:07:09
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-04 19:51:51
 */
 
 var React = require('react');
@@ -62,7 +62,7 @@ var NameInputForm = React.createClass({
     }
     // Display name input dif
     return (
-      <div className = "u-full-width">
+      <div className="">
       <form className ="inputForm " onSubmit={this.handleInput}>
         <input className = "u-full-width" type="text" placeholder="Enter your name" onKeyPress={this.checkSpace} ref="name" />
         <input className = "u-full-width button-primary" type="submit" value="Keep it even" />
@@ -74,3 +74,5 @@ var NameInputForm = React.createClass({
 });
 
 module.exports = NameInputForm;
+
+       // <input className = "u-full-width btn orange" type="submit" value="Keep it even" />

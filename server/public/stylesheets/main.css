@@ -2,27 +2,114 @@
 * @Author: hal
 * @Date:   2015-05-22 13:19:09
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-01 19:50:54
+* @Last Modified time: 2015-06-04 18:02:14
 */
 
+html {
+  min-height:100%;
+}
+
+
+
+body {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+   cursor:'pointer' ;
+  background-size:contain;
+  background-repeat:no-repeat;
+}
+
+html, body, #content, #content .container-fluid {
+  height:100%;
+}
 
 .bill-details ul {
   list-style: none;
-  border-top: 1px solid #eee;
-  padding-top:30px;
+  padding-bottom:0px;
+  margin-bottom:0px;
 }
+
+ul {
+  padding-left:0px;
+}
+
+.receipt-list {
+  padding-left:0px;
+  padding-right:0px;
+}
+
+.item-list, .totals-list {
+  list-style:none;
+}
+
+.item-li {
+  height:75px;
+  overflow:hidden;
+  background-color:white;
+ /* background:#FFF;*/
+}
+
+.totals-li {
+  height:50px;
+
+}
+
+.item-description {
+  padding-left:20px;
+  float:left;
+
+}
+
+.item-cost, .item-description {
+    height:30px;
+  line-height:30px;
+}
+
+.item-cost  {
+  float:right;
+  padding-right:20px;
+
+}
+
+
+.party-header {
+  color:#FFF;
+  height:30px;
+  background: #6060E0;
+  padding-left:20px;
+  padding-right:20px;
+  line-height:30px;
+}
+
 
 #content { 
-margin-top:30px;
+
 }
 
-#brand { 
-  text-align:center;
+.submitReceipt {
+  height:auto;
+  color:black;
 }
 
-.item-description { 
-  margin-right: 10px;
+.brand {
+/*    background: rgba(73,155,234,1);
+  background: -moz-linear-gradient(top, rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(73,155,234,1)), color-stop(100%, rgba(32,124,229,1)));
+  background: -webkit-linear-gradient(top, rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%);
+  background: -o-linear-gradient(top, rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%);
+  background: -ms-linear-gradient(top, rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%);
+  background: linear-gradient(to bottom, rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#207ce5', GradientType=0 );*/
+  padding-left:10px;
+  padding-bottom:10px;
 }
+
+.brand h1{ 
+
+  font-size:20px;
+  color:#000;
+ 
+}
+
 
 .loading-msg {
   text-align: center;
@@ -31,13 +118,59 @@ margin-top:30px;
 text-align:center;
 }
 
-.example-enter {
-  opacity: 0.01;
-  transition: opacity .5s ease-in;
+
+
+
+
+.claim-button {
+  width:100px;
 }
 
-.example-enter.example-enter-active {
-  opacity: 1;
-  color:red;
+
+.claimed-by {
+  padding-right:20px;
+   padding-left:20px;
+    border:none;
+
+}
+
+.claimed-name  {
+  color:orange;
+}
+
+
+
+
+
+
+
+.cost-desc {
+  float:left;
+  padding-left:20px;
+}
+
+.checked {
+  color: green;
+  font-size: 20px;
+  right:5px;
+  position:absolute;
+
+/*  background: rgb(202, 249, 249);*/
+  display: table-cell;
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #EEE;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #EEE;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #EEE;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+   color:    #EEE;
 }
 

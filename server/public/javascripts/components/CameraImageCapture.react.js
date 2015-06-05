@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:52:07
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-02 14:19:59
+* @Last Modified time: 2015-06-04 15:39:36
 */
 
 var React = require('react');
@@ -13,6 +13,7 @@ var AppActions = require('../actions/AppActions');
 var CameraImageCapture = React.createClass({
   // Initiate image handler action, passing file and userName
   _handleImage: function (e) {
+    console.log("wtf2");
     AppActions.handleImage( { file:e.target.files[0], userName: this.props.userName});
   },
   // draw dat div
@@ -27,13 +28,9 @@ var CameraImageCapture = React.createClass({
 
     // display file input button
     return (
-      <div>
-        <div>Hi {this.props.userName} </div>
-        <label className ="u-full-width" > 
-        <input ref="upload" type="file" capture="camera" style={{"display":"none"}} accept="image/*" onChange={ this._handleImage } />
-        <button className = "button-primary u-full-width">Capture Receipt </button>
-        </label>
-
+      <div className = "container">
+        <div>{"Hi " + this.props.userName + "!"} </div>
+        <input ref="upload" type="file" capture="camera" accept="image/*" onChange={ this._handleImage } />
       </div>
     );
   }

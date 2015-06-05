@@ -2,29 +2,62 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-29 16:00:24
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-02 14:59:01
+* @Last Modified time: 2015-06-04 19:37:52
 */
 
 var React = require('react');
+var addons =require('react/addons');
 var AppActions = require('../actions/AppActions');
 
 
 var ReceiptItem = React.createClass({
-  handleClick: function() {
-    console.log("this!!!");
+  getInitialState: function() {
+    React.initializeTouchEvents(true);
+    return null;
   },
+  componentDidMount: function() {
+      this.getDOMNode().onclick = function() {}
+    },
+
+  claimItem: function() {
+     AppActions.toggleClaimed(this.props.index);
+  },
+  splitItem: function() {
+
+  },
+
   render: function() {
     var item = this.props.item;
-    var classString = "item-li";
-    if(this.props.isClaimed) {
-      classString += ' item-claimed';
-    }
-    return (
-      <li onClick ={this.handleClick} className={classString} key={item.id} >
-      <span className="item-description">{item.item}</span>
-      <span className="item-cost u-pull-right">{item.cost}</span>
-      </li>
+    var userName = this.props.userName;
+    var claimedList = this.props.claimedBy;
+    var claimedBy = claimedList.join(" / ");
+    var indexOfClaimed = claimedList.indexOf(userName);
 
+    var buttonMessage = "";
+
+    if (claimedBy) {
+      if(indexOfClaimed === -1) {
+        buttonMessage = "Split";
+      } else {
+        buttonMessage = "Cancel";
+      }
+    } else {
+      buttonMessage = "Claim"
+    }
+
+    return (
+      <li className="item-li"key={item.id} >
+
+        <div className="item-description">{item.item}</div>
+            <div className="checked">{claimedBy && <span> &#10003;</span>}</div>
+        <div className="item-cost ">{item.cost}</div>
+      
+      <div className="clearfix"></div>
+      <div className="claimed-by">
+          <div className = "claim-button btn btn-default pull-left" onClick = {this.claimItem}> {buttonMessage}</div>
+          <div className = "claimed-name pull-right"> {claimedBy || "Not Claimed"} </div>
+      </div>
+      </li>
     );
   },
 });
