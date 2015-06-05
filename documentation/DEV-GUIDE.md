@@ -3,15 +3,15 @@
 All project tools must be compatible between OSX and Linux systems. The standard project tools appear below.
 
 ## Sublime Text 3
-Sublime Text 3 is the chosen editor for members of the Trybe project. You can use whatever text editor or IDE you choose, however using Sublime Text with the settings described below will make it easier to adhear to project style guide and coding standards.
+Sublime Text 3 is the chosen editor for members of the EvenStevens project. You can use whatever text editor or IDE you choose, however using Sublime Text with the settings described below will make it easier to adhear to project style guide and coding standards.
 
-### Project File (trybe.sublime-project)
+### Project File (coming)
 
 The project file standardizes a key editor settings between project members. For example, the file sets a default tab size for all new files to '2' and automattically translates all tab input to spaces. Another helpful setting; it displays two verical lines in the editor, the first (60 spaces) marks the border for comments, the second (80 spaces) marks the border code.
 
 ### Plugins
 
-Project plugins are seprated to the groups 'suggested', 'linters', and 'themes'. The suggested plugins are optional but strongly recommended for project synchronicity.  The linters are manditory.  A small amount of study is required ahead of configuration.  Themes are optional but installing at least one of them is recommended, as they will help with linter highlighting, sidebar organization, and more.
+Project plugins are seprated to the groups 'suggested', 'linters', and 'themes'. The suggested plugins are optional but strongly recommended for project synchronicity.  The linters are mandatory.  A small amount of study is required ahead of configuration.  Themes are optional but installing at least one of them is recommended, as they will help with linter highlighting, sidebar organization, and more.
 
 #### Suggested Plugins
 
@@ -48,7 +48,7 @@ Themes are optional. Your theme selection is largely a matter of preference. The
 }
 ```
 
-LightCante's list of favorite themes appears below:
+Decentralized Saxophone's list of favorite themes appears below:
 
 * [ITG Flat](http://itsthatguy.com/post/70191573560/sublime-text-theme-itg-flat)
 * [Farzer](http://devthemez.com/farzher)
@@ -62,24 +62,65 @@ ZSH is an command line terminal with powerful capabilities. It comes from bash, 
 
 ### Getting Set Up
 
-#####Development Environment 
+#####Development Environment (Additional information can be found on EvenSteven's [wiki](https://github.com/decentralizedsaxophone/evenstevens/wiki))
 
-1. Ensure you have mysql installed by running <code>which mysql</code>. If not installed, run <code>brew install mysql</code>. For Linux machines, run <code>sudo apt-get install mysql-server</code>. You can then decide to enter as a root user or create a normal user (https://dev.mysql.com/doc/refman/5.5/en/changing-mysql-user.html). To enter the mysql environment, run <code>mysql -u root</code>. (Or whichever username you decide). Upon entering, create a trybe database with the following command: <code>create database 'trybe';</code>. To use this database, run <code>use trybe;</code>. If you run <code>show tables;</code>, you will not see any tables because you haven't actually run your server yet. 
+Install necessary Node modules with the following command: 
 
-2. Outside of the mysql environment, in your directory, run <code>npm install</code>. 
+<code>npm install</code>
 
-3. Upon completion, run <code>bower install</code>. 
+Our application uses Node v 0.10.38 in order to run Jest Testing on our code base. First check your current Node version.  
 
-4. You should now have all of your front and back end dependencies. Now run <code>grunt build</code>. This command will build the tables from the schemas in trybe/server/models. 
+<code>node -v</code>
 
-5. In the terminal, set the following variables: DATABASE_NAME, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_HOST. Then run <code>export DATABASE_USERNAME DATABASE_PASSWORD DATABASE_HOST DATABASE_NAME</code>
+We are now going to use n to switch between different versions of node. Run the following command to install n globally. Afterwards, use n to install version 0.10.38 of node. 
 
-6. Run <code>nodemon server/server.js</code> to start the server on your machine.
+```
+sudo npm install -g n
+
+sudo n 0.10.38
+```
+
+At this point, you will have version 0.10.38 of Node. You will need to select it to switch over to it. 
+
+<code>sudo n</code>
+
+Then select version 0.10.38. Check your node version again with <code>node -v</code> and you should be running 0.10.38. 
+
+As for installing the Redis database, you need to run the following commands. This assumes you have [Homebrew](http://brew.sh/) installed on your computer. `redis-server` starts the redis server in your terminal. You will need to run the node server in a different terminal tab. 
+
+```
+brew update
+
+brew install redis
+
+redis-server
+```
+
+For our app's optical character recognition, we used Tesseract. You'll need to install this in order to convert the receipt images to text. Run the following commands: 
+
+```
+brew update
+
+brew install tesseract
+```
+Please note that the commands above only install the English package. To install other languages, please consult their [site](https://code.google.com/p/tesseract-ocr/downloads/list) 
+
+At this point, you are ready to start the Redis and Node servers on your terminal. I generally prefer to use <code>nodemon</code> to run my node server on my machine. It has a watcher that restarts your server whenever you change any files in your directory. With that said, you'll need to start up your redis server first before you start the node server. In two separate terminal tabs, run the following commands: 
+
+```
+redis-server
+
+gulp
+```
+the <code>gulp</code> command actually performs the entire build process of your site. You will find many tasks that are automated in there. Check them out!!
+
+You will want to interact with the Redis database that you set up. You can read about commands [here](http://redis.io/commands). To access the command line for the database, run the following command in a third tab: 
+
+```
+http://redis.io/commands
+```
+
 
 #####Deployment Environment
 
-1. Contact us (lightcante team) for environmental variables for online Heroku app. We will give you the credentials then. 
-
-2. Copy and paste them into your terminal and press 'Enter'. 
-
-3. Run <code>nodemon server/server.js</code>. You will now be interacting directly with the Cleardb database. 
+Our team (Decentralized Saxophones) deployed on Digital Ocean. Please contact us for details to access the server. 
