@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-05 11:37:48
+* @Last Modified time: 2015-06-05 11:38:11
 */
 
 'use strict';
@@ -70,6 +70,12 @@ exports.create = function(req, res) {
       console.log(require('util').inspect(finalBill, false, null));
       console.log('\n');
 
+      fs.unlink(path.join(__dirname, '../../.temp/' + randBillId + '.jpg'), function(err) {
+        if (err) {
+          throw err;
+        }
+      });
+
       if (!Object.keys(finalBill).length) {
         return res.status(202).json({});
       }
@@ -95,12 +101,6 @@ exports.create = function(req, res) {
           "receipt": JSON.stringify(finalBill.receipt),
           "diners": JSON.stringify(finalBill.diners)
         }, redis.print);
-
-        fs.unlink(path.join(__dirname, '../../.temp/' + randBillId + '.jpg'), function(err) {
-          if (err) {
-            throw err;
-          }
-        });
 
         return res.status(201).json({billName: billName});
       });
