@@ -2,20 +2,20 @@
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-01 11:32:27
+* @Last Modified time: 2015-06-04 20:12:39
 */
 'use strict';
 // This file is the main entry point for browserify
 
-var socket = io.connect('localhost:3000');
-var url = window.location.href.split('/');
-var billName = url[url.length-1];
-socket.on('fromServerInitialData', function (data) {});
+// var socket = io.connect('localhost:3000');
+// var url = window.location.href.split('/');
+// var billName = url[url.length-1];
+// socket.on('fromServerInitialData', function (data) {});
 
-// once data is updated on the server,
-// the update data gets broadcasted to all clients, handled here
-socket.on('fromServerUpdate', function (data) {});
-socket.emit('userJoin', {billName: billName});
+// // once data is updated on the server,
+// // the update data gets broadcasted to all clients, handled here
+// socket.on('fromServerUpdate', function (data) {});
+// socket.emit('userJoin', {billName: billName});
 
 
 // -----------------------------------------------
@@ -27,6 +27,8 @@ socket.emit('userJoin', {billName: billName});
 // React requires
 var React = require('react');
 var Router = require('react-router');
+var Grid = require('react-bootstrap').Grid;
+var Row = require('react-bootstrap').Row;
 var DefaultRoute = Router.DefaultRoute;
 var Link = Router.Link;
 var Route = Router.Route;
@@ -40,10 +42,12 @@ var SubmitReceipt = require('./components/SubmitReceipt.react');
 var App = React.createClass({
   render: function() {
     return (
-      <div className ="container">
-      <h1 id="brand"> Even Stevens </h1>
-      <RouteHandler />
-      </div>
+         <Grid>
+          <Row>
+            <div className ="brand"><h1> Even Stevens </h1></div>
+            <RouteHandler />
+          </Row>
+        </Grid>
     );
   }
 });

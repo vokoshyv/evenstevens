@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-02 17:15:39
+* @Last Modified time: 2015-06-04 20:11:43
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
@@ -18,6 +18,13 @@ var AppActions = {
   },
   socketEmitUpdate: function(data){
 
+
+    // {
+    //   billName: billName,
+    //   userName: "bill",
+    //   array:    [true, flase]
+    //   update: { "bill": [true, false, true] }
+    // }
     // sends just diner object
     // {billname:sdfsdfs
     //  dinerArray:sdfsdfsd}
@@ -26,11 +33,12 @@ var AppActions = {
   },
 
   joinSocketRoom : function(billName, userName) {
+    console.log("join");
+    // grabs current url for socket connection
+    var url = window.location.href.split('/');  
     socket = io.connect('localhost:3000');
-
-    // Listener for full receipt object from server
     socket.on('fromServerInitialData', function (data) {
-
+      console.log("data");
       AppDispatcher.dispatch({
         actionType: 'INITIAL_DATA',
         payload: data
@@ -44,10 +52,15 @@ var AppActions = {
     // This calls server to join room and get receipt data
     socket.emit('userJoin', {billName: billName});
 
-
     AppDispatcher.dispatch({
       actionType: 'BILL_NAME_LOADED',
       payload: billName
+    });
+  },
+  toggleClaimed: function(itemIndex){
+    AppDispatcher.dispatch({
+      actionType: 'ITEM_TOGGLE',
+      payload:itemIndex
     });
   },
   handleImage: function(userFile) {
@@ -59,7 +72,7 @@ var AppActions = {
     formData.append('file', file);    
     xhr.open('POST', '/api/bills/' + name); 
     xhr.onload = function () {
-      if (xhr.status === 200) {
+      if (xhr.status === 201) {
         console.log('response ' + xhr.status);
 
         var billName = JSON.parse(xhr.responseText).billName;
@@ -80,6 +93,6 @@ var AppActions = {
       payload: true
     });
   }
-}
+};
 
 module.exports = AppActions;

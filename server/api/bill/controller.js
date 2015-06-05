@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-03 15:56:21
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-04 19:55:51
 */
 
 'use strict';
@@ -92,7 +92,7 @@ exports.create = function(req, res) {
           }
         });
 
-        res.status(200).json({billName: billName});
+        res.status(201).json({billName: billName});
       });
     });
   });

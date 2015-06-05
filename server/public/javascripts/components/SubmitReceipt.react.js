@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-29 10:19:44
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-01 11:57:05
+* @Last Modified time: 2015-06-04 16:14:28
 */
 
 var React = require('react');
@@ -42,7 +42,7 @@ var SubmitReceipt = React.createClass({
   },
   // Render the row!
   render: function(){
-    return (<div className = "row"> 
+    return (<div className= "submitReceipt"> 
       <NameInputForm userName={this.state.userName} />
       <CameraImageCapture isLoading={this.state.isLoading}  userName={this.state.userName} />
       <LoadingView isLoading={this.state.isLoading} />

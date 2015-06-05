@@ -2,7 +2,7 @@
 * @Author: nathanbailey
 * @Date:   2015-06-02 14:46:31
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-02 15:34:09
+* @Last Modified time: 2015-06-04 17:49:38
 */
 
 var React = require('react');
@@ -12,13 +12,13 @@ var AppActions = require('../actions/AppActions');
 var KeyValueListItem = React.createClass({
 
   render: function() {
-    var item = this.props.item;
+    var cost = this.props.item;
     var title = this.props.title.toLowerCase();
 
     return (
-      <li key = {item.id} >
-      <span className="item-description">{title}</span>
-      <span className="item-cost u-pull-right">{item}</span>
+      <li className = "totals-li" key = {cost.id} >
+      <div className="cost-desc ">{title}</div>
+      <div className="item-cost ">{cost}</div>
       </li>
     );
   },
