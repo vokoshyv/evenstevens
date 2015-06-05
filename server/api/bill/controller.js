@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-05 11:36:12
+* @Last Modified time: 2015-06-05 11:37:48
 */
 
 'use strict';
@@ -62,7 +62,17 @@ exports.create = function(req, res) {
   form.parse(req, function(err, fields, files) {
     bill.parse(billPath, files.file.path, billName)
     .then(function(finalBill) {
-      console.log('parsed text: ', require('util').inspect(finalBill, false, null));
+      console.log('/**');
+      console.log(' * /////////////////');
+      console.log(' * // parsed text //');
+      console.log(' * /////////////////');
+      console.log(' */')
+      console.log(require('util').inspect(finalBill, false, null));
+      console.log('\n');
+
+      if (!Object.keys(finalBill).length) {
+        return res.status(202).json({});
+      }
 
       redisDB.keys("*", function(err, availKeys) {
         if (err) {
@@ -92,7 +102,7 @@ exports.create = function(req, res) {
           }
         });
 
-        res.status(201).json({billName: billName});
+        return res.status(201).json({billName: billName});
       });
     });
   });
