@@ -2,7 +2,7 @@
 * @Author: vokoshyv
 * @Date:   2015-05-26 17:12:39
 * @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-06-03 19:44:59
+* @Last Modified time: 2015-06-05 16:36:18
 */
 
 'use strict';
@@ -14,14 +14,22 @@ var gulp = require('gulp'),
     open = require('gulp-open'),
     shell = require('gulp-shell'),
     stylish = require('jshint-stylish'),
-    // added
+
+    // required dependencies for compressing React files
     browserify = require('browserify'),
     source = require('vinyl-source-stream'),
     reactify = require('reactify'),
+
     // for cleaning out files
     del = require('del'),
+
     // for delaying a pipe stream
-    wait = require('gulp-wait');
+    wait = require('gulp-wait'),
+
+    // to implement consistent styling
+    jscs = require('gulp-jscs'),
+    notify = require('gulp-notify'),
+    growl = require('gulp-notify-growl');
 
 // set up paths 
 var paths = {
@@ -126,4 +134,17 @@ gulp.task('lint', function() {
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'));
+});
+
+var growlNotifier = growl();
+
+gulp.task('style', function() {
+    gulp.src('testing/*.js')
+        .pipe(jscs({preset: 'google'}))
+        .pipe(jscs({fix: true}))
+        .pipe(notify({
+            title: 'JSCS',
+            message: 'JSCS Passed. Let it fly!'
+        }));
+
 });
