@@ -105,15 +105,28 @@ exports.create = function(req, res) {
  * @return {[type]}     [description]
  */
 
-exports.update = function(io, data) {
-  // stringify diners object, save it to database, then broadcast updateData to all users
-  redisDB.hmset(data.billName, {
-    "diners": JSON.stringify(data.updateData)
-  }, function(){
-    io.to(data.billName).emit('fromServerUpdate', data); // broadcast changes to everyone
+exports.update = function(io, clientData) {
+
+  var billName = clientData.billName;
+  var dinersName = clientData.userName;
+  var dinersArray = clientData.array;
+
+  redisDB.hget(billName, 'diners', function(err, data){
+    if (err) {
+      throw err;
+    } 
+    else {
+
+      var parsedData = JSON.parse(data);
+      parsedData[dinersName] = dinersArray;
+      var dataToBeInserted = JSON.stringify(parsedData);
+      redisDB.hset(billName, 'diners', dataToBeInserted, redis.print);
+      io.to(billName).emit('fromServerUpdate', clientData);
+
+    }
   });
 };
- 
+
 function handleError(res, err) {
   res.status(500).send(err);
   throw new Error('something bad happened');

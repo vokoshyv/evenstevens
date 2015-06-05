@@ -28,6 +28,7 @@ var AppActions = {
   joinSocketRoom : function(billName, userName) {
     socket = io.connect('localhost:3000');
 
+    // Listener for full receipt object from server
     socket.on('fromServerInitialData', function (data) {
 
       AppDispatcher.dispatch({
@@ -37,9 +38,8 @@ var AppActions = {
   
     });
 
-    socket.on('fromServerUpdate', function(data) {
-      console.log('Server to client update ', data)
-    });
+    // Listener for server broadcast of a single user's updated diner object.
+    socket.on('fromServerUpdate', function(data) {});
 
     // This calls server to join room and get receipt data
     socket.emit('userJoin', {billName: billName});
