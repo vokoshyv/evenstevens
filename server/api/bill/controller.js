@@ -1,8 +1,13 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
+<<<<<<< HEAD
 * @Last Modified by:   Nathan Bailey
 * @Last Modified time: 2015-06-05 17:13:07
+=======
+* @Last Modified by:   Johnny Nguyen
+* @Last Modified time: 2015-06-05 20:01:55
+>>>>>>> (feat) Save tip percent
 */
 
 'use strict';
@@ -60,7 +65,7 @@ exports.create = function(req, res) {
   // block below parses uploaded receipt image  //
   ////////////////////////////////////////////////
   form.parse(req, function(err, fields, files) {
-    bill.parse(billPath, files.file.path, billName)
+    bill.parse(billPath, files.file.path, fields)
     .then(function(finalBill) {
       console.log('/**');
       console.log(' * /////////////////');
