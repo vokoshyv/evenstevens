@@ -2,7 +2,7 @@
 * @Author: nathanbailey
 * @Date:   2015-06-02 14:46:31
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-06 10:22:46
+* @Last Modified time: 2015-06-06 12:10:45
 */
 
 var React = require('react');
@@ -18,7 +18,7 @@ var KeyValueListItem = React.createClass({
     return (
       <li className = "totals-li" key = {cost.id} >
       <div className="cost-desc ">{title}</div>
-      <div className="item-cost ">{cost.toFixed(2)}</div>
+      <div className="item-cost ">{cost}</div>
       </li>
     );
   },
