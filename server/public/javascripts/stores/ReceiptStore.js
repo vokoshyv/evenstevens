@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-28 15:15:14
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-05 14:40:53
+* @Last Modified by:   Johnny Nguyen
+* @Last Modified time: 2015-06-05 20:33:13
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -15,6 +15,7 @@ var CHANGE_EVENT = 'change';
 var _items = [];
 var _totals = {};
 var _billName ="";
+var _tipPercent = 0;
 
 
 var setItems = function(items) {
@@ -33,6 +34,9 @@ var setBillName = function(billName) {
   _billName = billName;
 };
 
+var setTipPercent = function(tipPercent) {
+  _tipPercent = tipPercent;
+}
 
 var ReceiptStore = assign({}, EventEmitter.prototype, {
   getItems: function() {
@@ -43,6 +47,9 @@ var ReceiptStore = assign({}, EventEmitter.prototype, {
   },
   getTotals: function() {
     return _totals;
+  },
+  getTipPercent: function() {
+    return _tipPercent;
   },
   addChangeListener: function(callback) {
     this.on(CHANGE_EVENT, callback);
@@ -58,9 +65,19 @@ var ReceiptStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(action) {
   var receipt;
   var billName;
-  var items;
+  var tipPercent;
 
   switch(action.actionType) {
+    case 'ADD_TIP_PERCENT':
+      tipPercent = action.payload;
+      setTipPercent(tipPercent);
+      ReceiptStore.emitChange();
+      break;
+    case 'BILL_NAME_LOADED':
+      billName = action.payload;
+      setBillName(billName);
+      ReceiptStore.emitChange();
+      break;
     case 'INITIAL_DATA':
       receipt = action.receipt;
       items = action.items;

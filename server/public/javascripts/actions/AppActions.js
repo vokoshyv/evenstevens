@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-05 16:36:11
+* @Last Modified by:   Johnny Nguyen
+* @Last Modified time: 2015-06-05 20:33:46
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
@@ -15,6 +15,27 @@ var AppActions = {
       actionType: 'ADD_USER',
       payload: userName
     });
+  },
+  addTipPercent: function(tipPercent) {
+    AppDispatcher.dispatch({
+      actionType: 'ADD_TIP_PERCENT',
+      payload: tipPercent
+    })
+  },
+  socketEmitUpdate: function(data){
+
+
+    // {
+    //   billName: billName,
+    //   userName: "bill",
+    //   array:    [true, flase]
+    //   update: { "bill": [true, false, true] }
+    // }
+    // sends just diner object
+    // {billname:sdfsdfs
+    //  dinerArray:sdfsdfsd}
+    socket.emit('userUpdate', {data:data});
+    console.log("EMITTING data to server");
   },
   joinSocketRoom : function(billName, userName) {
     // grabs current url for socket connection
@@ -89,10 +110,14 @@ var AppActions = {
   handleImage: function(userFile) {
     var file = userFile.file;
     var name = userFile.userName;
+    var tipPercent = userFile.tipPercent;
     var formData = new FormData();
     var xhr = new XMLHttpRequest();
 
-    formData.append('file', file);    
+    formData.append('file', file);
+    formData.append('billName', name);
+    formData.append('tipPercent', tipPercent);
+
     xhr.open('POST', '/api/bills/' + name); 
     xhr.onload = function () {
       if (xhr.status === 201) {

@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:52:07
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-05 10:27:00
+* @Last Modified by:   Johnny Nguyen
+* @Last Modified time: 2015-06-05 19:37:23
 */
 
 var React = require('react');
@@ -13,7 +13,11 @@ var AppActions = require('../actions/AppActions');
 var CameraImageCapture = React.createClass({
   // Initiate image handler action, passing file and userName
   _handleImage: function (e) {
-    AppActions.handleImage( { file:e.target.files[0], userName: this.props.userName});
+    AppActions.handleImage({ 
+      file:e.target.files[0], 
+      userName: this.props.userName,
+      tipPercent: this.props.tipPercent
+    });
   },
   // draw dat div
   render: function() {
@@ -21,16 +25,13 @@ var CameraImageCapture = React.createClass({
   
     // hide this component while the user is inputing
     // name
-    if(!this.props.userName || this.props.isLoading) {
+    if(!this.props.userName || !this.props.tipPercent || this.props.isLoading) {
       return null;
     }
 
     // display file input button
     return (
-      <div className = "container">
-        <div>{"Hi " + this.props.userName + "!"} </div>
-        <input ref="upload" type="file" capture="camera" accept="image/*" onChange={ this._handleImage } />
-      </div>
+      <input ref="upload" type="file" capture="camera" accept="image/*" onChange={ this._handleImage } />
     );
   }
 });

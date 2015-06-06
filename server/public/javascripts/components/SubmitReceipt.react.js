@@ -1,14 +1,15 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-29 10:19:44
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-04 16:14:28
+* @Last Modified by:   Johnny Nguyen
+* @Last Modified time: 2015-06-05 19:36:24
 */
 
 var React = require('react');
 var UserStore = require('../stores/UserStore');
 var ReceiptStore = require('../stores/ReceiptStore');
 var NameInputForm = require('./NameInputForm.react');
+var TipPercentInputForm = require('./TipPercentInputForm.react');
 var CameraImageCapture = require('./CameraImageCapture.react');
 var LoadingView = require('./LoadingView.react');
 var Router = require('react-router');
@@ -17,9 +18,10 @@ var Router = require('react-router');
 // helper function to pull changes from the stores
 var getSubmitState = function() {
   return {
-     userName: UserStore.getUserName(),
-     billName: ReceiptStore.getBillName(),
-     isLoading: UserStore.getIsLoading()
+    userName: UserStore.getUserName(),
+    billName: ReceiptStore.getBillName(),
+    tipPercent: ReceiptStore.getTipPercent(),
+    isLoading: UserStore.getIsLoading()
   }
 };
 
@@ -42,12 +44,14 @@ var SubmitReceipt = React.createClass({
   },
   // Render the row!
   render: function(){
-    return (<div className= "submitReceipt"> 
-      <NameInputForm userName={this.state.userName} />
-      <CameraImageCapture isLoading={this.state.isLoading}  userName={this.state.userName} />
-      <LoadingView isLoading={this.state.isLoading} />
+    return (
+      <div className="submitReceipt">
+        <NameInputForm userName={this.state.userName} />
+        <TipPercentInputForm tipPercent={this.state.tipPercent} userName={this.state.userName} />
+        <CameraImageCapture isLoading={this.state.isLoading} userName={this.state.userName}  tipPercent={this.state.tipPercent}/>
+        <LoadingView isLoading={this.state.isLoading} />
       </div>
-      );
+    );
   },
   // This method is called when changes occur in the store, 
   // pulling data to update the state, which flows into the
