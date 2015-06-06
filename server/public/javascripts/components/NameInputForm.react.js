@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:53:40
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-05 11:52:51
+* @Last Modified time: 2015-06-05 16:25:39
 */
 
 var React = require('react');
@@ -91,15 +91,15 @@ var NameInputForm = React.createClass({
     if (this.props.userName) {
       return null;
     }
-    
+  
     return (
-      <div className = "u-full-width">
-        <form className ="inputForm " onSubmit={this.handleInput}>
-          <input className = "u-full-width" type="text" placeholder="Enter your name" ref="name" onKeyPress={this.handleKeyPress} />
-          <input className = "u-full-width button-primary" type="submit" value="Keep it even" />
-          <div className ="errorBox"> {this.state.errMessage}</div>
-        </form>
-      </div>
+      <form className="form" onSubmit={this.handleInput}>
+        <div className="form-group">
+          <input className="form-control input-lg"  type="text" placeholder="Enter your name" ref="name" onKeyPress={this.handleKeyPress} />
+        </div>
+        <button className="btn-lg btn-primary" type="submit" value="Keep It Even">Keep It Even</button>
+        <div className="errorBox"> {this.state.errMessage}</div>
+      </form>
     );
   }
 });

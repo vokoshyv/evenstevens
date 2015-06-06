@@ -13,14 +13,14 @@ Promise.promisifyAll(fs);
  * @param  {JPEG}    file     Uploaded bill image
  * @param  {String}  billName File name of uploaded receipt
  */
-exports.parse = function(path, file, billName) {
+exports.parse = function(path, file, fields) {
   return new Promise(function(resolve, reject) {
     exports.readFile(file)
     .then(function(data) {
       return writeFile(path, data);
     })
     .then(function() {
-      return exports.process(path, billName);
+      return exports.process(path, fields);
     })
     .then(function(text) {
       resolve(text);
@@ -68,7 +68,10 @@ var writeFile = function(path, file) {
  * @param  {JPEG}    file Uploaded bill image
  * @return {Promise}      Returns parsed bill items or error
  */
-exports.process = function(path, billName) {
+exports.process = function(path, fields) {
+  var billName = fields.billName;
+  var tipPercent = fields.tipPercent;
+
   return new Promise(function(resolve, reject) {
     tesseract.process(path, function(err, text) {
       if (err) {
@@ -87,6 +90,7 @@ exports.process = function(path, billName) {
 
         var bill = require('../api/bill/model').billModel();
         bill.billName = billName;
+        bill.receipt.tip = tipPercent;
         bill.diners[billName] = [];
         
         exports.postProcess(bill, text);
