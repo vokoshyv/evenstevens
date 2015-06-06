@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-28 15:15:14
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-02 21:09:35
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-06-05 14:40:53
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -15,6 +15,7 @@ var CHANGE_EVENT = 'change';
 var _items = [];
 var _totals = {};
 var _billName ="";
+
 
 var setItems = function(items) {
   _items = items;
@@ -57,16 +58,15 @@ var ReceiptStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(action) {
   var receipt;
   var billName;
+  var items;
 
   switch(action.actionType) {
-    case 'BILL_NAME_LOADED':
-      billName = action.payload;
-      setBillName(billName);
-      ReceiptStore.emitChange();
-      break;
     case 'INITIAL_DATA':
-      receipt = JSON.parse(action.payload.receipt);
-      setItems(receipt.items);
+      receipt = action.receipt;
+      items = action.items;
+      billName = action.billName;
+      setBillName(billName);
+      setItems(items);
       setTotals(receipt);
       ReceiptStore.emitChange();
       break;

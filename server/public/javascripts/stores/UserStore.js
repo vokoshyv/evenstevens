@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 14:23:20
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-04 20:22:07
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-06-05 16:12:10
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -17,6 +17,7 @@ var _isLoading = false;
 var _diners = {};
 var _itemCount = 0;
 var _itemToDiner = [];
+var _socket = null;
 
 var setName = function(name) {
   _userName = name;
@@ -26,48 +27,45 @@ var setLoading = function(bool) {
   _isLoading = bool;
 };
 
-var setDiners = function(diners, itemCount) {
+var setDiners = function(diners, itemCount, itemToDiner, socket, billName) {
   _itemCount = itemCount;
-   _diners = diners;
-  if(_diners[_userName] > 0) {
-    console.log("duplicate user");
-  } else {
-    var claimedArray = [];
-    while(itemCount--) {
-      claimedArray[itemCount] = false;
-      _itemToDiner[itemCount] = [];
-    }
-
-    _diners[_userName] = claimedArray;
-
-    for(var diner in _diners){
-      for(var i = 0; i < _diners[diner].length; i++){
-        if(_diners[diner][i]) {
-           _itemToDiner[i].push(diner);
-        }
-      }
-    }   
-  }
+  _diners = diners;
+  _itemToDiner = itemToDiner;
+  _socket = socket;
+  _billName = billName
 };
 
 var setToggleItem = function(itemIndex) {
   _diners[_userName][itemIndex] = !_diners[_userName][itemIndex];
 
   var isClaimed = _diners[_userName][itemIndex];
-
-
   var claimedNames = _itemToDiner[itemIndex];
 
- if(isClaimed){
+  if(isClaimed){
     claimedNames.push(_userName);
- } else {
-  var index = claimedNames.indexOf(_userName);
-  claimedNames.splice(index, 1);
- }
+   } else {
+    var index = claimedNames.indexOf(_userName);
+    claimedNames.splice(index, 1);
+   }
 
- console.log(isClaimed);
+   claimedNames.sort();
+   _socket.emit('userUpdate', {billName: _billName, userName: _userName, array:  _diners[_userName] } );
+};
 
+var updateDiners = function(diner){
+  _diners[diner.userName] = diner.array;
+  var nameIndex;
 
+    for(var i = 0; i < _diners[diner.userName].length; i++){
+      nameIndex = _itemToDiner[i].indexOf(diner.userName);
+
+      if(_diners[diner.userName][i] && nameIndex === -1) {
+         _itemToDiner[i].push(diner.userName);
+      } else if (!_diners[diner.userName][i] && nameIndex > -1 ) {
+        _itemToDiner[i].splice(nameIndex, 1);
+      }
+      _itemToDiner[i].sort();
+    }
 };
 
 var UserStore = assign({}, EventEmitter.prototype, {
@@ -101,6 +99,9 @@ AppDispatcher.register(function(action) {
   var diners
   var item;
   var itemCount;
+  var itemToDiner;
+  var socket;
+  var dinerToUpdate;
 
   switch(action.actionType) {
     case 'ADD_USER':
@@ -116,9 +117,17 @@ AppDispatcher.register(function(action) {
       UserStore.emitChange();
       break;
     case 'INITIAL_DATA':
-      var itemCount = JSON.parse(action.payload.receipt).items.length;
-      diners = JSON.parse(action.payload.diners);
-      setDiners(diners, itemCount);
+      itemCount = action.itemCount;
+      diners = action.diners;
+      socket = action.socket;
+      billName = action.billName;
+      itemToDiner = action.itemToDiner;
+      setDiners(diners, itemCount, itemToDiner, socket, billName);
+      UserStore.emitChange();
+      break;
+    case 'UPDATE_FROM_SERVER':
+      dinerToUpdate = action.payload;
+      updateDiners(dinerToUpdate);
       UserStore.emitChange();
       break;
     case 'TOGGLE_LOADING_VIEW':
