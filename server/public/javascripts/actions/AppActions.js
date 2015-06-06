@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-05 20:33:46
+* @Last Modified time: 2015-06-05 20:40:28
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
@@ -40,7 +40,7 @@ var AppActions = {
   joinSocketRoom : function(billName, userName) {
     // grabs current url for socket connection
     var url = window.location.href.split('/');  
-    socket = io.connect('http://6b281572.ngrok.io');
+    socket = io.connect('http://localhost:3000');
 
     socket.on('fromServerInitialData', function (data) {
       var receipt = JSON.parse(data.receipt);
