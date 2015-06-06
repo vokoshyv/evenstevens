@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-29 16:00:24
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-04 20:23:53
+* @Last Modified time: 2015-06-06 10:21:06
 */
 
 var React = require('react');
@@ -54,7 +54,7 @@ var ReceiptItem = React.createClass({
 
         <div className="item-description">{item.item}</div>
             <div className="checked">{claimedBy && <span> &#10003;</span>}</div>
-        <div className="item-cost ">{item.cost}</div>
+        <div className="item-cost ">{item.cost.toFixed(2)}</div>
       
       <div className="clearfix"></div>
       <div className="claimed-by">
