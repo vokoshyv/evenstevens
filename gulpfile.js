@@ -2,7 +2,7 @@
 * @Author: vokoshyv
 * @Date:   2015-05-26 17:12:39
 * @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-06-05 19:24:34
+* @Last Modified time: 2015-06-03 19:44:59
 */
 
 'use strict';
@@ -14,22 +14,14 @@ var gulp = require('gulp'),
     open = require('gulp-open'),
     shell = require('gulp-shell'),
     stylish = require('jshint-stylish'),
-
-    // required dependencies for compressing React files
+    // added
     browserify = require('browserify'),
     source = require('vinyl-source-stream'),
     reactify = require('reactify'),
-
     // for cleaning out files
     del = require('del'),
-
     // for delaying a pipe stream
-    wait = require('gulp-wait'),
-
-    // to implement consistent styling
-    jscs = require('gulp-jscs'),
-    notify = require('gulp-notify'),
-    growl = require('gulp-notify-growl');
+    wait = require('gulp-wait');
 
 // set up paths 
 var paths = {
@@ -135,64 +127,3 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'));
 });
-
-var growlNotifier = growl();
-
-// Style check for scripts
-gulp.task('scriptsStyle', function() {
-    gulp.src(paths.scripts)
-        .pipe(jscs({preset: 'google'}))
-        .pipe(jscs({fix: true}))
-        .pipe(notify({
-            title: 'JSCS',
-            message: 'JSCS Passed. Let it fly!'
-        }));
-});
-
-// Style check for server
-gulp.task('serverStyle', function() {
-    gulp.src(paths.server)
-        .pipe(jscs({preset: 'google'}))
-        .pipe(jscs({fix: true}))
-        .pipe(notify({
-            title: 'JSCS',
-            message: 'JSCS Passed. Let it fly!'
-        }));
-});
-
-// Style check for CSS stylesheets
-gulp.task('CSSStyle', function() {
-    gulp.src(paths.styles)
-        .pipe(jscs({preset: 'google'}))
-        .pipe(jscs({fix: true}))
-        .pipe(notify({
-            title: 'JSCS',
-            message: 'JSCS Passed. Let it fly!'
-        }));
-});
-
-// Style check for billRoute
-gulp.task('billRouteStyle', function() {
-    gulp.src(paths.billRoute)
-        .pipe(jscs({preset: 'google'}))
-        .pipe(jscs({fix: true}))
-        .pipe(notify({
-            title: 'JSCS',
-            message: 'JSCS Passed. Let it fly!'
-        }));
-});
-
-// Style check for html files
-gulp.task('htmlStyle', function() {
-    gulp.src(paths.html)
-        .pipe(jscs({preset: 'google'}))
-        .pipe(jscs({fix: true}))
-        .pipe(notify({
-            title: 'JSCS',
-            message: 'JSCS Passed. Let it fly!'
-        }));
-});
-
-// Task to check styling across project files
-gulp.task('allStyleCheck', ['scriptsStyle', 'serverStyle', 'CSSStyle', 'billRouteStyle', 'htmlStyle']);
-
