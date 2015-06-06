@@ -2,7 +2,7 @@
 * @Author: vokoshyv
 * @Date:   2015-05-26 17:12:39
 * @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-06-05 16:36:18
+* @Last Modified time: 2015-06-05 19:24:34
 */
 
 'use strict';
@@ -138,13 +138,61 @@ gulp.task('lint', function() {
 
 var growlNotifier = growl();
 
-gulp.task('style', function() {
-    gulp.src('testing/*.js')
+// Style check for scripts
+gulp.task('scriptsStyle', function() {
+    gulp.src(paths.scripts)
         .pipe(jscs({preset: 'google'}))
         .pipe(jscs({fix: true}))
         .pipe(notify({
             title: 'JSCS',
             message: 'JSCS Passed. Let it fly!'
         }));
-
 });
+
+// Style check for server
+gulp.task('serverStyle', function() {
+    gulp.src(paths.server)
+        .pipe(jscs({preset: 'google'}))
+        .pipe(jscs({fix: true}))
+        .pipe(notify({
+            title: 'JSCS',
+            message: 'JSCS Passed. Let it fly!'
+        }));
+});
+
+// Style check for CSS stylesheets
+gulp.task('CSSStyle', function() {
+    gulp.src(paths.styles)
+        .pipe(jscs({preset: 'google'}))
+        .pipe(jscs({fix: true}))
+        .pipe(notify({
+            title: 'JSCS',
+            message: 'JSCS Passed. Let it fly!'
+        }));
+});
+
+// Style check for billRoute
+gulp.task('billRouteStyle', function() {
+    gulp.src(paths.billRoute)
+        .pipe(jscs({preset: 'google'}))
+        .pipe(jscs({fix: true}))
+        .pipe(notify({
+            title: 'JSCS',
+            message: 'JSCS Passed. Let it fly!'
+        }));
+});
+
+// Style check for html files
+gulp.task('htmlStyle', function() {
+    gulp.src(paths.html)
+        .pipe(jscs({preset: 'google'}))
+        .pipe(jscs({fix: true}))
+        .pipe(notify({
+            title: 'JSCS',
+            message: 'JSCS Passed. Let it fly!'
+        }));
+});
+
+// Task to check styling across project files
+gulp.task('allStyleCheck', ['scriptsStyle', 'serverStyle', 'CSSStyle', 'billRouteStyle', 'htmlStyle']);
+
