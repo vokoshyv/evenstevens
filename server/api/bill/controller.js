@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-05 11:38:11
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-06-05 17:13:07
 */
 
 'use strict';
@@ -115,7 +115,7 @@ exports.create = function(req, res) {
  * @return {[type]}     [description]
  */
 
-exports.update = function(io, clientData) {
+exports.update = function(socket, clientData) {
 
   var billName = clientData.billName;
   var dinersName = clientData.userName;
@@ -131,7 +131,7 @@ exports.update = function(io, clientData) {
       parsedData[dinersName] = dinersArray;
       var dataToBeInserted = JSON.stringify(parsedData);
       redisDB.hset(billName, 'diners', dataToBeInserted, redis.print);
-      io.to(billName).emit('fromServerUpdate', clientData);
+      socket.to(billName).broadcast.emit('fromServerUpdate', clientData);
 
     }
   });

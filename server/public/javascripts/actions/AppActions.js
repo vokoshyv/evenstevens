@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-04 20:11:43
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-06-05 16:36:11
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
@@ -16,46 +16,69 @@ var AppActions = {
       payload: userName
     });
   },
-  socketEmitUpdate: function(data){
-
-
-    // {
-    //   billName: billName,
-    //   userName: "bill",
-    //   array:    [true, flase]
-    //   update: { "bill": [true, false, true] }
-    // }
-    // sends just diner object
-    // {billname:sdfsdfs
-    //  dinerArray:sdfsdfsd}
-    socket.emit('userUpdate', {data:data});
-    console.log("EMITTING data to server");
-  },
-
   joinSocketRoom : function(billName, userName) {
-    console.log("join");
     // grabs current url for socket connection
     var url = window.location.href.split('/');  
-    socket = io.connect('localhost:3000');
+    socket = io.connect('http://6b281572.ngrok.io');
+
     socket.on('fromServerInitialData', function (data) {
-      console.log("data");
+      var receipt = JSON.parse(data.receipt);
+      var items = receipt.items;
+      var itemCount = items.length;
+      var diners = JSON.parse(data.diners);
+      var itemToDiner = [];
+
+      // if(diners[userName] && diners[userName].length > 0) {
+      //   console.log("duplicate user");
+      // } else {
+      // 
+      var populateWithFalse = false;
+      
+      if(!diners[userName]) {
+        diners[userName] = [];
+        populateWithFalse = true;
+      }
+        while(itemCount--) {
+          if (populateWithFalse) {
+            diners[userName].push(false);
+          }
+            itemToDiner[itemCount] = [];
+        }
+
+        for(var diner in diners){
+          for(var i = 0; i < diners[diner].length; i++){
+            if(diners[diner][i]) {
+               itemToDiner[i].push(diner);
+            }
+          }
+        }   
+      // }
+
       AppDispatcher.dispatch({
         actionType: 'INITIAL_DATA',
-        payload: data
+        itemCount: itemCount,
+        diners: diners,
+        itemToDiner: itemToDiner,
+        receipt: receipt,
+        items: items,
+        billName:billName,
+        socket:socket
       });
   
     });
 
     // Listener for server broadcast of a single user's updated diner object.
-    socket.on('fromServerUpdate', function(data) {});
+    socket.on('fromServerUpdate', function(data) {
+      console.log("got Data!!!! ", data);
+      AppDispatcher.dispatch({
+        actionType: 'UPDATE_FROM_SERVER',
+        payload:data
+      });
+    });
 
     // This calls server to join room and get receipt data
     socket.emit('userJoin', {billName: billName});
 
-    AppDispatcher.dispatch({
-      actionType: 'BILL_NAME_LOADED',
-      payload: billName
-    });
   },
   toggleClaimed: function(itemIndex){
     AppDispatcher.dispatch({

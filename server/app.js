@@ -1,8 +1,8 @@
 /*
 * @Author: hal
 * @Date:   2015-05-22 10:53:35
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-02 17:14:36
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-06-05 11:40:21
 */
 
 // set up server variables
@@ -90,7 +90,7 @@ var onUserJoin = function (socket, data) {
 
 // client updated its data and sent it to server, handled here
 var onUserUpdate = function (socket, data) {
-  controller.update(io, data);
+  controller.update(socket, data);
 };
 
 var onDisconnect = function (socket) {
