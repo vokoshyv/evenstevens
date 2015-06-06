@@ -1,13 +1,12 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-29 10:19:44
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-05 19:36:24
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-06 12:03:05
 */
 
 var React = require('react');
-var UserStore = require('../stores/UserStore');
-var ReceiptStore = require('../stores/ReceiptStore');
+var AppStore = require('../stores/AppStore');
 var NameInputForm = require('./NameInputForm.react');
 var TipPercentInputForm = require('./TipPercentInputForm.react');
 var CameraImageCapture = require('./CameraImageCapture.react');
@@ -18,10 +17,10 @@ var Router = require('react-router');
 // helper function to pull changes from the stores
 var getSubmitState = function() {
   return {
-    userName: UserStore.getUserName(),
-    billName: ReceiptStore.getBillName(),
-    tipPercent: ReceiptStore.getTipPercent(),
-    isLoading: UserStore.getIsLoading()
+     userName: AppStore.getUserName(),
+     billName: AppStore.getBillName(),
+     isLoading: AppStore.getIsLoading(),
+     tipPercent: AppStore.getTipPercent()
   }
 };
 
@@ -34,13 +33,11 @@ var SubmitReceipt = React.createClass({
   },
   // Adds change listener to stores
   componentDidMount: function() {
-    UserStore.addChangeListener(this._onChange);
-    ReceiptStore.addChangeListener(this._onChange);
+    AppStore.addChangeListener(this._onChange);
   },
   // Removes change listener fom stores
   componentWillUnmount: function() {
-    UserStore.removeChangeListener(this._onChange);
-    ReceiptStore.removeChangeListener(this._onChange);
+    AppStore.removeChangeListener(this._onChange);
   },
   // Render the row!
   render: function(){

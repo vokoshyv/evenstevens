@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-05 20:40:28
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-06 12:08:30
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
@@ -22,75 +22,64 @@ var AppActions = {
       payload: tipPercent
     })
   },
-  socketEmitUpdate: function(data){
+  processDataFromServer: function(data, userName, billName) {
+    var receipt = JSON.parse(data.receipt);
+    var items = receipt.items;
+    var itemCount = items.length;
+    var diners = JSON.parse(data.diners);
+    var itemToDiner = []; // maps item to list of diners
+    var populateWithFalse = false;
+    
+    // if new user, creates a new array in the diner
+    // object to store the claim info
+    if(!diners[userName]) {
+      diners[userName] = [];
+      populateWithFalse = true;
+    }
 
+    // primes data structures 
+    while(itemCount--) {
+      if (populateWithFalse) {
+        diners[userName].push(false);
+      }
+      itemToDiner[itemCount] = [];
+    }
 
-    // {
-    //   billName: billName,
-    //   userName: "bill",
-    //   array:    [true, flase]
-    //   update: { "bill": [true, false, true] }
-    // }
-    // sends just diner object
-    // {billname:sdfsdfs
-    //  dinerArray:sdfsdfsd}
-    socket.emit('userUpdate', {data:data});
-    console.log("EMITTING data to server");
+    // Checks for claimed items in the diner object and
+    // adds the corresponding name to the itemToDiner array
+    for(var diner in diners){
+      for(var i = 0; i < diners[diner].length; i++){
+        if(diners[diner][i]) {
+           itemToDiner[i].push(diner);
+        }
+      }
+    }   
+
+    // Dispatches the data from server to the be 
+    // rendered in the UI
+    AppDispatcher.dispatch({
+      actionType: 'INITIAL_DATA',
+      itemCount: itemCount,
+      diners: diners,
+      itemToDiner: itemToDiner,
+      receipt: receipt,
+      items: items,
+      billName:billName,
+      socket:socket
+    });
   },
   joinSocketRoom : function(billName, userName) {
     // grabs current url for socket connection
     var url = window.location.href.split('/');  
-    socket = io.connect('http://localhost:3000');
+    socket = io.connect(url[url.length-2]);
 
+    // Processes data from server
     socket.on('fromServerInitialData', function (data) {
-      var receipt = JSON.parse(data.receipt);
-      var items = receipt.items;
-      var itemCount = items.length;
-      var diners = JSON.parse(data.diners);
-      var itemToDiner = [];
-
-      // if(diners[userName] && diners[userName].length > 0) {
-      //   console.log("duplicate user");
-      // } else {
-      // 
-      var populateWithFalse = false;
-      
-      if(!diners[userName]) {
-        diners[userName] = [];
-        populateWithFalse = true;
-      }
-        while(itemCount--) {
-          if (populateWithFalse) {
-            diners[userName].push(false);
-          }
-            itemToDiner[itemCount] = [];
-        }
-
-        for(var diner in diners){
-          for(var i = 0; i < diners[diner].length; i++){
-            if(diners[diner][i]) {
-               itemToDiner[i].push(diner);
-            }
-          }
-        }   
-      // }
-
-      AppDispatcher.dispatch({
-        actionType: 'INITIAL_DATA',
-        itemCount: itemCount,
-        diners: diners,
-        itemToDiner: itemToDiner,
-        receipt: receipt,
-        items: items,
-        billName:billName,
-        socket:socket
-      });
-  
+      AppActions.processDataFromServer(data, userName, billName );
     });
 
     // Listener for server broadcast of a single user's updated diner object.
     socket.on('fromServerUpdate', function(data) {
-      console.log("got Data!!!! ", data);
       AppDispatcher.dispatch({
         actionType: 'UPDATE_FROM_SERVER',
         payload:data

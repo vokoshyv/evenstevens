@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 13:19:09
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-05 12:08:18
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-06 09:49:59
 */
 
 html {
@@ -30,6 +30,7 @@ html, body, #content, #content .container-fluid {
 
 ul {
   padding-left:0px;
+  list-style: none;
 }
 
 .receipt-list {
