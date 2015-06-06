@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 14:23:06
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-05 11:37:19
+* @Last Modified time: 2015-06-05 19:58:13
 */
 
 'use strict';
@@ -33,7 +33,7 @@ exports.kingOfThai = function() {
       subTotal: 41.85,
       tax: 3.66,
       total: 45.51,
-      tip: 6.28,
+      tip: .15,
       grandTotal: 51.79
     },
     diners: {
@@ -96,8 +96,8 @@ exports.pakwan = function() {
       subTotal: 53.92,
       tax: 4.72,
       total: 58.64,
-      tip: 0,
-      grandTotal: 0
+      tip: .18,
+      grandTotal: 66.73
     },
     diners: {
       'johnny': [false, false, false, true,  false, true,  false, false, false, false, false],
