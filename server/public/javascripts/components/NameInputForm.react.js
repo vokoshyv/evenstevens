@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:53:40
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-05 16:25:39
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-06 16:03:14
 */
 
 var React = require('react');
@@ -91,13 +91,15 @@ var NameInputForm = React.createClass({
     if (this.props.userName) {
       return null;
     }
+
+           // <button className="btn-wire" type="submit" value="Keep It Even">Keep It Even</button>
+
   
     return (
-      <form className="form" onSubmit={this.handleInput}>
+      <form className="form name-form" onSubmit={this.handleInput}>
         <div className="form-group">
           <input className="form-control input-lg"  type="text" placeholder="Enter your name" ref="name" onKeyPress={this.handleKeyPress} />
         </div>
-        <button className="btn-lg btn-primary" type="submit" value="Keep It Even">Keep It Even</button>
         <div className="errorBox"> {this.state.errMessage}</div>
       </form>
     );
