@@ -120,6 +120,10 @@ You will want to interact with the Redis database that you set up. You can read 
 http://redis.io/commands
 ```
 
+#####Deployment Environment
+
+Our team (Decentralized Saxophones) deployed on Digital Ocean. Please contact us for details to access the server. 
+
 ### Testing
 
 ##### CasperJS and PhantomJS Setup
@@ -135,7 +139,3 @@ And for CapserJS:
 To run CasperJS test file (from project root):
 
 <code>$ casperjs test server/casperTest.js</code>
-
-#####Deployment Environment
-
-Our team (Decentralized Saxophones) deployed on Digital Ocean. Please contact us for details to access the server. 
