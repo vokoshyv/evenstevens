@@ -1,8 +1,13 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:53:40
+<<<<<<< HEAD
 * @Last Modified by:   nathanbailey
 * @Last Modified time: 2015-06-06 16:03:14
+=======
+* @Last Modified by:   Johnny Nguyen
+* @Last Modified time: 2015-06-08 17:28:10
+>>>>>>> (feat) Make billName lower case
 */
 
 var React = require('react');
@@ -36,7 +41,7 @@ var NameInputForm = React.createClass({
     }
 
     if (e.key !== "Enter") {
-      var billName = e.target.value + e.key;
+      var billName = (e.target.value + e.key).toLowerCase();
 
       if (billName.length > 10) {
         this.setState({errMessage: "Name must be less than 10 characters."});
@@ -44,7 +49,7 @@ var NameInputForm = React.createClass({
         return;
       }
       
-      this.setState({billName: e.target.value + e.key});  
+      this.setState({billName: billName});
     }
   },
   /**
@@ -54,7 +59,7 @@ var NameInputForm = React.createClass({
   handleInput: function(e, holler, at, foobar){
     e.preventDefault();
     
-    var billName = this.state.billName;
+    var billName = this.state.billName.toLowerCase();
     var name = React.findDOMNode(this.refs.name).value.trim();
     
     // empty billName validation
@@ -68,7 +73,7 @@ var NameInputForm = React.createClass({
       var url = window.location.href.split('/');  
       AppActions.joinSocketRoom(url[url.length - 1], billName);
     }
-
+    
     // clear error message
     this.setState({errMessage:""});
 
