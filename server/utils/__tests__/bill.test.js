@@ -2,7 +2,7 @@
 * @Author: Johnny Nguyen
 * @Date:   2015-06-02 13:08:51
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-05 11:14:13
+* @Last Modified time: 2015-06-08 17:30:42
 */
 
 'use strict';
@@ -11,6 +11,7 @@ jest.dontMock('../bill.js');
 jest.dontMock('../../../node_modules/underscore');
 jest.dontMock('../../api/bill/model');
 jest.dontMock('../regex')
+jest.dontMock('../stringMath')
 
 describe('Bill Parsing', function() {
   var bill = require('../bill.js');
@@ -53,15 +54,15 @@ Total :1»";
     billName: 'johnny',
     receipt:
      { items:
-        [ { item: 'Roasted Duck over Rice', cost: 10.2 },
-          { item: 'Roasted Duck over Rice', cost: 10.2 },
-          { item: 'Coke', cost: 1.8 },
-          { item: 'Crab Meat; Fried Rice ’~', cost: 10.2 },
-          { item: 'Wonton Soup', cost: 8.5 },
-          { item: 'Hot Tea', cost: 0.96 } ],
-      subTotal: 41.85,
-      tax: 3.66,
-      total: 45.51,
+        [ { item: 'Roasted Duck over Rice', cost: '$10.20' },
+          { item: 'Roasted Duck over Rice', cost: '$10.20' },
+          { item: 'Coke', cost: '$1.80' },
+          { item: 'Crab Meat; Fried Rice ’~', cost: '$10.20' },
+          { item: 'Wonton Soup', cost: '$8.50' },
+          { item: 'Hot Tea', cost: '$0.96' } ],
+      subTotal: '$41.85',
+      tax: '$3.66',
+      total: '$45.51',
       tip: 0,
       grandTotal: 0 },
       diners: {johnny: [false, false, false, false, false, false]}

@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-05 20:37:36
+* @Last Modified time: 2015-06-06 16:36:39
 */
 
 'use strict';
@@ -51,7 +51,7 @@ exports.show = function(socket, data) {
  * @return {[type]}     [description]
  */
 exports.create = function(req, res) {
-  var billName = req.params.billName;
+  var billName = req.params.billName.toLowerCase();
   var randBillId = makeid();
   var billPath = path.join(__dirname, '../../.temp/', randBillId + '.jpg');
   var form = new formidable.IncomingForm();

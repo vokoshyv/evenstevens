@@ -1,8 +1,8 @@
 /* 
 * @Author: Johnny Nguyen
 * @Date:   2015-06-05 14:41:39
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-05 19:25:41
+* @Last Modified by:   hal
+* @Last Modified time: 2015-06-08 16:34:15
 */
 
 /* 
@@ -72,13 +72,13 @@ var TipPercentInputForm = React.createClass({
     return (
       <div className = "btn-group btn-group-justified" role="group">
         <ButtonGroup bsSize="large">
-          <Button onClick={this.handleSubmit} value='.15'>15%</Button>
+          <Button onClick={this.handleSubmit} value='15%'>15%</Button>
         </ ButtonGroup>
         <ButtonGroup bsSize="large">
-          <Button onClick={this.handleSubmit} value='.18'>18%</Button>
+          <Button onClick={this.handleSubmit} value='18%'>18%</Button>
         </ ButtonGroup>
         <ButtonGroup bsSize="large">
-          <Button onClick={this.handleSubmit} value='.20'>20%</Button>
+          <Button onClick={this.handleSubmit} value='20%'>20%</Button>
         </ ButtonGroup>
       </div>
     );
