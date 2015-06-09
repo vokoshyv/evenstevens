@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-06 12:08:30
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-06-09 16:22:48
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
@@ -71,7 +71,8 @@ var AppActions = {
   joinSocketRoom : function(billName, userName) {
     // grabs current url for socket connection
     var url = window.location.href.split('/');  
-    socket = io.connect(url[url.length-2]);
+    // socket = io.connect(url[url.length-2]);
+      socket = io.connect('localhost:3000');
 
     // Processes data from server
     socket.on('fromServerInitialData', function (data) {
