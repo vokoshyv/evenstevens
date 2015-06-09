@@ -1,13 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:53:40
-<<<<<<< HEAD
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-06 16:03:14
-=======
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-08 17:28:10
->>>>>>> (feat) Make billName lower case
+* @Last Modified time: 2015-06-08 18:01:22
 */
 
 var React = require('react');
