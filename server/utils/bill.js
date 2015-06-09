@@ -4,6 +4,7 @@ var fs = require('fs');
 var tesseract = require('node-tesseract');
 var Promise = require('bluebird');
 var costRegex = require('./regex').cost();
+var stringMath = require('./stringMath');
 
 Promise.promisifyAll(fs);
 
@@ -122,7 +123,7 @@ exports.postProcess = function(bill, text) {
       continue;
     }
 
-    cost = +parseFloat(cost).toFixed(2);
+    // cost = +parseFloat(cost).toFixed(2);
     // cost = Math.floor(cost * 100) / 100;
 
     // assume ordered item if first element is a number
@@ -168,7 +169,8 @@ exports.parseItems = function(bill, item, cost) {
   for (var i = 0; i < quanity; i++) {
     bill.receipt.items.push({
       item: item.join(' '),
-      cost: cost / quanity
+      // cost: cost / quanity
+      cost: stringMath.divide(cost, quanity)
     });
 
     // push false value for each item
@@ -187,15 +189,15 @@ exports.parseTotals = function(bill, item, cost) {
   
   // check for 'sub' must come before 'total'
   if (itemString.indexOf('sub') !== -1) {
-    bill.receipt.subTotal = cost;
+    bill.receipt.subTotal = stringMath.sum(cost);
   }
 
   if (itemString.indexOf('tax') !== -1) {
-    bill.receipt.tax = cost;
+    bill.receipt.tax = stringMath.sum(cost);
   }
 
   if (itemString.indexOf('total') !== -1) {
-    bill.receipt.total = cost;
+    bill.receipt.total = stringMath.sum(cost);
   }
 };
 
@@ -210,7 +212,8 @@ exports.checkTotals = function(bill) {
 
   // derive total from subtoal and tax if no total
   if (receipt.subTotal && receipt.tax && !receipt.total) {
-    receipt.total = Math.floor((receipt.subTotal + receipt.tax) * 100) / 100;
+    // receipt.total = Math.floor((receipt.subTotal + receipt.tax) * 100) / 100;
+    receipt.total = stringMath.sum(receipt.subTotal, receipt.tax);
   }
 
   // TODO: better total handling
