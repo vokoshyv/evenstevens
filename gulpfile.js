@@ -2,7 +2,7 @@
 * @Author: vokoshyv
 * @Date:   2015-05-26 17:12:39
 * @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-06-03 19:44:59
+* @Last Modified time: 2015-06-08 14:41:44
 */
 
 'use strict';
@@ -29,6 +29,7 @@ var paths = {
   server: 'server/*.js', 
   styles: 'server/public/stylesheets/*.css',
   billRoute: 'server/api/bill/*.js', 
+  utils: 'server/utils/*.js', 
   html: 'server/public/index.html'
 }
 
@@ -75,6 +76,15 @@ gulp.task('billRoute', function(){
   .pipe(livereload());
 });
 
+gulp.task('utils', function(){
+  return gulp.src([
+    paths.utils
+  ])
+  .pipe(jshint())
+  .pipe(jshint.reporter(stylish))
+  .pipe(livereload());
+});
+
 gulp.task('html', function(){
   return gulp.src([
     paths.html
@@ -114,6 +124,7 @@ gulp.task('watch', function(){
   gulp.watch(paths.server, ['server']);
   gulp.watch(paths.styles, ['styles']);
   gulp.watch(paths.billRoute, ['billRoute']);
+  gulp.watch(paths.utils, ['utils']);
   gulp.watch(paths.html, ['html']);
   gulp.watch(paths.scripts, ['clearDist', 'browserify', 'scripts']);
 
