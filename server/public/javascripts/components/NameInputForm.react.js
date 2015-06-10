@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:53:40
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-10 11:02:56
+* @Last Modified time: 2015-06-10 11:18:45
 */
 
 var React = require('react');
@@ -51,7 +51,7 @@ var NameInputForm = React.createClass({
    * Submits the form.
    * @param {Event} e The form onSubmit event.
    */
-  handleInput: function(e, holler, at, foobar){
+  handleInput: function(e){
     e.preventDefault();
     
     var billName = this.state.billName.toLowerCase();
