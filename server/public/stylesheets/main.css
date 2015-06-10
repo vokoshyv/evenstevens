@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 13:19:09
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-09 18:49:29
+* @Last Modified time: 2015-06-09 19:02:52
 */
 
 
@@ -314,13 +314,6 @@ text-align:center;
 
 }
 
-/*.receipt-totals, .user-summary {
-  background: white;
-  color:;
-
-
-}*/
-
 .receipt-totals , .diner-totals, .brand {
   -webkit-box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.3);
   -moz-box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.3);
@@ -331,11 +324,6 @@ text-align:center;
   background-color:#4091FF;
 }
 
-/*.user-summary .totals-li,  .user-summary .totals-li .item-cost {
-  color:white;
-  font-size:20px;
-  padding-top:0px;
-} */
 
 
 
@@ -349,51 +337,28 @@ text-align:center;
 }
 
 .claimed-name  {
-/*  color: rgb(72, 94, 165);
-  position: absolute;
-  right: -5px;
-  margin-top: 25px;
-  background-color: rgb(213, 213, 221);
-  border-radius: 4px;
-  padding-left: 5px;
-  padding-right: 5px;*/
 color: #708FBA;
   position: absolute;
   right: -5px;
   margin-top: 40px;
   text-transform:uppercase;
-/*  background-color:#1F4E8F;*/
-  /* border-radius: 4px; */
   padding-left: 5px;
   padding-right: 5px;
- /* border-top-left-radius: 5px;*/
-
-
-
-
 }
-
-
-
-
-
-
 
 .cost-desc {
   float:left;
   padding-left:20px;
 }
 
-.checked {
+/*.checked {
   color: green;
   font-size: 20px;
   right:0px;
   position:absolute;
-
-/*  background: rgb(202, 249, 249);*/
   display: table-cell;
 }
-
+*/
 ::-webkit-input-placeholder { /* WebKit browsers */
     color:    #EEE;
 }

@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 14:23:20
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-09 17:03:51
+* @Last Modified time: 2015-06-09 19:54:50
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -20,6 +20,7 @@ var _itemCount = 0;
 var _itemToDiner = [];
 var _socket = null;
 var _userTotals = {};
+var _userGrandTotal = {};
 var _items = [];
 var _totals = {};
 var _tipPercent = 0;
@@ -94,6 +95,10 @@ var calcUserTotals = function() {
          item.length);
     });
   });
+
+  // for(var name in _userTotals) {
+  //   _userGrandTotal[name] = stringMath.applyTipTax(_userTotals[, tip, tax) {
+  // }
 };
 
 var updateDiners = function(diner){
