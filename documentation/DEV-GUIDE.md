@@ -64,7 +64,7 @@ ZSH is an command line terminal with powerful capabilities. It comes from bash, 
 
 #####Development Environment (Additional information can be found on EvenSteven's [wiki](https://github.com/decentralizedsaxophone/evenstevens/wiki))
 
-Install necessary Node modules with the following command: 
+After forking over this project and cloning it down to your machine, install necessary Node modules with the following command: 
 
 <code>npm install</code>
 
@@ -117,7 +117,7 @@ the <code>gulp</code> command actually performs the entire build process of your
 You will want to interact with the Redis database that you set up. You can read about commands [here](http://redis.io/commands). To access the command line for the database, run the following command in a third tab: 
 
 ```
-http://redis.io/commands
+redis-cli
 ```
 
 #####Deployment Environment
