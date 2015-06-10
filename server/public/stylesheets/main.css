@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 13:19:09
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-10 10:52:12
+* @Last Modified time: 2015-06-10 11:03:28
 */
 
 
@@ -375,6 +375,10 @@ color: #708FBA;
 }
 
 .name-form {
+  /*display: none;*/
+}
+
+.name-form input[type="submit"] {
   display: none;
 }
 
