@@ -40,10 +40,10 @@ exports.divide = function(value, divisor) {
  * @return {String}          Tax percent
  */
 exports.getTaxPercent = function(subtotal, tax) {
-  var args = Array.prototype.slice.call(arguments, 0);
+  var args = Array.prototype.slice.call(arguments);
 
   for (var i = 0; i < args.length; i++) {
-    if (total[0] === '$') {
+    if (args[i][0] === '$') {
       args[i] = args[i].substr(1);
     }
 
