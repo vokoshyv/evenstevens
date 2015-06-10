@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-09 16:22:48
+* @Last Modified time: 2015-06-09 16:44:13
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
@@ -76,6 +76,7 @@ var AppActions = {
 
     // Processes data from server
     socket.on('fromServerInitialData', function (data) {
+      console.log("data");
       AppActions.processDataFromServer(data, userName, billName );
     });
 

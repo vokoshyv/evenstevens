@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-29 16:00:24
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-09 16:38:51
+* @Last Modified time: 2015-06-09 16:45:17
 */
 
 var React = require('react');
@@ -51,7 +51,7 @@ var ReceiptItem = React.createClass({
       <li className="item-li"key={item.id} >
         <div className = "claim-button pull-left" onClick = {this.claimItem}> {buttonMessage}</div>
         <div className="item-description">{item.item}</div>
-        <div className="item-cost pull-right">{item.cost.toFixed(2)}</div>
+        <div className="item-cost pull-right">{item.cost}</div>
         <div className = "claimed-name pull-right"> {claimedBy || null} </div>   
       </li>
     );

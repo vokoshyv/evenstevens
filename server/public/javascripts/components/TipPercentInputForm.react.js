@@ -2,7 +2,7 @@
 * @Author: Johnny Nguyen
 * @Date:   2015-06-05 14:41:39
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-09 16:34:02
+* @Last Modified time: 2015-06-09 16:43:05
 */
 
 
@@ -74,7 +74,6 @@ var TipPercentInputForm = React.createClass({
         <ButtonGroup bsSize="large">
           <Button onClick={this.handleSubmit} value='20%'>20%</Button>
         </ ButtonGroup>
-        <p> Please select the desired tip percentage for your party</p>
       </div>
     );
   }

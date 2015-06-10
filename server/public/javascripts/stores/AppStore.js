@@ -1,13 +1,14 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 14:23:20
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-06 12:05:16
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-06-09 17:03:51
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
+var stringMath = require('../../../utils/stringMath.js');
 
 var CHANGE_EVENT = 'change';
 
@@ -83,11 +84,14 @@ var setToggleItem = function(itemIndex) {
 };
 
 var calcUserTotals = function() {
+  console.log(stringMath);
   _userTotals = {};
   _itemToDiner.forEach(function(item, index){
     item.forEach(function(name){
-      _userTotals[name] = _userTotals[name] || 0;
-      _userTotals[name] += _items[index].cost / item.length
+      _userTotals[name] = _userTotals[name] || "$0.00";
+      _userTotals[name] = stringMath.divide(
+        stringMath.sum(_userTotals[name], _items[index].cost),
+         item.length);
     });
   });
 };
