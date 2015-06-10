@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 13:19:09
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-10 11:51:24
+* @Last Modified time: 2015-06-10 16:00:34
 */
 
 
@@ -30,6 +30,9 @@ body {
   cursor:'pointer' ;
   background-color:#4091FF;
   padding-bottom:50px;
+/*  background-color:#7AB0FA;*/
+
+
 /*  background-size:contain;
   background-repeat:no-repeat;
   background-attachment:fixed;
@@ -53,29 +56,16 @@ ul {
 }
 
 .receipt-list {
-  padding-left:0px;
-  padding-right:0px;
+  padding-left:10px;
+  padding-right:10px;
 }
 
-.item-list {
- /*   background-color: #1F4E8F;*/
-    background:#FFF;
-
-}
 
 .item-list, .totals-list {
   list-style:none;
 }
 
-.item-li {
-  height:65px;
-  overflow:hidden;
-  border-bottom:1px solid #E4EEF5;
- /* border-top:1px solid #1B96EF;*/
 
-/*  background: #F0F5FC;*/
-
-}
 .tip-view {
   padding:30px;
 }
@@ -89,11 +79,14 @@ ul {
 .tip-view .btn-default {
   color:#269CDA;
 }
-.totals-li {
-  height:60px;
-    border-bottom: 1px solid #E4EEF5;
-
+.totals-li, .item-li {
+   height:65px;
+    border-top: 0px;
 }
+
+.totals-li + .totals-li, .item-li + .item-li {
+ border-top:1px solid #E4EEF5;
+} 
 
 .item-description {
   float: left;
@@ -151,9 +144,7 @@ ul {
 }
 
 .party-header {
-
-border-bottom:1px solid rgba(239, 248, 255, 0.24);
-padding:18px;
+padding:10px;
 }
 
 .brand h2{ 
@@ -180,49 +171,22 @@ padding:18px;
 
 }
 
-.party-url {
-   font-size:18px;
-  /*     font-family: 'League';*/
- /*   background:#1F4E8F;*/
-   color:#FFF
 
-}
-/*.brand img {
-  position: absolute;
-  height: 37px;
-  right: 20px;
-  top: 21px;
-}*/
 
 input[type="email"], input[type="number"], input[type="search"], input[type="text"], input[type="tel"], input[type="url"], input[type="password"], textarea, select 
 input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focus, input[type="text"]:focus, input[type="tel"]:focus, input[type="url"]:focus, input[type="password"]:focus, textarea:focus, select:focus {  
 
-  /*background-color:transparent;*/
-/*  border-color:transparent;
-  border-radius:0px;*/
-/*  border-bottom-color:#FFF;*/
-  color: #b0b8bf;
+
+  color: #999999;
   /*font-size: 12px;*/
-  text-transform: uppercase;
+/*  text-transform: uppercase;*/
   /*letter-spacing: .2em;*/
  /* font-weight: 500;*/
   font-family: 'Raleway';
 
 }
 
-.btn-wire {
-  border: 1px solid;
-  background:transparent;
-  border-color:white;
-  width:100%;
-  padding: 18px 30px 20px;
-  font-weight: 700;
-  border-radius: 6px;
-  font-size: 16px;
-  margin-top: 20px;
-  color:white;
-/*  font-family: 'Raleway';*/
-}
+
 
 .image-wrapper {
   text-align:center;
@@ -282,6 +246,10 @@ text-align:center;
 .claim-button {
   font-size:14px;
   color:#4091FF;
+/*  color:#4A4A4A;*/
+/*  background: #DEE1FF;*/
+
+
   /*background: #3D86EA;*/
 /*  background:#4091FF;*/
 
@@ -306,28 +274,39 @@ text-align:center;
 
 }*/
 
-.diner-totals p, .receipt-totals p{
-  background:rgb(64, 145, 255);
+.diner-totals p, .receipt-totals p, .party-url {
+/*  background:rgb(64, 145, 255);*/
   text-align: center;
   color:white;
-  font-size:18px;
+  font-size:22px;
   margin:0px;
   padding-top:10px;
+/*  text-shadow: 1px 1px 1px #000;
+*/   text-shadow: 2px 1px 0px rgba(62,135,238,.5);
 }
+
+
+/*.party-url {
+   font-size:18px;
+       font-family: 'League';
+ /*   background:#1F4E8F;
+   color:#FFF
+
+}*/
 
 
 .receipt-totals p { 
   padding:20px;
 }
 
-.receipt-totals , .diner-totals, .brand {
-/*  -webkit-box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.3);
-  -moz-box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.3);
-  box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.3);*/
+.item-list, .totals-list, .user-summary, .brand{
+  -webkit-box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.2);
+  -moz-box-shadow:  0px 1px 1px 1px rgba(0,0,0,0.2);
+  box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.2);
 }
 
 .diner-totals {
-  background-color:#4091FF;
+/*  background-color:#4091FF;*/
 }
 
 
@@ -338,14 +317,16 @@ text-align:center;
   padding-bottom:13px;
 }
 
-.user-summary, .receipt-totals {
+.user-summary, .totals-list, .item-list {
   background: white;
+  border-radius:5px;
 }
 
-
+.user-summary li:last-child, .totals-list li:last-child{
+  border-bottom:none!important;
+}
 
 .receipt-totals .totals-li, .user-summary .totals-li {
-  background: white;
   padding:10px;
   padding-left:0px;
   color:#4091FF;
@@ -355,7 +336,7 @@ text-align:center;
 .claimed-name  {
 color: #708FBA;
   position: absolute;
-  right: -5px;
+  right: 5px;
   margin-top: 40px;
   text-transform:uppercase;
   padding-left: 5px;

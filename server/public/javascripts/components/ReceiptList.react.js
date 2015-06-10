@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-28 15:08:02
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-10 11:39:11
+* @Last Modified time: 2015-06-10 13:53:25
 */
 
 var React = require('react');
@@ -20,7 +20,8 @@ var getReceiptState = function() {
     totals: AppStore.getTotals(),
     currentUserName: AppStore.getUserName(),
     itemToDiner: AppStore.getItemToDiner(),
-    userTotals: AppStore.getUserTotals()
+    userTotals: AppStore.getUserTotals(),
+    tipValue: AppStore.getTipValue()
   }
 };
 
@@ -48,11 +49,11 @@ var ReceiptList = React.createClass({
     
 
     for(var key in this.state.totals) {
-      totalListItems.push(<KeyValueListItem key ={key} title={key} item={this.state.totals[key]} />);
+      totalListItems.push(<KeyValueListItem key={key} title={key} item={this.state.totals[key]} tipValue={this.state.tipValue} />);
     }   
 
     for(var name in this.state.userTotals) {
-      userTotals.push(<KeyValueListItem key ={name} title ={name} item={this.state.userTotals[name]} />);
+      userTotals.push(<KeyValueListItem key ={name} title={name} item={this.state.userTotals[name]} />);
     }
 
             // <p className ="url-instructions"> {"Your party can interact with this bill by visiting:"}</p>

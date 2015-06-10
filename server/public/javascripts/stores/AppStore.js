@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 14:23:20
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-10 11:43:14
+* @Last Modified time: 2015-06-10 14:16:05
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -20,11 +20,10 @@ var _itemCount = 0;
 var _itemToDiner = [];
 var _socket = null;
 var _userTotals = {};
-var _userGrandTotal = {};
 var _items = [];
 var _totals = {};
-var _tipPercent = "";
 var _taxPercent = "0%";
+var _tipValue = "$0.00";
 
 // This sets the inital state of the receipt as received
 // from the server on first connection
@@ -42,13 +41,13 @@ var setTotals = function(receipt) {
   _totals.tax = receipt.tax
   _totals.total = receipt.total
   _totals.tip = receipt.tip
-  _totals.grandTotal =receipt.grandTotal
+  _totals.grandTotal;
   _taxPercent = stringMath.getTaxPercent(_totals.subTotal, _totals.tax);
+  _totals.grandTotal = stringMath.applyTipTax(_totals.subTotal, _totals.tip, _taxPercent);
 };
 
 var setTipPercent = function(tipPercent) {
-  _tipPercent = tipPercent;
-
+   _totals.tip  = tipPercent;
 }
 
 var setName = function(name) {
@@ -90,7 +89,6 @@ var setToggleItem = function(itemIndex) {
 var calcUserTotals = function() {
 
   _userTotals = {};
-
   _itemToDiner.forEach(function(item, index){
     item.forEach(function(name){
       _userTotals[name] = _userTotals[name] || "$0.00";
@@ -102,7 +100,7 @@ var calcUserTotals = function() {
 
   // apply tip and tax to each user total
   for(var name in _userTotals) {
-    _userTotals[name] = stringMath.applyTipTax(_userTotals[name], _tipPercent, _taxPercent);
+    _userTotals[name] = stringMath.applyTipTax(_userTotals[name], _totals.tip, _taxPercent);
   }
 };
 
@@ -127,8 +125,11 @@ var updateDiners = function(diner){
 };
 
 var AppStore = assign({}, EventEmitter.prototype, {
+  getTipValue: function(){
+    return _tipValue;
+  },
   getTipPercent: function() {
-    return _tipPercent;
+    return _totals.tip;
   },
   getUserName: function() {
     return _userName;

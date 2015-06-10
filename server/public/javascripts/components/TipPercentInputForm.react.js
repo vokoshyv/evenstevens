@@ -2,7 +2,7 @@
 * @Author: Johnny Nguyen
 * @Date:   2015-06-05 14:41:39
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-10 11:42:27
+* @Last Modified time: 2015-06-10 14:09:36
 */
 
 
@@ -32,7 +32,6 @@ var TipPercentInputForm = React.createClass({
     e.preventDefault();
     
     var tipPercent = e.target.value;
-    console.log(e.target.value)
     
     // not sure if setting tip percent is necessary
     this.setState({tipPercent: tipPercent});
@@ -40,7 +39,6 @@ var TipPercentInputForm = React.createClass({
     // initiate addUser action
     AppActions.addTipPercent(tipPercent);
     
-    console.log(this.props)
     return;
   },
   /**
@@ -51,15 +49,11 @@ var TipPercentInputForm = React.createClass({
     // if (!this.props.billName) {
     //   return null;
     // }
-    console.log(this.props)
-    console.log(!!this.props.billName)
     if (!this.props.userName) {
-      console.log('billname')
       return null;
     }
 
     if (this.props.tipPercent) {
-      console.log('tip');
       return null;
     }
     
