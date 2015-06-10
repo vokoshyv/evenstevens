@@ -2,7 +2,7 @@
 * @Author: Johnny Nguyen
 * @Date:   2015-06-02 13:08:51
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-08 17:30:42
+* @Last Modified time: 2015-06-10 15:19:14
 */
 
 'use strict';
@@ -59,7 +59,7 @@ Total :1»";
           { item: 'Coke', cost: '$1.80' },
           { item: 'Crab Meat; Fried Rice ’~', cost: '$10.20' },
           { item: 'Wonton Soup', cost: '$8.50' },
-          { item: 'Hot Tea', cost: '$0.96' } ],
+          { item: 'Hot Tea', cost: '$0.95' } ],
       subTotal: '$41.85',
       tax: '$3.66',
       total: '$45.51',
