@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-28 15:08:02
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-08 19:59:42
+* @Last Modified time: 2015-06-09 20:59:01
 */
 
 var React = require('react');
@@ -74,9 +74,11 @@ var ReceiptList = React.createClass({
            
             </ul>
           </li>
-          <li className ="diner-totals"><p>Diner Totals</p>
-            <ul className="user-summary">{ userTotals } </ul>
-          </li>
+          {
+            userTotals.length > 0 && <li className ="diner-totals"><p>Diner Totals</p>
+              <ul className="user-summary">{ userTotals } </ul>
+            </li>
+          } 
           <li className = "receipt-totals"><p>Receipt Totals</p>
             <ul className="totals-list"> { totalListItems } </ul>
           </li>
