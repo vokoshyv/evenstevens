@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 14:23:20
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-10 14:16:05
+* @Last Modified time: 2015-06-10 16:16:44
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -43,7 +43,8 @@ var setTotals = function(receipt) {
   _totals.tip = receipt.tip
   _totals.grandTotal;
   _taxPercent = stringMath.getTaxPercent(_totals.subTotal, _totals.tax);
-  _totals.grandTotal = stringMath.applyTipTax(_totals.subTotal, _totals.tip, _taxPercent);
+  _totals.grandTotal = stringMath.applyPercent(_totals.subTotal, _totals.tip, _taxPercent);
+  // _tipTotal = stringMath.applyPercent(_totals.subTotal);
 };
 
 var setTipPercent = function(tipPercent) {
@@ -100,7 +101,7 @@ var calcUserTotals = function() {
 
   // apply tip and tax to each user total
   for(var name in _userTotals) {
-    _userTotals[name] = stringMath.applyTipTax(_userTotals[name], _totals.tip, _taxPercent);
+    _userTotals[name] = stringMath.applyPercent(_userTotals[name], _totals.tip, _taxPercent);
   }
 };
 

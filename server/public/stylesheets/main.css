@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 13:19:09
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-10 16:00:34
+* @Last Modified time: 2015-06-10 16:24:15
 */
 
 
@@ -246,36 +246,19 @@ text-align:center;
 .claim-button {
   font-size:14px;
   color:#4091FF;
-/*  color:#4A4A4A;*/
-/*  background: #DEE1FF;*/
-
-
-  /*background: #3D86EA;*/
-/*  background:#4091FF;*/
-
-/* background-color:rgba(48,48,56,0.5);*/
- /*   text-shadow: 0px 2px 3px #3D86EA;*/
   text-align: center;
   width: 70px;
   height:100%;
   padding-top:15px;
 
-/*  border-right:1px solid rgba(27, 150, 239, 0.24);*/
-/*border-right:1px solid rgba(239, 248, 255, 0.24);
-*/  /*border-bottom:1px solid rgba(27, 150, 239, 0.24);*/
 
 
 }
 
 
-/*.claimed-by {
-  padding-right:20px;
-    border:none;
-
-}*/
 
 .diner-totals p, .receipt-totals p, .party-url {
-/*  background:rgb(64, 145, 255);*/
+
   text-align: center;
   color:white;
   font-size:22px;
@@ -320,6 +303,7 @@ text-align:center;
 .user-summary, .totals-list, .item-list {
   background: white;
   border-radius:5px;
+  border:1px solid #E4EEF5;
 }
 
 .user-summary li:last-child, .totals-list li:last-child{
@@ -334,11 +318,10 @@ text-align:center;
 }
 
 .claimed-name  {
-color: #708FBA;
+  color: #616262;
   position: absolute;
   right: 5px;
   margin-top: 40px;
-  text-transform:uppercase;
   padding-left: 5px;
   padding-right: 5px;
 }
@@ -377,9 +360,24 @@ color: #708FBA;
   /*display: none;*/
 }
 
-.name-form input[type="submit"] {
-  display: none;
+/*.name-input {
+  width:90%;
+  margin: 0 auto;
+}*/
+.submit-btn {
+ width:100%;
+  margin-top:20px;
+  margin-bottom:20px;
+  border-radius: 6px;
+  height:46px;
+/*  background: rgba(48,48,56,0.1);*/
+background: transparent;
+  border-color: white;
 }
+
+/*.name-form input[type="submit"] {
+  display: none;
+}*/
 
 /* ----------- iPhone 4 and 4S ----------- */
 
