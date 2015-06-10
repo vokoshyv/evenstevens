@@ -30,7 +30,11 @@ exports.divide = function(value, divisor) {
     value = parseFloat(value.substr(1));
   }
 
-  return '$' + (value / divisor).toFixed(2);
+  value = value / divisor;
+  value = Math.floor(+(value + 'e' + 2));
+  value = +(value + 'e' + (-2)); 
+  
+  return '$' + value.toFixed(2);
 };
 
 /**
@@ -54,26 +58,32 @@ exports.getTaxPercent = function(subtotal, tax) {
 };
 
 /**
- * Takes in a value, applies tip and tax, and returns the new total.
- * @param  {String} value Cost of item(s)
- * @param  {String} tip   Tip percent
- * @param  {String} tax   Tax percent
- * @return {[type]}       New cost total
+ * Applies percentage to the value. If multiple percenages are passed,
+ * the first percent is applied, then the second percent is applied to 
+ * the new value and so on.
+ * @param  {String} value Value amount
+ * @return {String}       New value amount after applied percenages
  */
-exports.applyTipTax = function(value, tip, tax) {
-  var args = Array.prototype.slice.call(arguments, 1);
+exports.applyPercent = function(value) {
+  var percentages = Array.prototype.slice.call(arguments, 1);
 
   if (value[0] === '$') {
     value = value.substr(1);
+    console.log(typeof value)
+    value = parseFloat(value);
   }
 
-  value = parseFloat(value);
+  console.log(typeof value)
 
-  for (var i = 0; i < args.length; i++) {
-    args[i] = args[i].substr(0, args[i].length - 1);
-    args[i] = parseFloat(args[i]);
-    args[i] = args[i] / 100;
+  for (var i = 0; i < percentages.length; i++) {
+    percentages[i] = percentages[i].substr(0, percentages[i].length - 1);
+    percentages[i] = parseFloat(percentages[i]);
+    percentages[i] = percentages[i] / 100;
+    
+    value = value * (1 + percentages[i]);
+    value = Math.round(+(value + 'e' + 2));
+    value = +(value + 'e' + (-2)); 
   }
 
-  return '$' + (value + (value * args[0]) + (value * args[1])).toFixed(2);
+  return '$' + value.toFixed(2);
 };
