@@ -2,7 +2,7 @@
 * @Author: Johnny Nguyen
 * @Date:   2015-06-05 14:41:39
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-09 16:43:05
+* @Last Modified time: 2015-06-10 11:42:27
 */
 
 
@@ -59,7 +59,7 @@ var TipPercentInputForm = React.createClass({
     }
 
     if (this.props.tipPercent) {
-      console.log('tip')
+      console.log('tip');
       return null;
     }
     

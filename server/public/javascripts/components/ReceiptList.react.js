@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-28 15:08:02
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-09 20:59:01
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-06-10 11:39:11
 */
 
 var React = require('react');
@@ -75,8 +75,10 @@ var ReceiptList = React.createClass({
             </ul>
           </li>
           {
-            userTotals.length > 0 && <li className ="diner-totals"><p>Diner Totals</p>
-              <ul className="user-summary">{ userTotals } </ul>
+            userTotals.length > 0 && <li className ="diner-totals">
+              <p>Diner Totals</p>
+              <p className = "tax-tip-message">( tax and tip included )</p>
+                <ul className="user-summary">{ userTotals } </ul>
             </li>
           } 
           <li className = "receipt-totals"><p>Receipt Totals</p>

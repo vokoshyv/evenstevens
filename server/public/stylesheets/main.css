@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 13:19:09
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-10 11:03:28
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-06-10 11:51:24
 */
 
 
@@ -90,7 +90,8 @@ ul {
   color:#269CDA;
 }
 .totals-li {
-  height:50px;
+  height:60px;
+    border-bottom: 1px solid #E4EEF5;
 
 }
 
@@ -152,7 +153,7 @@ ul {
 .party-header {
 
 border-bottom:1px solid rgba(239, 248, 255, 0.24);
-padding:10px;
+padding:18px;
 }
 
 .brand h2{ 
@@ -180,7 +181,7 @@ padding:10px;
 }
 
 .party-url {
-   font-size:16px;
+   font-size:18px;
   /*     font-family: 'League';*/
  /*   background:#1F4E8F;*/
    color:#FFF
@@ -306,18 +307,23 @@ text-align:center;
 }*/
 
 .diner-totals p, .receipt-totals p{
-  background:rgb(61, 134, 234);
+  background:rgb(64, 145, 255);
   text-align: center;
   color:white;
   font-size:18px;
-  padding:10px;
+  margin:0px;
+  padding-top:10px;
+}
 
+
+.receipt-totals p { 
+  padding:20px;
 }
 
 .receipt-totals , .diner-totals, .brand {
-  -webkit-box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.3);
+/*  -webkit-box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.3);
   -moz-box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.3);
-  box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.3);
+  box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.3);*/
 }
 
 .diner-totals {
@@ -325,10 +331,20 @@ text-align:center;
 }
 
 
+.diner-totals .tax-tip-message {
+  padding:0px;
+  margin:0px;
+  font-size:12px;
+  padding-bottom:13px;
+}
+
+.user-summary, .receipt-totals {
+  background: white;
+}
+
 
 
 .receipt-totals .totals-li, .user-summary .totals-li {
-  margin-top:-10px;
   background: white;
   padding:10px;
   padding-left:0px;
@@ -349,6 +365,8 @@ color: #708FBA;
 .cost-desc {
   float:left;
   padding-left:20px;
+  line-height: 40px;
+
 }
 
 /*.checked {
