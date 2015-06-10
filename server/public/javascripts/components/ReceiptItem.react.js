@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-29 16:00:24
-* @Last Modified by:   hal
-* @Last Modified time: 2015-06-08 16:32:21
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-06-09 16:45:17
 */
 
 var React = require('react');
@@ -35,33 +35,24 @@ var ReceiptItem = React.createClass({
       var indexOfClaimed = claimedList.indexOf(userName);
     }
     
-  
-
-    var buttonMessage = "";
+    var buttonMessage;
 
     if (claimedBy) {
       if(indexOfClaimed === -1) {
-        buttonMessage = "Split";
+        buttonMessage = (<div><i className="fa fa-exchange"></i> Split</div>);
       } else {
-        buttonMessage = "Cancel";
+        buttonMessage = (<div><i className ="fa fa-times"></i> Cancel</div>);
       }
     } else {
-      buttonMessage = "Claim"
+      buttonMessage = (<div><i className ="fa fa-plus"></i> Add </div>);
     }
 
     return (
       <li className="item-li"key={item.id} >
-
+        <div className = "claim-button pull-left" onClick = {this.claimItem}> {buttonMessage}</div>
         <div className="item-description">{item.item}</div>
-            <div className="checked">{claimedBy && <span> &#10003;</span>}</div>
-        // <div className="item-cost ">{item.cost.toFixed(2)}</div>
-        <div className="item-cost ">{item.cost}</div>
-      
-      <div className="clearfix"></div>
-      <div className="claimed-by">
-          <div className = "claim-button btn btn-default pull-left" onClick = {this.claimItem}> {buttonMessage}</div>
-          <div className = "claimed-name pull-right"> {claimedBy || "Not Claimed"} </div>
-      </div>
+        <div className="item-cost pull-right">{item.cost}</div>
+        <div className = "claimed-name pull-right"> {claimedBy || null} </div>   
       </li>
     );
   },

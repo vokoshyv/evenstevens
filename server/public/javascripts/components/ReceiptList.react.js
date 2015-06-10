@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-28 15:08:02
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-06 09:46:01
+* @Last Modified time: 2015-06-08 19:59:42
 */
 
 var React = require('react');
@@ -54,13 +54,18 @@ var ReceiptList = React.createClass({
     for(var name in this.state.userTotals) {
       userTotals.push(<KeyValueListItem key ={name} title ={name} item={this.state.userTotals[name]} />);
     }
+
+            // <p className ="url-instructions"> {"Your party can interact with this bill by visiting:"}</p>
+
   
     return (
       <Col xs={12} className = "receipt-list">
       <div className = "party-header">
-        <div className ="centered"> {"evensteven.co/" + this.state.billName} </div>
+        <div className ="centered">
+         <p className ="party-url"> {"evensteven.co/" + this.state.billName}</p>
+         </div>
       </div>
-        <ul>
+        <ul className ="receipt-lists">
           <li>
             <ul className="item-list"> {
                 this.state.items.map(function(value, index) {
@@ -69,10 +74,10 @@ var ReceiptList = React.createClass({
            
             </ul>
           </li>
-          <li> Diner Totals 
+          <li className ="diner-totals"><p>Diner Totals</p>
             <ul className="user-summary">{ userTotals } </ul>
           </li>
-          <li> Receipt Totals
+          <li className = "receipt-totals"><p>Receipt Totals</p>
             <ul className="totals-list"> { totalListItems } </ul>
           </li>
         </ul>

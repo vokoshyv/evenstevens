@@ -1,16 +1,10 @@
 /* 
 * @Author: Johnny Nguyen
 * @Date:   2015-06-05 14:41:39
-* @Last Modified by:   hal
-* @Last Modified time: 2015-06-08 16:34:15
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-06-09 16:43:05
 */
 
-/* 
-* @Author: Nathan Bailey
-* @Date:   2015-05-27 10:53:40
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-05 11:52:51
-*/
 
 var React = require('react');
 var AppActions = require('../actions/AppActions');

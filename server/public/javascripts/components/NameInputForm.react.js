@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:53:40
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-08 18:01:22
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-06-09 16:40:41
 */
 
 var React = require('react');
@@ -74,12 +74,6 @@ var NameInputForm = React.createClass({
 
     // initiate addUser action
     AppActions.addUser(billName);
-
-    ////////////////////////////////////////////////////
-    // NATE: I don't think line is necessary 
-    // clear input field
-    // React.findDOMNode(this.refs.name).value = '';
-    ////////////////////////////////////////////////////
     
     return;
   },
@@ -92,16 +86,17 @@ var NameInputForm = React.createClass({
       return null;
     }
 
-           // <button className="btn-wire" type="submit" value="Keep It Even">Keep It Even</button>
-
-  
     return (
+      <div className = "image-wrapper">
+        <img src = "../../images/eLogo.png" />
+        <h1>Interactive Bill Splitting</h1>
       <form className="form name-form" onSubmit={this.handleInput}>
         <div className="form-group">
-          <input className="form-control input-lg"  type="text" placeholder="Enter your name" ref="name" onKeyPress={this.handleKeyPress} />
+          <input className="name-input form-control input-lg"  type="text" placeholder="Enter your name to begin" ref="name" onKeyPress={this.handleKeyPress} />
         </div>
         <div className="errorBox"> {this.state.errMessage}</div>
       </form>
+      </div>
     );
   }
 });
