@@ -2,7 +2,7 @@
 * @Author: Johnny Nguyen
 * @Date:   2015-06-05 14:41:39
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-10 14:09:36
+* @Last Modified time: 2015-06-10 16:35:07
 */
 
 
@@ -58,16 +58,19 @@ var TipPercentInputForm = React.createClass({
     }
     
     return (
-      <div className = "btn-group btn-group-justified" role="group">
-        <ButtonGroup bsSize="large">
-          <Button onClick={this.handleSubmit} value='15%'>15%</Button>
-        </ ButtonGroup>
-        <ButtonGroup bsSize="large">
-          <Button onClick={this.handleSubmit} value='18%'>18%</Button>
-        </ ButtonGroup>
-        <ButtonGroup bsSize="large">
-          <Button onClick={this.handleSubmit} value='20%'>20%</Button>
-        </ ButtonGroup>
+      <div className = "tip-input-wrapper">
+        <p> Please select the tip percentage for your party </p>
+        <div className = "tip-input btn-group btn-group-justified" role="group">
+          <ButtonGroup bsSize="large">
+            <Button className = "btn-primary" onClick={this.handleSubmit} value='15%'>15%</Button>
+          </ ButtonGroup>
+          <ButtonGroup bsSize="large">
+            <Button className = "btn-primary" onClick={this.handleSubmit} value='18%'>18%</Button>
+          </ ButtonGroup>
+          <ButtonGroup bsSize="large">
+            <Button className = "btn-primary" onClick={this.handleSubmit} value='20%'>20%</Button>
+          </ ButtonGroup>
+        </div>
       </div>
     );
   }
