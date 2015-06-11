@@ -9,11 +9,7 @@ exports.sum = function() {
   var sum = 0;
 
   for (var i = 0; i < args.length; i++) {
-    if (args[i].substr(0, 1) === '$') {
-      args[i] = args[i].substr(1)
-    }
-
-    sum += parseFloat(args[i]);
+    sum += stripDollar(args[i]);
   }
 
   return '$' + sum.toFixed(2);
@@ -26,10 +22,7 @@ exports.sum = function() {
  * @return {String}         Result string
  */
 exports.divide = function(value, divisor) {
-  if (value[0] === '$') {
-    value = parseFloat(value.substr(1));
-  }
-
+  value = stripDollar(value);
   value = value / divisor;
   value = Math.floor(+(value + 'e' + 2));
   value = +(value + 'e' + (-2)); 
@@ -38,7 +31,7 @@ exports.divide = function(value, divisor) {
 };
 
 /**
- * Takes in subtotal and tax amounds and returns percent tax percent
+ * Takes in subtotal and tax amount and returns percent tax percent
  * @param  {String} subtotal Total amount of ordered items 
  * @param  {String} tax      The tax total
  * @return {String}          Tax percent
@@ -47,14 +40,10 @@ exports.getTaxPercent = function(subtotal, tax) {
   var args = Array.prototype.slice.call(arguments);
 
   for (var i = 0; i < args.length; i++) {
-    if (args[i][0] === '$') {
-      args[i] = args[i].substr(1);
-    }
-
-    args[i] = parseFloat(args[i]);
+    args[i] = stripDollar(args[i]);
   }
 
-  return ((args[1] / args[0]) * 100).toFixed(2) + '%';
+  return ((args[1] / args[0]) * 100) + '%';
 };
 
 /**
@@ -66,19 +55,10 @@ exports.getTaxPercent = function(subtotal, tax) {
  */
 exports.applyPercent = function(value) {
   var percentages = Array.prototype.slice.call(arguments, 1);
-
-  if (value[0] === '$') {
-    value = value.substr(1);
-    console.log(typeof value)
-    value = parseFloat(value);
-  }
-
-  console.log(typeof value)
+  value = stripDollar(value);
 
   for (var i = 0; i < percentages.length; i++) {
-    percentages[i] = percentages[i].substr(0, percentages[i].length - 1);
-    percentages[i] = parseFloat(percentages[i]);
-    percentages[i] = percentages[i] / 100;
+    percentages[i] = stripPercent(percentages[i]);
     
     value = value * (1 + percentages[i]);
     value = Math.round(+(value + 'e' + 2));
@@ -86,4 +66,40 @@ exports.applyPercent = function(value) {
   }
 
   return '$' + value.toFixed(2);
+};
+
+/**
+ * [percentOf description]
+ * @param  {[type]} value   [description]
+ * @param  {[type]} percent [description]
+ * @return {[type]}         [description]
+ */
+exports.percentOf = function(value, percent) {
+  value = stripDollar(value);
+  percent = stripPercent(percent);
+
+  var percentOf = value * percent;
+  percentOf = Math.round(+(percentOf + 'e' + 2));
+  percentOf = +(percentOf + 'e' + (-2)); 
+
+  return '$' + percentOf.toFixed(2);
+};
+
+/**
+ * Helper function to take string value and returns a float 
+ * @param  {[type]} value [description]
+ * @return {[type]}       [description]
+ */
+var stripDollar = function(value) {
+  if (value[0] === '$') {
+    value = value.substr(1);
+  }
+
+  return value = parseFloat(value);
+};
+
+var stripPercent = function(percent) {
+  percent = percent.substr(0, percent.length - 1);
+  percent = parseFloat(percent);
+  return percent / 100;
 };
