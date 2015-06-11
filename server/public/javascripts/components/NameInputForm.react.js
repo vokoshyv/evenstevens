@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:53:40
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-10 16:17:17
+* @Last Modified time: 2015-06-11 16:18:03
 */
 
 var React = require('react');
@@ -88,7 +88,7 @@ var NameInputForm = React.createClass({
 
     return (
       <div className = "image-wrapper">
-        <img src = "../../images/eLogo.png" />
+        <img src = "../../images/even-stevens-logo.png" />
         <h1>Interactive Bill Splitting</h1>
       <form className="form name-form" onSubmit={this.handleInput}>
         <div className="form-group">

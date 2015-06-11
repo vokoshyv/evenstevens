@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 14:23:20
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-10 16:16:44
+* @Last Modified time: 2015-06-11 15:27:19
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -23,6 +23,7 @@ var _userTotals = {};
 var _items = [];
 var _totals = {};
 var _taxPercent = "0%";
+var _totalTax = "$0.00";
 var _tipValue = "$0.00";
 
 // This sets the inital state of the receipt as received
@@ -41,10 +42,11 @@ var setTotals = function(receipt) {
   _totals.tax = receipt.tax
   _totals.total = receipt.total
   _totals.tip = receipt.tip
-  _totals.grandTotal;
   _taxPercent = stringMath.getTaxPercent(_totals.subTotal, _totals.tax);
-  _totals.grandTotal = stringMath.applyPercent(_totals.subTotal, _totals.tip, _taxPercent);
-  // _tipTotal = stringMath.applyPercent(_totals.subTotal);
+  _tipValue = stringMath.percentOf(_totals.subTotal, _totals.tip);
+  _totalTax = stringMath.percentOf(_totals.subTotal, _taxPercent);
+  _totals.grandTotal = stringMath.sum(_totals.subTotal, _tipValue, _totalTax);
+
 };
 
 var setTipPercent = function(tipPercent) {
@@ -99,9 +101,14 @@ var calcUserTotals = function() {
     });
   });
 
+  var userTip;
+  var userTax;
+
   // apply tip and tax to each user total
   for(var name in _userTotals) {
-    _userTotals[name] = stringMath.applyPercent(_userTotals[name], _totals.tip, _taxPercent);
+    userTip = stringMath.percentOf(_userTotals[name], _totals.tip);
+    userTax = stringMath.percentOf(_userTotals[name], _taxPercent);
+    _userTotals[name]  = stringMath.sum(_userTotals[name], userTax, userTip);
   }
 };
 
