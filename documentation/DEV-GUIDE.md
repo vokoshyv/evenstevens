@@ -120,7 +120,22 @@ You will want to interact with the Redis database that you set up. You can read 
 http://redis.io/commands
 ```
 
-
 #####Deployment Environment
 
 Our team (Decentralized Saxophones) deployed on Digital Ocean. Please contact us for details to access the server. 
+
+### Testing
+
+##### CasperJS and PhantomJS Setup
+
+To install PhantomJS using npm:
+
+<code>npm install phantomjs -g</code>
+
+And for CapserJS:
+
+<code>npm install casperjs -g</code>
+
+To run CasperJS test file (from project root):
+
+<code>$ casperjs test server/casperTest.js</code>
