@@ -2,7 +2,7 @@
 * @Author: Johnny Nguyen
 * @Date:   2015-06-05 14:41:39
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-09 16:43:05
+* @Last Modified time: 2015-06-10 16:35:07
 */
 
 
@@ -32,7 +32,6 @@ var TipPercentInputForm = React.createClass({
     e.preventDefault();
     
     var tipPercent = e.target.value;
-    console.log(e.target.value)
     
     // not sure if setting tip percent is necessary
     this.setState({tipPercent: tipPercent});
@@ -40,7 +39,6 @@ var TipPercentInputForm = React.createClass({
     // initiate addUser action
     AppActions.addTipPercent(tipPercent);
     
-    console.log(this.props)
     return;
   },
   /**
@@ -51,29 +49,28 @@ var TipPercentInputForm = React.createClass({
     // if (!this.props.billName) {
     //   return null;
     // }
-    console.log(this.props)
-    console.log(!!this.props.billName)
     if (!this.props.userName) {
-      console.log('billname')
       return null;
     }
 
     if (this.props.tipPercent) {
-      console.log('tip')
       return null;
     }
     
     return (
-      <div className = "btn-group btn-group-justified" role="group">
-        <ButtonGroup bsSize="large">
-          <Button onClick={this.handleSubmit} value='15%'>15%</Button>
-        </ ButtonGroup>
-        <ButtonGroup bsSize="large">
-          <Button onClick={this.handleSubmit} value='18%'>18%</Button>
-        </ ButtonGroup>
-        <ButtonGroup bsSize="large">
-          <Button onClick={this.handleSubmit} value='20%'>20%</Button>
-        </ ButtonGroup>
+      <div className = "tip-input-wrapper">
+        <p> Please select the tip percentage for your party </p>
+        <div className = "tip-input btn-group btn-group-justified" role="group">
+          <ButtonGroup bsSize="large">
+            <Button className = "btn-primary" onClick={this.handleSubmit} value='15%'>15%</Button>
+          </ ButtonGroup>
+          <ButtonGroup bsSize="large">
+            <Button className = "btn-primary" onClick={this.handleSubmit} value='18%'>18%</Button>
+          </ ButtonGroup>
+          <ButtonGroup bsSize="large">
+            <Button className = "btn-primary" onClick={this.handleSubmit} value='20%'>20%</Button>
+          </ ButtonGroup>
+        </div>
       </div>
     );
   }

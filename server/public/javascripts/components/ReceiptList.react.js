@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-28 15:08:02
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-09 20:59:01
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-06-11 17:18:53
 */
 
 var React = require('react');
@@ -20,7 +20,8 @@ var getReceiptState = function() {
     totals: AppStore.getTotals(),
     currentUserName: AppStore.getUserName(),
     itemToDiner: AppStore.getItemToDiner(),
-    userTotals: AppStore.getUserTotals()
+    userTotals: AppStore.getUserTotals(),
+    tipValue: AppStore.getTipValue()
   }
 };
 
@@ -41,6 +42,11 @@ var ReceiptList = React.createClass({
       return ( <NameInputForm joinRoom={true} userName={this.state.currentUserName} />);
     }
 
+    // loading
+    if(this.state.itemToDiner.length === 0) {
+      return <div>Loading</div> 
+    }
+
     var totalListItems = [];
     var claimedItems = this.state.itemToDiner;
     var currentUserName = this.state.currentUserName
@@ -48,17 +54,17 @@ var ReceiptList = React.createClass({
     
 
     for(var key in this.state.totals) {
-      totalListItems.push(<KeyValueListItem key ={key} title={key} item={this.state.totals[key]} />);
+      totalListItems.push(<KeyValueListItem key={key} title={key} item={this.state.totals[key]} tipValue={this.state.tipValue} />);
     }   
 
     for(var name in this.state.userTotals) {
-      userTotals.push(<KeyValueListItem key ={name} title ={name} item={this.state.userTotals[name]} />);
+      userTotals.push(<KeyValueListItem key ={name} title={name} item={this.state.userTotals[name]} />);
     }
 
             // <p className ="url-instructions"> {"Your party can interact with this bill by visiting:"}</p>
 
   
-    return (
+    return ( 
       <Col xs={12} className = "receipt-list">
       <div className = "party-header">
         <div className ="centered">
@@ -75,8 +81,10 @@ var ReceiptList = React.createClass({
             </ul>
           </li>
           {
-            userTotals.length > 0 && <li className ="diner-totals"><p>Diner Totals</p>
-              <ul className="user-summary">{ userTotals } </ul>
+            userTotals.length > 0 && <li className ="diner-totals">
+              <p>Diner Totals</p>
+              <p className = "tax-tip-message">( tax and tip included )</p>
+                <ul className="user-summary">{ userTotals } </ul>
             </li>
           } 
           <li className = "receipt-totals"><p>Receipt Totals</p>
