@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-11 19:54:37
+* @Last Modified time: 2015-06-12 12:07:34
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
@@ -72,7 +72,8 @@ var AppActions = {
     // grabs current url for socket connection
     var url = window.location.href.split('/');  
     // socket = io.connect(url[url.length-2]);
-      socket = io.connect('http://6f226949.ngrok.io');
+    socket = io.connect('http://014405a0.ngrok.io');
+    // socket = io.connect('localhost:3000');
 
     // Processes data from server
     socket.on('fromServerInitialData', function (data) {

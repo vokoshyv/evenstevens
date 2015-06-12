@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 14:00:21
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-08 12:26:55
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-06-12 15:17:29
 */
 'use strict';
 // This file is the main entry point for browserify
@@ -43,14 +43,8 @@ var SubmitReceipt = require('./components/SubmitReceipt.react');
 var App = React.createClass({
   render: function() {
     return (
-      <Grid>
-        <Row className = "brand-row">
-          <Col md={12}>
-            <div className="brand">
-              <h2>Even Stevens</h2>
-            </div>
-          </Col>
-        </Row>
+      <div className ="container-fluid">
+     
        
 
 
@@ -59,7 +53,7 @@ var App = React.createClass({
             <RouteHandler />
           </Col>
         </Row>
-      </Grid>
+      </div>
     );
   }
 });

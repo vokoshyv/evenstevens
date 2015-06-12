@@ -2,7 +2,7 @@
 * @Author: nathanbailey
 * @Date:   2015-06-02 14:46:31
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-11 14:53:09
+* @Last Modified time: 2015-06-12 15:19:56
 */
 
 var React = require('react');
@@ -15,7 +15,7 @@ var KeyValueListItem = React.createClass({
     var cost = this.props.item;
     var title = this.props.title.toLowerCase();
     if(title === "tip") {
-      cost = (this.props.tipValue + " (" + cost + ")");
+      cost = ("(" + cost + ") " + this.props.tipValue);
     }
 
     return (
