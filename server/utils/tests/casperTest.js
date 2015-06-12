@@ -1,7 +1,6 @@
 var host = 'http://localhost:3000';
-var path = 'server/utils/__tests__/';
+var path = 'server/utils/tests/';
 var numberOfTests = 8;
-
 
 casper.test.begin('Testing EvenStevens.co', numberOfTests, function(test){
   casper.start(host);
@@ -12,7 +11,6 @@ casper.test.begin('Testing EvenStevens.co', numberOfTests, function(test){
     test.assertTitle('Even Stevens', 'Even Stevens has correct title');
     this.echo('');
     // this.echo(this.getHTML());
-
 
     var waitForResource = function (context, fileName) {
       context.waitForResource(fileName, function(){
@@ -40,7 +38,7 @@ casper.test.begin('Testing EvenStevens.co', numberOfTests, function(test){
 
   casper.then(function(){
     this.echo('');
-    casper.page.injectJs('server/utils/__tests__/jquery.js');
+    casper.page.injectJs(path + 'jquery.js');
 
     var getElement = function (selector) {
       var temp = casper.evaluate(function(selector) {
