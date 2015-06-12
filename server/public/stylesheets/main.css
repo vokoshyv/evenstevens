@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 13:19:09
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-12 15:54:04
+* @Last Modified time: 2015-06-12 16:07:31
 */
 
 
@@ -67,8 +67,8 @@ ul {
 }
 
 .receipt-list {
-  padding-left:10px;
-  padding-right:10px;
+/*  padding-left:10px;
+  padding-right:10px;*/
 }
 
 
@@ -465,7 +465,6 @@ background: transparent;
 
 input[type=file] {
   display: block;
-  padding: 20px;
   margin: 0px auto;
   max-width: 420px;
 }
