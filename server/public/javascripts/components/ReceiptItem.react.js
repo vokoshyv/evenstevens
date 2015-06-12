@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-29 16:00:24
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-10 16:52:00
+* @Last Modified time: 2015-06-11 19:18:19
 */
 
 var React = require('react');
@@ -39,12 +39,12 @@ var ReceiptItem = React.createClass({
 
     if (claimedBy) {
       if(indexOfClaimed === -1) {
-        buttonMessage = (<div><i className="fa fa-exchange"></i> Split</div>);
+        buttonMessage = (<div><i className="fa fa-exchange"></i></div>);
       } else {
-        buttonMessage = (<div><i className ="fa fa-times"></i> Remove</div>);
+        buttonMessage = (<div><i className ="fa fa-times"></i></div>);
       }
     } else {
-      buttonMessage = (<div><i className ="fa fa-plus"></i> Add </div>);
+      buttonMessage = (<div><i className ="fa fa-plus"></i></div>);
     }
 
     return (

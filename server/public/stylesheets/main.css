@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 13:19:09
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-10 17:07:45
+* @Last Modified time: 2015-06-11 20:14:56
 */
 
 
@@ -18,6 +18,11 @@
   src: url('/../fonts/LeagueSpartan-Bold.otf');
 
 }
+@font-face { 
+  font-family: 'Roboto';
+  src: url('/../fonts/Roboto-Regular.ttf');
+
+}
 
 html {
   height:100%;
@@ -28,8 +33,10 @@ html {
 body {
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   cursor:'pointer' ;
-  background-color:#4091FF;
+  background-color:#5298FC;
   padding-bottom:50px;
+  font-family: 'Roboto';
+  color:#787F8C;
 /*  background-color:#7AB0FA;*/
 
 
@@ -75,20 +82,8 @@ ul {
   margin-top:20px;
 }
 
-/* not sure if these tip styles are needed
 
 
-.tip-view {
-  padding:30px;
-}
-
-.tip-view p {
-  text-align:center;
-  color: #FFF;
-  margin-top:30px;
-}
-
-*/
 
 
 
@@ -106,15 +101,12 @@ ul {
 
 .item-description {
   float: left;
-  line-height: 60px;
-
-
-      color: #707070;
   font-size: 14px;
-    white-space: nowrap; 
-    width: 12em; 
-    overflow: hidden;
-    text-overflow: ellipsis; 
+  white-space: nowrap;
+  width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 20px 0px;
    
  
 
@@ -124,7 +116,7 @@ ul {
 
 .item-cost  {
   padding-top: 10px;
-  font-size: 16px;
+  font-size: 18px;
   color: rgb(64, 145, 255);
   font-weight: bold;
   position: absolute;
@@ -141,7 +133,8 @@ ul {
 }
 
 .main-content {
-/*  margin-top:20px;*/
+padding-right:0px;
+padding-left:0px;
 }
 
 .submitReceipt {
@@ -152,7 +145,8 @@ ul {
 
 
 .brand {
-  background-color:rgba(48,48,56,0.1);
+  background: rgba(61, 134, 234, 1);
+/*  background-color:rgba(48,48,56,0.1);*/
     padding:20px;
 }
 
@@ -196,7 +190,7 @@ input[type="email"], input[type="number"], input[type="search"], input[type="tex
 input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focus, input[type="text"]:focus, input[type="tel"]:focus, input[type="url"]:focus, input[type="password"]:focus, textarea:focus, select:focus {  
 
 
-  color: #999999;
+  color: #4D4D4D;
   /*font-size: 12px;*/
 /*  text-transform: uppercase;*/
   /*letter-spacing: .2em;*/
@@ -252,10 +246,11 @@ text-align:center;
 
 
 .claim-button i {
-  font-size:16px;
-  float:none;
-  display:block;
-/*  text-shadow: 0px 2px 3px #3D86EA;*/
+  font-size: 35px;
+  float: none;
+  display: block;
+  text-shadow: 1px 1px 2px rgba(151, 156, 171, 0.51);
+  color: rgb(82, 152, 252);
 
 
 }
@@ -264,7 +259,7 @@ text-align:center;
 
 .claim-button {
   font-size:14px;
-  color:#4091FF;
+  color:#FFF;
   text-align: center;
   width: 70px;
   height:100%;
@@ -280,11 +275,12 @@ text-align:center;
 
   text-align: center;
   color:white;
-  font-size:22px;
+  font-size:18px;
   margin:0px;
   padding-top:10px;
 /*  text-shadow: 1px 1px 1px #000;
-*/   text-shadow: 2px 1px 0px rgba(62,135,238,.5);
+   text-shadow: 2px 1px 0px rgba(62,135,238,.5); */
+/*text-shadow: -1px 1px 1px rgba(0, 0, 0, 0.43);*/
 }
 
 
@@ -301,11 +297,11 @@ text-align:center;
   padding:20px;
 }
 
-.item-list, .totals-list, .user-summary, .brand{
-  -webkit-box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.1);
-  -moz-box-shadow:  0px 1px 1px 1px rgba(0,0,0,0.1);
-  box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.1)
-}
+/*.item-list, .totals-list, .user-summary, {
+  -webkit-box-shadow: 0px 0px 6px 3px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0px 0px 6px 3px rgba(0,0,0,0.3);
+  box-shadow: 0px 0px 6px 3px rgba(0,0,0,0.3);
+}*/
 
 .diner-totals {
 /*  background-color:#4091FF;*/
@@ -320,8 +316,8 @@ text-align:center;
 }
 
 .user-summary, .totals-list, .item-list {
-  background: white;
-  border-radius:5px;
+  background: rgb(255, 254, 254);
+/*  border-radius:5px;*/
   border:1px solid #E4EEF5;
 }
 
@@ -332,12 +328,11 @@ text-align:center;
 .receipt-totals .totals-li, .user-summary .totals-li {
   padding:10px;
   padding-left:0px;
-  color:#4091FF;
   font-size:16px;
 }
 
 .claimed-name  {
-  color: #616262;
+/*  color: #616262;*/
   position: absolute;
   right: 5px;
   margin-top: 40px;
@@ -349,7 +344,8 @@ text-align:center;
   float:left;
   padding-left:20px;
   line-height: 40px;
-
+/*  color:#707070;
+*/
 }
 
 /*.checked {
@@ -405,6 +401,14 @@ text-align:center;
 background: transparent;
   border-color: white;
 }
+
+/*.fa-times {
+  color:rgb(255, 80, 80);
+}
+
+.fa-plus {
+  color:rgb(170, 250, 170);
+}*/
 
 /*.name-form input[type="submit"] {
   display: none;
