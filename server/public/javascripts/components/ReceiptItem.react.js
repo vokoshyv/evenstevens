@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-29 16:00:24
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-11 19:18:19
+* @Last Modified time: 2015-06-12 14:14:11
 */
 
 var React = require('react');
@@ -39,20 +39,20 @@ var ReceiptItem = React.createClass({
 
     if (claimedBy) {
       if(indexOfClaimed === -1) {
-        buttonMessage = (<div><i className="fa fa-exchange"></i></div>);
+        buttonMessage = (<div><span className="button-char split">&#x21c4;</span></div>);
       } else {
-        buttonMessage = (<div><i className ="fa fa-times"></i></div>);
+        buttonMessage = (<div><span className="button-char minus-char ">-</span></div>);
       }
     } else {
-      buttonMessage = (<div><i className ="fa fa-plus"></i></div>);
+      buttonMessage = (<div><span className="button-char plus-char ">+</span></div>);
     }
 
     return (
-      <li className="item-li"key={item.id} >
-        <div className = "claim-button pull-left" onClick = {this.claimItem}> {buttonMessage}</div>
+      <li className="item-li"key={item.id}   onClick = {this.claimItem}>
+        <div className = "claim-button pull-left"> {buttonMessage}</div>
         <div className="item-description">{item.item}</div>
-        <div className="item-cost pull-right">{item.cost}</div>
-        <div className = "claimed-name pull-right"> {claimedBy || null} </div>   
+        <div className="item-cost">{item.cost}</div>
+        <div className = "claimed-name"> {claimedBy || null} </div>   
       </li>
     );
   },
