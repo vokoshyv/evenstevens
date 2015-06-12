@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-28 15:08:02
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-11 17:18:53
+* @Last Modified time: 2015-06-12 16:10:46
 */
 
 var React = require('react');
@@ -12,6 +12,7 @@ var KeyValueListItem = require('./KeyValueListItem.react');
 var NameInputForm = require('./NameInputForm.react');
 var AppActions = require('../actions/AppActions') ;
 var Col = require('react-bootstrap').Col;
+var LoadingView = require('./LoadingView.react');
 
 var getReceiptState = function() {
   return {
@@ -44,7 +45,7 @@ var ReceiptList = React.createClass({
 
     // loading
     if(this.state.itemToDiner.length === 0) {
-      return <div>Loading</div> 
+      return (<LoadingView  isLoading={true} />);
     }
 
     var totalListItems = [];
