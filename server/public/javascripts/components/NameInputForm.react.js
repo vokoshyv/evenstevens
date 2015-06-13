@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:53:40
-* @Last Modified by:   hal
-* @Last Modified time: 2015-06-13 15:07:24
+* @Last Modified by:   vokoshyv
+* @Last Modified time: 2015-06-13 16:41:38
 */
 
 var React = require('react');
@@ -87,10 +87,13 @@ var NameInputForm = React.createClass({
     }
 
     return (
-      <div className = "name-input-wrapper">
-        <div className="brand">
-          <h2>Even Stevens</h2>
-        </div>
+
+      <div className = "name-input-wrapper extendfull">
+      <div className="landingPage"> 
+            <div className="brand">
+              <h2>Even Stevens</h2>
+            </div>
+       
         <img src = "../../images/even-stevens-logo.png" />
         <h1>Interactive Bill Splitting</h1>
         <form className="form name-form" onSubmit={this.handleInput}>
@@ -100,6 +103,57 @@ var NameInputForm = React.createClass({
           <input className ="btn btn-primary submit-btn" type="submit" />
           <div className="errorBox"> {this.state.errMessage}</div>
         </form>
+      </div>
+
+      <div className="marketing extendfull bringItDown">
+        <div className="row">
+          <div className="col-md-6 darken marketingWords">
+            <h1>Take a Picture</h1>
+            <h1>Claim your items</h1>
+            <h1>Know what you owe</h1>
+          </div>
+          <div className="col-md-1"></div>
+          <div className="col-md-4 darken marketingWords">
+            <p>We, at Even Stevens, grew tired of dealing with
+            unnecessary stress when it came time to divide up 
+            the bill at large dinner parties. Why not tap into 
+            a resource that all of us carry around twenty-four
+            seven? Whenever you're out eating dinner with your 
+            friends, just remember: keep it Even Stevens</p>
+          </div>
+          <div className="col-md-12">
+            <div className="row marketingPhones">
+              <div className="col-md-3">
+                <img src="images/iphone1.png" className="img-responsive"></img>
+              </div>
+              <div className="col-md-3">
+                <img src="images/iphone2.png" className="img-responsive"></img>
+              </div>
+              <div className="col-md-3">
+                <img src="images/iphone3.png" className="img-responsive"></img>
+              </div>
+              <div className="col-md-3">
+                <img src="images/iphone4.png" className="img-responsive"></img>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="copyright row darken">
+          <div className="col-md-4">
+            <p>Decentralized Saxophone</p>
+          </div>
+          <div className="col-md-6"></div>
+          <div className="col-md-1">
+            <a href="https://github.com/decentralizedsaxophone/evenstevens">
+              <p>GitHub</p>
+            </a>
+          </div>
+          <div className="col-md-1"></div>
+        </div>
+
+      </div>
+      
       </div>
     );
   }
