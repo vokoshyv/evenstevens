@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-13 14:07:24
+* @Last Modified by:   vokoshyv
+* @Last Modified time: 2015-06-13 16:41:10
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
@@ -76,8 +76,9 @@ var AppActions = {
     // grabs current url for socket connection
     var url = window.location.href.split('/');  
     // socket = io.connect(url[url.length-2]);
-    // socket = io.connect('http://3b430dce.ngrok.io');
-     socket = io.connect('localhost:3000');
+
+    socket = io.connect('http://evenstevens.co/');
+    // socket = io.connect('localhost:3000');
 
     // Processes data from server
     socket.on('fromServerInitialData', function (data) {
