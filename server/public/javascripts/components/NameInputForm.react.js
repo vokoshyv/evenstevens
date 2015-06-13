@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:53:40
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-12 14:33:28
+* @Last Modified by:   hal
+* @Last Modified time: 2015-06-13 15:07:24
 */
 
 var React = require('react');
@@ -88,20 +88,18 @@ var NameInputForm = React.createClass({
 
     return (
       <div className = "name-input-wrapper">
-       
-            <div className="brand">
-              <h2>Even Stevens</h2>
-            </div>
-       
+        <div className="brand">
+          <h2>Even Stevens</h2>
+        </div>
         <img src = "../../images/even-stevens-logo.png" />
         <h1>Interactive Bill Splitting</h1>
-      <form className="form name-form" onSubmit={this.handleInput}>
-        <div className="form-group">
-          <input className="name-input form-control input-lg"  type="text" placeholder="Enter your name to begin" ref="name" onKeyPress={this.handleKeyPress} />
-        </div>
-        <input className ="btn btn-primary submit-btn" type="submit" />
-        <div className="errorBox"> {this.state.errMessage}</div>
-      </form>
+        <form className="form name-form" onSubmit={this.handleInput}>
+          <div className="form-group">
+            <input className="name-input form-control input-lg"  type="text" placeholder="Enter your name to begin" ref="name" onKeyPress={this.handleKeyPress} />
+          </div>
+          <input className ="btn btn-primary submit-btn" type="submit" />
+          <div className="errorBox"> {this.state.errMessage}</div>
+        </form>
       </div>
     );
   }
