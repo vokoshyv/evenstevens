@@ -1,8 +1,8 @@
 /* 
 * @Author: vokoshyv
 * @Date:   2015-05-26 17:12:39
-* @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-06-08 14:41:44
+* @Last Modified by:   hal
+* @Last Modified time: 2015-06-12 09:25:35
 */
 
 'use strict';
@@ -118,7 +118,6 @@ gulp.task('clearDist', function(cb){
 });
 
 gulp.task('watch', function(){
-  console.log('reached here');
   livereload.listen();
 
   gulp.watch(paths.server, ['server']);

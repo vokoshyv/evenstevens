@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-06 16:36:39
+* @Last Modified by:   hal
+* @Last Modified time: 2015-06-13 15:13:43
 */
 
 'use strict';
@@ -16,9 +16,6 @@ var redisDB = require('../../db.js');
 var bill = require('../../utils/bill');
 var tesseract = require('node-tesseract');
 var Promise = require("bluebird");
-
-// seed for DB to test integration
-var seed = require('../../config/seed').kingOfThai();
 
 Promise.promisifyAll(fs);
 Promise.promisifyAll(tesseract);
@@ -104,6 +101,9 @@ exports.create = function(req, res) {
 
         return res.status(201).json({billName: billName});
       });
+    })
+    .catch(function(err) {
+      handleError(res, err);
     });
   });
 };
@@ -114,7 +114,6 @@ exports.create = function(req, res) {
  * @param  {[type]} res [description]
  * @return {[type]}     [description]
  */
-
 exports.update = function(socket, clientData) {
 
   var billName = clientData.billName;
@@ -137,11 +136,20 @@ exports.update = function(socket, clientData) {
   });
 };
 
+/**
+ * Error handling for all bill REST actions
+ * @param  {Object} res Node response object
+ * @param  {Object} err Error
+ */
 function handleError(res, err) {
   res.status(500).send(err);
-  throw new Error('something bad happened');
 }
 
+/**
+ * Makes a random file name generator for saved uploaded images. 
+ * This is necessary to (reasonably) avoid file collisions.
+ * @return {String} Random alphanumeric, five character string
+ */
 function makeid() {
   var text = "";
   var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

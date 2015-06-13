@@ -10,9 +10,9 @@ Promise.promisifyAll(fs);
 
 /**
  * Initial function to start parsing bill data.
- * @param  {String}  path     Path to bill image
- * @param  {JPEG}    file     Uploaded bill image
- * @param  {String}  billName File name of uploaded receipt
+ * @param {String} path     Path to bill image
+ * @param {JPEG}   file     Uploaded bill image
+ * @param {String} billName File name of uploaded receipt
  */
 exports.parse = function(path, file, fields) {
   return new Promise(function(resolve, reject) {
@@ -50,9 +50,9 @@ exports.readFile = function(file) {
 
 /**
  * Writes to bill image to disk.
- * @param   {String}   path   Path to bill image
- * @param   {JPEG}     file   Uploaded bill image
- * @return  {Promise}         Returns parsed bill items or error
+ * @param  {String}  path Path to bill image
+ * @param  {JPEG}    file Uploaded bill image
+ * @return {Promise}      Returns parsed bill items or error
  */
 var writeFile = function(path, file) {
   return fs.writeFileAsync(path, file)
@@ -65,7 +65,7 @@ var writeFile = function(path, file) {
 };
 
 /**
- * Process bill items to JSON object.
+ * Process bill from raw text to JSON object.
  * @param  {JPEG}    file Uploaded bill image
  * @return {Promise}      Returns parsed bill items or error
  */
@@ -118,21 +118,22 @@ exports.postProcess = function(bill, text) {
 
     var cost = item.pop();
     
-    // continue if line doesn't have a cost
+    // check if last item is a cost value to determine
+    // if the line needs to be parsed 
     if (cost.search(costRegex) < 0) {
       continue;
     }
 
-    // cost = +parseFloat(cost).toFixed(2);
-    // cost = Math.floor(cost * 100) / 100;
-
-    // assume ordered item if first element is a number
+    // at this point the line of text is assumed to be a 
+    // either an ordered item or total/subtotal, determine
+    // ordered item if quantity is at first element
     if (!isNaN(item[0])) {
       exports.parseItems(bill, item, cost);
       continue;
     } 
 
-    // assume total if cost and first element is not a number 
+    // at this point the line of text is assumed to be a 
+    // total/subtotal
     exports.parseTotals(bill, item, cost);
   }
 
@@ -144,7 +145,7 @@ exports.postProcess = function(bill, text) {
 /**
  * Decorator to replace empty space with decimals in a valid
  * cost value (if needed).
- * @param  {Array}  item  Single line item of receipt.
+ * @param {Array} item Single line item of receipt.
  */
 exports.spaceToDecimal = function(item) {
   var length = item.length;
@@ -169,11 +170,10 @@ exports.parseItems = function(bill, item, cost) {
   for (var i = 0; i < quanity; i++) {
     bill.receipt.items.push({
       item: item.join(' '),
-      // cost: cost / quanity
       cost: stringMath.divide(cost, quanity)
     });
 
-    // push false value for each item
+    // data model requires binary value for each ordered item 
     bill.diners[billName].push(false);
   }
 };
@@ -187,24 +187,24 @@ exports.parseItems = function(bill, item, cost) {
 exports.parseTotals = function(bill, item, cost) {
   var itemString = item.join('').toLowerCase();
   
-  // check for 'sub' must come before 'total'
+  // check for subtotal, must come before checking total
   if (itemString.indexOf('sub') !== -1) {
     bill.receipt.subTotal = stringMath.sum(cost);
-  }
-
-  if (itemString.indexOf('tax') !== -1) {
-    bill.receipt.tax = stringMath.sum(cost);
   }
 
   if (itemString.indexOf('total') !== -1) {
     bill.receipt.total = stringMath.sum(cost);
   }
+
+  if (itemString.indexOf('tax') !== -1) {
+    bill.receipt.tax = stringMath.sum(cost);
+  }
 };
 
 /**
- * Sanity check for totals before returning the constructed bill 
- * object. If the raw text is too grabled for a clean parse, bill
- * will be an empty object.
+ * Check for totals before returning the constructed bill object. 
+ * If one total was not cleanly parsed, it can be derived if the 
+ * other two totals are parsed.
  * @param {Object} bill Bill object
  */
 exports.checkTotals = function(bill) {
@@ -212,20 +212,16 @@ exports.checkTotals = function(bill) {
 
   // derive total from subtoal and tax if no total
   if (receipt.subTotal && receipt.tax && !receipt.total) {
-    // receipt.total = Math.floor((receipt.subTotal + receipt.tax) * 100) / 100;
     receipt.total = stringMath.sum(receipt.subTotal, receipt.tax);
   }
-
-  // TODO: better total handling
-  // if (receipt.subTotal + receipt.tax !== receipt.total) {
-  //   
-  // }
-
-  // if (receipt.total - receipt.tax !== receipt.subTotal) {
-  //   
-  // }
 };
 
+/**
+ * Sanity check to see if bill object is parsed correctly and 
+ * totals match sum of items ordered.
+ * @param  {Object} bill Bill object
+ * @return {Boolean}     Tells if bill is correct
+ */
 exports.isValid = function(bill) {
   var receipt = bill.receipt;
   var subTotal = receipt.items.reduce(function(prev, curr) {
