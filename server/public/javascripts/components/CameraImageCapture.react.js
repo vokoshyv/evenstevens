@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:52:07
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-12 15:29:03
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-13 11:05:49
 */
 
 var React = require('react');
@@ -16,6 +16,10 @@ var CameraImageCapture = React.createClass({
   // Initiate image handler action, passing file and userName
   _handleImage: function (e) {
     this.setState({isLoading: true});
+
+    // console.log(e.target.files[0]);
+    // var file = e.target.files[0];
+
     AppActions.handleImage({ 
       file:e.target.files[0], 
       userName: this.props.userName,
@@ -41,6 +45,9 @@ var CameraImageCapture = React.createClass({
     );
   }
 });
+
+      //  <input className="custom-file-input2" ref="upload" type="file" capture="camera" accept="image/*" onChange={ this._handleImage } />
+
 
 module.exports = CameraImageCapture;
 

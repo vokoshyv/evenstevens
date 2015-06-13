@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 14:23:20
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-11 15:27:19
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-13 13:47:11
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -25,6 +25,7 @@ var _totals = {};
 var _taxPercent = "0%";
 var _totalTax = "$0.00";
 var _tipValue = "$0.00";
+var _isAllClaimed = false;
 
 // This sets the inital state of the receipt as received
 // from the server on first connection
@@ -82,6 +83,7 @@ var setToggleItem = function(itemIndex) {
   // maintain consistent order of diner names
   itemToDiner.sort();
 
+
   // Let the server know about the changes so that
   // the other 
   _socket.emit('userUpdate', {billName: _billName, 
@@ -92,14 +94,20 @@ var setToggleItem = function(itemIndex) {
 var calcUserTotals = function() {
 
   _userTotals = {};
+  var claimedCount = 0;
+
   _itemToDiner.forEach(function(item, index){
+    if(item.length > 0) { ++claimedCount; }
+
     item.forEach(function(name){
       _userTotals[name] = _userTotals[name] || "$0.00";
       _userTotals[name] = stringMath.sum(_userTotals[name],
-        stringMath.divide(_items[index].cost, item.length)
-      );
+        stringMath.divide(_items[index].cost, item.length));
     });
+
   });
+
+  _isAllClaimed = (claimedCount === _itemCount) ? true : false;
 
   var userTip;
   var userTax;
@@ -110,6 +118,8 @@ var calcUserTotals = function() {
     userTax = stringMath.percentOf(_userTotals[name], _taxPercent);
     _userTotals[name]  = stringMath.sum(_userTotals[name], userTax, userTip);
   }
+
+
 };
 
 var updateDiners = function(diner){
@@ -133,6 +143,9 @@ var updateDiners = function(diner){
 };
 
 var AppStore = assign({}, EventEmitter.prototype, {
+  getIsAllClaimed: function(){
+    return _isAllClaimed;
+  },
   getTipValue: function(){
     return _tipValue;
   },
@@ -200,7 +213,7 @@ AppDispatcher.register(function(action) {
     case 'INITIAL_DATA':
       setTotals(action.receipt);
       setReceipt(action.items, action.diners,
-        action.itemCount,action.itemToDiner, 
+        action.itemCount, action.itemToDiner, 
         action.socket, action.billName);
       calcUserTotals();
       AppStore.emitChange();

@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-28 15:08:02
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-12 16:10:46
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-13 14:41:23
 */
 
 var React = require('react');
@@ -13,6 +13,28 @@ var NameInputForm = require('./NameInputForm.react');
 var AppActions = require('../actions/AppActions') ;
 var Col = require('react-bootstrap').Col;
 var LoadingView = require('./LoadingView.react');
+var addons =require('react/addons');
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
+// var checkValidRoom = function() {
+
+//   console.log("CHECK");
+//   var billName = window.location.href.split('/'); 
+//   console.log(billName);
+//   var xhr = new XMLHttpRequest();
+//   xhr.open('GET', '/api/bills/' + billName[billName.length-1]); 
+
+//   xhr.onload = function () {
+//     if (xhr.status === 201) {
+//       console.log('response ' + xhr.status);
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   };
+
+//    xhr.send();
+// }
 
 var getReceiptState = function() {
   return {
@@ -22,7 +44,8 @@ var getReceiptState = function() {
     currentUserName: AppStore.getUserName(),
     itemToDiner: AppStore.getItemToDiner(),
     userTotals: AppStore.getUserTotals(),
-    tipValue: AppStore.getTipValue()
+    tipValue: AppStore.getTipValue(),
+    isAllClaimed: AppStore.getIsAllClaimed()
   }
 };
 
@@ -31,6 +54,7 @@ var ReceiptList = React.createClass({
     return getReceiptState();
   },
   componentDidMount: function() {
+    console.log(checkValidRoom());
     AppStore.addChangeListener(this._onChange);
   },
   componentWillUnmount: function() {
@@ -39,6 +63,7 @@ var ReceiptList = React.createClass({
 
   render: function(){
     // if username not set, prompt for username input
+    
     if (!this.state.currentUserName) {
       return ( <NameInputForm joinRoom={true} userName={this.state.currentUserName} />);
     }
@@ -52,6 +77,7 @@ var ReceiptList = React.createClass({
     var claimedItems = this.state.itemToDiner;
     var currentUserName = this.state.currentUserName
     var userTotals = [];
+    console.log(this.state.isAllClaimed);
     
 
     for(var key in this.state.totals) {
@@ -67,6 +93,7 @@ var ReceiptList = React.createClass({
   
     return ( 
       <Col xs={12} className = "receipt-list">
+      {this.state.isAllClaimed && <div className = "all-Claimed show">All items claimed!</div> }
       <div className = "party-header">
         <div className ="centered">
          <p className ="party-url"> {"evensteven.co/" + this.state.billName}</p>

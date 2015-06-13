@@ -1,12 +1,11 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-29 16:00:24
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-12 14:14:11
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-13 11:42:28
 */
 
 var React = require('react');
-var addons =require('react/addons');
 var AppActions = require('../actions/AppActions');
 
 
@@ -20,6 +19,7 @@ var ReceiptItem = React.createClass({
     },
 
   claimItem: function() {
+     // React.findDOMNode(this.refs.listItem).focus();
      AppActions.toggleClaimed(this.props.index);
   },
   splitItem: function() {
@@ -36,8 +36,10 @@ var ReceiptItem = React.createClass({
     }
     
     var buttonMessage;
+    var classString = "item-li";
 
     if (claimedBy) {
+      classString += " claimed";
       if(indexOfClaimed === -1) {
         buttonMessage = (<div><span className="button-char split">&#x21c4;</span></div>);
       } else {
@@ -48,7 +50,7 @@ var ReceiptItem = React.createClass({
     }
 
     return (
-      <li className="item-li"key={item.id}   onClick = {this.claimItem}>
+      <li className={classString} key={item.id} ref="listItem"  onClick = {this.claimItem}>
         <div className = "claim-button pull-left"> {buttonMessage}</div>
         <div className="item-description">{item.item}</div>
         <div className="item-cost">{item.cost}</div>

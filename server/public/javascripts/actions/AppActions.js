@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-12 12:07:34
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-13 14:07:24
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
@@ -38,11 +38,11 @@ var AppActions = {
     }
 
     // primes data structures 
-    while(itemCount--) {
+    for(var i = 0; i < itemCount; i++) {
       if (populateWithFalse) {
         diners[userName].push(false);
       }
-      itemToDiner[itemCount] = [];
+      itemToDiner[i] = [];
     }
 
     // Checks for claimed items in the diner object and
@@ -69,14 +69,19 @@ var AppActions = {
     });
   },
   joinSocketRoom : function(billName, userName) {
+
+
+
+
     // grabs current url for socket connection
     var url = window.location.href.split('/');  
     // socket = io.connect(url[url.length-2]);
-    socket = io.connect('http://014405a0.ngrok.io');
-    // socket = io.connect('localhost:3000');
+    // socket = io.connect('http://3b430dce.ngrok.io');
+     socket = io.connect('localhost:3000');
 
     // Processes data from server
     socket.on('fromServerInitialData', function (data) {
+      console.log("DATA ", data);
       AppActions.processDataFromServer(data, userName, billName );
     });
 
