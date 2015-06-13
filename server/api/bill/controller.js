@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-06 16:36:39
+* @Last Modified by:   hal
+* @Last Modified time: 2015-06-12 19:58:23
 */
 
 'use strict';
@@ -16,9 +16,6 @@ var redisDB = require('../../db.js');
 var bill = require('../../utils/bill');
 var tesseract = require('node-tesseract');
 var Promise = require("bluebird");
-
-// seed for DB to test integration
-var seed = require('../../config/seed').kingOfThai();
 
 Promise.promisifyAll(fs);
 Promise.promisifyAll(tesseract);
