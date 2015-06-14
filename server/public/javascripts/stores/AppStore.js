@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 14:23:20
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-13 13:47:11
+* @Last Modified time: 2015-06-13 17:03:07
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -12,6 +12,7 @@ var stringMath = require('../../../utils/stringMath.js');
 
 var CHANGE_EVENT = 'change';
 
+// private app state variables
 var _userName = null
 var _billName = "";
 var _isLoading = false;
@@ -38,6 +39,7 @@ var setReceipt = function(items, diners, itemCount, itemToDiner, socket, billNam
   _billName = billName
 };
 
+// This sets the totals object when inital recipt data is received
 var setTotals = function(receipt) {
   _totals.subTotal = receipt.subTotal
   _totals.tax = receipt.tax
@@ -47,21 +49,24 @@ var setTotals = function(receipt) {
   _tipValue = stringMath.percentOf(_totals.subTotal, _totals.tip);
   _totalTax = stringMath.percentOf(_totals.subTotal, _taxPercent);
   _totals.grandTotal = stringMath.sum(_totals.subTotal, _tipValue, _totalTax);
-
 };
 
+// updates tip percent 
 var setTipPercent = function(tipPercent) {
    _totals.tip  = tipPercent;
 }
 
+// sets username 
 var setName = function(name) {
   _userName = name;
 };
 
+// This variable controls when to show the loading view
 var setLoading = function(bool) {
   _isLoading = bool;
 };
 
+// This function toggles an items claimed state
 var setToggleItem = function(itemIndex) {
 
   // Toggle True/False in current users claimed items array
@@ -83,7 +88,6 @@ var setToggleItem = function(itemIndex) {
   // maintain consistent order of diner names
   itemToDiner.sort();
 
-
   // Let the server know about the changes so that
   // the other 
   _socket.emit('userUpdate', {billName: _billName, 
@@ -91,24 +95,37 @@ var setToggleItem = function(itemIndex) {
   });
 };
 
+// This function updates all user totals when an item is claimed
+// or unclaimed and also checks if all items have been claimed
 var calcUserTotals = function() {
 
+  // overwrites old totals
   _userTotals = {};
+
+  // keeps track of the number of claimed items
   var claimedCount = 0;
 
+  // Iterates over the itemToDiner list
   _itemToDiner.forEach(function(item, index){
+
+    // Increments claimed count if there are 1 or more diners
+    // claiming this item
     if(item.length > 0) { ++claimedCount; }
 
+    // Adds the price of the item to each diner claiming the item
+    // Amount is split if more than one diner claiming
     item.forEach(function(name){
       _userTotals[name] = _userTotals[name] || "$0.00";
       _userTotals[name] = stringMath.sum(_userTotals[name],
         stringMath.divide(_items[index].cost, item.length));
     });
-
   });
 
+  // Sets the "all claimed" state
   _isAllClaimed = (claimedCount === _itemCount) ? true : false;
 
+  // Used to store the dollar value of the tip and tax
+  // This will be added to the users total dollar value
   var userTip;
   var userTax;
 
@@ -118,11 +135,12 @@ var calcUserTotals = function() {
     userTax = stringMath.percentOf(_userTotals[name], _taxPercent);
     _userTotals[name]  = stringMath.sum(_userTotals[name], userTax, userTip);
   }
-
-
 };
 
+// Updates the clients diner object with changes from the server
+// Only one diner is ever updated at a time
 var updateDiners = function(diner){
+
   // overwrite old array with new diner data from server
   _diners[diner.userName] = diner.array;
 
@@ -138,10 +156,14 @@ var updateDiners = function(diner){
     } else if (!_diners[diner.userName][i] && nameIndex > -1) {
       _itemToDiner[i].splice(nameIndex, 1);
     }
+
+    // keeps diner names in order
     _itemToDiner[i].sort();
   }
 };
 
+
+// Public getters, used by the controller views to update app state
 var AppStore = assign({}, EventEmitter.prototype, {
   getIsAllClaimed: function(){
     return _isAllClaimed;
@@ -190,9 +212,10 @@ var AppStore = assign({}, EventEmitter.prototype, {
   }
 });
 
+
+// Registers Actions listeners
 AppDispatcher.register(function(action) {
   var name;
-
   switch(action.actionType) {
     case 'ADD_TIP_PERCENT':
       setTipPercent(action.payload);

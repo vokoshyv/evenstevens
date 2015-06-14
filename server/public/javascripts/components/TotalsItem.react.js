@@ -1,16 +1,16 @@
 /* 
 * @Author: nathanbailey
 * @Date:   2015-06-02 14:46:31
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-12 15:19:56
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-13 16:09:39
 */
 
 var React = require('react');
 var AppActions = require('../actions/AppActions');
 
-
-var KeyValueListItem = React.createClass({
-
+// This component is used to create list items for both
+// the Receipt totals and the Diner totals lists.
+var TotalsItem = React.createClass({
   render: function() {
     var cost = this.props.item;
     var title = this.props.title.toLowerCase();
@@ -27,4 +27,4 @@ var KeyValueListItem = React.createClass({
   },
 });
 
-module.exports = KeyValueListItem;
+module.exports = TotalsItem;
