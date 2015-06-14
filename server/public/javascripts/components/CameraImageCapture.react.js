@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:52:07
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-13 11:05:49
+* @Last Modified time: 2015-06-13 16:07:15
 */
 
 var React = require('react');
@@ -13,30 +13,25 @@ var AppActions = require('../actions/AppActions');
 var CameraImageCapture = React.createClass({
 
 
-  // Initiate image handler action, passing file and userName
+  // Initiates image handler action, passing file and userName
   _handleImage: function (e) {
-    this.setState({isLoading: true});
-
-    // console.log(e.target.files[0]);
-    // var file = e.target.files[0];
-
     AppActions.handleImage({ 
       file:e.target.files[0], 
       userName: this.props.userName,
       tipPercent: this.props.tipPercent
     });
   },
-  // draw dat div
   render: function() {
     var image;
   
-    // hide this component while the user is inputing
-    // name
+    // Hides this component if userName or tip have not been entered, or 
+    // the app is in the process of loading data from the server 
     if( !this.props.userName || !this.props.tipPercent || this.props.isLoading ) {
       return null;
     }
 
-    // display file input button
+    // display file (image) input button. OnChange, this input prompts the user
+    // to upload a file, or take a picture if using a mobile device
     return (
       <div className = "image-input-wrapper">
         <p className="image-prompt"> Take a picture of your bill or use a saved image</p>
@@ -45,8 +40,6 @@ var CameraImageCapture = React.createClass({
     );
   }
 });
-
-      //  <input className="custom-file-input2" ref="upload" type="file" capture="camera" accept="image/*" onChange={ this._handleImage } />
 
 
 module.exports = CameraImageCapture;

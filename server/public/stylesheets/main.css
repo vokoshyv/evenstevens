@@ -1,20 +1,17 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 13:19:09
-* @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-06-13 16:42:12
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-13 17:34:25
 */
 
-
-
-
 @font-face {
-    font-family: 'Raleway'; /*a name to be used later*/
-    src: url('/../fonts/Raleway-Thin.ttf'); /*URL to font*/
+    font-family: 'Raleway'; 
+    src: url('/../fonts/Raleway-Thin.ttf');
 }
 @font-face {
-    font-family: 'Raleway-Med'; /*a name to be used later*/
-    src: url('/../fonts/Raleway-Medium.ttf'); /*URL to font*/
+    font-family: 'Raleway-Med';
+    src: url('/../fonts/Raleway-Medium.ttf');
 }
 
 @font-face { 
@@ -25,14 +22,11 @@
 @font-face { 
   font-family: 'Roboto';
   src: url('/../fonts/Roboto-Regular.ttf');
-
 }
 
 html {
   height:100%;
 }
-
-
 
 body {
   -webkit-tap-highlight-color: rgba(0,0,0,0);
@@ -41,20 +35,8 @@ body {
   padding-bottom:50px;
   font-family: 'Roboto';
   color:#787F8C;
-/*  background-color:#7AB0FA;*/
-
-
-/*  background-size:contain;
-  background-repeat:no-repeat;
-  background-attachment:fixed;
-  background-image: linear-gradient(-180deg,#5298fc 66%,#2392ff 100%);*/
 }
 
-/*html, body, #content, #content .container-fluid {
-  height:100%;
-  overflow:scroll;
-}
-*/
 .bill-details ul {
   list-style: none;
   padding-bottom:0px;
@@ -65,12 +47,6 @@ ul {
   padding-left:0px;
   list-style: none;
 }
-
-.receipt-list {
-/*  padding-left:10px;
-  padding-right:10px;*/
-}
-
 
 .item-list, .totals-list {
   list-style:none;
@@ -94,25 +70,13 @@ ul {
   margin-top:20px;
 }
 
-
-
-
-
-
-
 .tip-view .btn-default {
   color:#269CDA;
 }
 .totals-li, .item-li {
-   height:65px;
-    border-top: 0px;
-/*      -webkit-tap-highlight-color: rgba(201, 224, 253, 0.8);
-*/
+  height:65px;
+  border-top: 0px;
 }
-/*
-.item-li:active, .item-li:focus {
-  background: rgba(201, 224, 253, 0.8);
-}*/
 
 .totals-li + .totals-li, .item-li + .item-li {
  border-top:1px solid #E4EEF5;
@@ -127,35 +91,25 @@ ul {
   text-overflow: ellipsis;
   padding: 20px 0px;
   margin-top:2px
-   
- 
-
 }
-
-
 
 .item-cost  {
   padding-top: 17px;
   font-size: 18px;
   color: rgb(82, 152, 252);
-    text-shadow: 1px 1px 1px rgba(151, 156, 171, 0.29);
-
+  text-shadow: 1px 1px 1px rgba(151, 156, 171, 0.29);
   position: absolute;
   right: 20px;
-
-
 }
 
 .totals-li .item-cost {
   padding-top:10px;
 }
 
-
-
-
 .receipt-lists {
   margin-left:-15px;
   margin-right:-15px;
+  margin-top: 60px;
 }
 
 .main-content {
@@ -165,26 +119,32 @@ padding-left:0px;
 
 .submitReceipt {
   height:auto;
-  /*padding: 0 15px;*/
-
 }
-
 
 .brand {
   background: rgba(61, 134, 234, 1);
-    padding:20px;
-      margin-left:-25px;
+  padding:20px;
+  margin-left:-25px;
   margin-right:-25px;
   margin-bottom:20px;
 }
 
 .brand, .party-header  {
-
   text-align:center;
 }
 
 .party-header {
-padding:10px;
+  padding: 10px;
+  position: fixed;
+  background-color: rgb(82, 152, 252);
+  width: 100%;
+  left: 0px;
+  right: 0px;
+  z-index: 100;
+  -webkit-box-shadow:0 1px 1px rgba(0,0,0,.075);
+  -moz-box-shadow:0 1px 1px rgba(0,0,0,.075);
+  box-shadow:0 1px 1px rgba(0,0,0,.075);
+
 }
 
 .brand h2{ 
@@ -192,44 +152,29 @@ padding:10px;
   color:#FFF;
   font-family: 'Raleway';
   display:inline-block;
-  font-size:40px;
- 
+  font-size:40px; 
 }
 
 .url-instructions {
- font-size:12px;
-/*  background-color:rgba(128, 128, 186, 0.1);*/
-/*background: #FFF;*/
+  font-size:12px;
   padding:10px;
-
 }
 
 .url-instructions, .party-url { 
   margin:0px;
   padding:5px;
-    color:#FFF;
-
+  color:#FFF;
 }
-
-
 
 input[type="email"], input[type="number"], input[type="search"], input[type="text"], input[type="tel"], input[type="url"], input[type="password"], textarea, select 
 input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focus, input[type="text"]:focus, input[type="tel"]:focus, input[type="url"]:focus, input[type="password"]:focus, textarea:focus, select:focus {  
-
-
   color: #4D4D4D;
-  /*font-size: 12px;*/
-/*  text-transform: uppercase;*/
-  /*letter-spacing: .2em;*/
- /* font-weight: 500;*/
   font-family: 'Raleway';
-
 }
-
 
 .name-input-wrapper{
   text-align:center;
-  padding:0px 25px;
+/*  padding:0px 25px;*/
 }
 
 .name-input-wrapper h1 {
@@ -243,8 +188,6 @@ input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focu
   margin-right:5px;
 }
 
-
-
 .name-input-wrapper p {
   margin-top:20px;
   color:#FFF;
@@ -253,14 +196,11 @@ input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focu
 
 .name-input{
   text-align:center;
-
 }
 
 .form-group {
   margin-bottom:0px;
 }
-
-
 
 .loading-msg {
   text-align: center;
@@ -268,9 +208,8 @@ input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focu
   color:#FFF;
 }
 .centered { 
-text-align:center;
+  text-align:center;
 }
-
 
 .claim-button i, .claim-button .button-char {
   font-size: 35px;
@@ -278,22 +217,17 @@ text-align:center;
   display: block;
   text-shadow: 1px 1px 1px rgba(151, 156, 171, 0.29);
   color: rgb(82, 152, 252);
-
-
 }
+
 .claim-button .button-char {
- font-size: 61px;
+  font-size: 61px;
   font-family: 'Raleway';
-
 }
 
-.claim-button  .minus-char {
-
+.claim-button .minus-char {
   margin-top: -32px;
 }
-
-.claim-button  .plus-char {
-
+.claim-button .plus-char {
   margin-top: -27px;
 }
 
@@ -302,8 +236,6 @@ text-align:center;
   margin-top: -1px;
 }
 
-
-
 .claim-button {
   font-size:14px;
   color:#FFF;
@@ -311,49 +243,19 @@ text-align:center;
   width: 70px;
   height:100%;
   padding-top:15px;
-
-
-
 }
 
-
-
 .diner-totals p, .receipt-totals p, .party-url {
-
   text-align: center;
   color:white;
   font-size:18px;
   margin:0px;
   padding-top:10px;
-/*  text-shadow: 1px 1px 1px #000;
-   text-shadow: 2px 1px 0px rgba(62,135,238,.5); */
-/*text-shadow: -1px 1px 1px rgba(0, 0, 0, 0.43);*/
 }
-
-
-/*.party-url {
-   font-size:18px;
-       font-family: 'League';
- /*   background:#1F4E8F;
-   color:#FFF
-
-}*/
-
 
 .receipt-totals p { 
   padding:20px;
 }
-
-/*.item-list, .totals-list, .user-summary, {
-  -webkit-box-shadow: 0px 0px 6px 3px rgba(0,0,0,0.3);
-  -moz-box-shadow: 0px 0px 6px 3px rgba(0,0,0,0.3);
-  box-shadow: 0px 0px 6px 3px rgba(0,0,0,0.3);
-}*/
-
-.diner-totals {
-/*  background-color:#4091FF;*/
-}
-
 
 .diner-totals .tax-tip-message {
   padding:0px;
@@ -364,7 +266,6 @@ text-align:center;
 
 .user-summary, .totals-list, .item-list {
   background: rgb(255, 254, 254);
-/*  border-radius:5px;*/
   border:1px solid #E4EEF5;
 }
 
@@ -380,17 +281,17 @@ text-align:center;
 
 .all-Claimed {
   z-index:100;
-  padding:10px;
+  padding:20px;
 }
 
 .all-Claimed.show {
   text-align: center;
-  color: white;
+  color: rgb(73, 92, 76);
   position: fixed;
   left: 0px;
   right: 0px;
-  bottom:0px;
-  background-color: green;
+  bottom: 0px;
+  background-color: rgb(171, 245, 171);
 }
 
 .all-Claimed.hide {
@@ -406,10 +307,6 @@ text-align:center;
 }
 .claimed .item-description {
   font-weight: bold;
-}
-
-.claimed {
-/*  background: rgb(243, 244, 250);*/
 }
 
 .cost-desc {
@@ -439,17 +336,15 @@ text-align:center;
 }
 
 .name-form, .custom-file-input::before, .tip-input-wrapper {
-max-width: 420px;
+  max-width: 420px;
   margin: 0px auto;
   text-align: center;
 }
-
 
 .btn-primary {
   background: transparent;
   border-color: white;
 }
-
 
 .btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open>.dropdown-toggle.btn-primary {
   color: #fff;
@@ -458,13 +353,12 @@ max-width: 420px;
   }
 
 .submit-btn {
- width:100%;
+  width:100%;
   margin-top:20px;
   margin-bottom:20px;
   border-radius: 6px;
   height:46px;
-/*  background: rgba(48,48,56,0.1);*/
-background: transparent;
+  background: transparent;
   border-color: white;
 }
 
@@ -473,7 +367,7 @@ background: transparent;
 }
 
 .custom-file-input::before {
-    content: 'Upload your bill';
+  content: 'Upload your bill';
 }
 
 .custom-file-input2::before {
@@ -513,6 +407,7 @@ input[type=file]:focus {
   outline:none;
 }
 
+<<<<<<< HEAD
 
 /*Styling for marketing page below landing page*/
 body {
@@ -529,11 +424,13 @@ body {
     background: no-repeat center center;
     background-size: cover;
     overflow: hidden;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .darken h1, .darken p {
   color: #333333;
-  //text-shadow: 2px 1px 0px #333333;
+  /*text-shadow: 2px 1px 0px #333333;*/
 }
 
 .marketing {
@@ -561,15 +458,6 @@ body {
 .copyright {
   margin-top: 30px;
 }
-
-
-/*.custom-file-input:hover:before {
-   color: #fff;
-  background-color: #3D86EA;
-  border-color: rgba(32, 77, 116, 0.17);
-}*/
-
-
 
 /* ----------- iPhone 4 and 4S ----------- */
 

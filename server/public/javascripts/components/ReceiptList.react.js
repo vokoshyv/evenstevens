@@ -2,39 +2,19 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-28 15:08:02
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-13 14:41:23
+* @Last Modified time: 2015-06-13 16:28:52
 */
 
 var React = require('react');
 var AppStore = require('../stores/AppStore');
 var ReceiptItem = require('./ReceiptItem.react');
-var KeyValueListItem = require('./KeyValueListItem.react');
+var TotalsItem = require('./TotalsItem.react');
 var NameInputForm = require('./NameInputForm.react');
 var AppActions = require('../actions/AppActions') ;
 var Col = require('react-bootstrap').Col;
 var LoadingView = require('./LoadingView.react');
 var addons =require('react/addons');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-
-// var checkValidRoom = function() {
-
-//   console.log("CHECK");
-//   var billName = window.location.href.split('/'); 
-//   console.log(billName);
-//   var xhr = new XMLHttpRequest();
-//   xhr.open('GET', '/api/bills/' + billName[billName.length-1]); 
-
-//   xhr.onload = function () {
-//     if (xhr.status === 201) {
-//       console.log('response ' + xhr.status);
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   };
-
-//    xhr.send();
-// }
 
 var getReceiptState = function() {
   return {
@@ -54,7 +34,6 @@ var ReceiptList = React.createClass({
     return getReceiptState();
   },
   componentDidMount: function() {
-    console.log(checkValidRoom());
     AppStore.addChangeListener(this._onChange);
   },
   componentWillUnmount: function() {
@@ -62,8 +41,8 @@ var ReceiptList = React.createClass({
   },
 
   render: function(){
+
     // if username not set, prompt for username input
-    
     if (!this.state.currentUserName) {
       return ( <NameInputForm joinRoom={true} userName={this.state.currentUserName} />);
     }
@@ -77,26 +56,21 @@ var ReceiptList = React.createClass({
     var claimedItems = this.state.itemToDiner;
     var currentUserName = this.state.currentUserName
     var userTotals = [];
-    console.log(this.state.isAllClaimed);
     
-
     for(var key in this.state.totals) {
-      totalListItems.push(<KeyValueListItem key={key} title={key} item={this.state.totals[key]} tipValue={this.state.tipValue} />);
+      totalListItems.push(<TotalsItem key={key} title={key} item={this.state.totals[key]} tipValue={this.state.tipValue} />);
     }   
 
     for(var name in this.state.userTotals) {
-      userTotals.push(<KeyValueListItem key ={name} title={name} item={this.state.userTotals[name]} />);
+      userTotals.push(<TotalsItem key ={name} title={name} item={this.state.userTotals[name]} />);
     }
 
-            // <p className ="url-instructions"> {"Your party can interact with this bill by visiting:"}</p>
-
-  
     return ( 
       <Col xs={12} className = "receipt-list">
       {this.state.isAllClaimed && <div className = "all-Claimed show">All items claimed!</div> }
       <div className = "party-header">
         <div className ="centered">
-         <p className ="party-url"> {"evensteven.co/" + this.state.billName}</p>
+         <p className ="party-url"> {"evenstevens.co/" + this.state.billName}</p>
          </div>
       </div>
         <ul className ="receipt-lists">

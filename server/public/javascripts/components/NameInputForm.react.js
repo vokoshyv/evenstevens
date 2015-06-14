@@ -1,8 +1,9 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:53:40
-* @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-06-13 16:41:38
+*
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-13 17:33:26
 */
 
 var React = require('react');
@@ -87,15 +88,16 @@ var NameInputForm = React.createClass({
     }
 
     return (
-
-      <div className = "name-input-wrapper extendfull">
+      <div className = "name-input-wrapper">
       <div className="landingPage"> 
-            <div className="brand">
-              <h2>Even Stevens</h2>
-            </div>
-       
+        <div className="brand">
+          <h2>Even Stevens</h2>
+        </div>
         <img src = "../../images/even-stevens-logo.png" />
+
+
         <h1>Interactive Bill Splitting</h1>
+
         <form className="form name-form" onSubmit={this.handleInput}>
           <div className="form-group">
             <input className="name-input form-control input-lg"  type="text" placeholder="Enter your name to begin" ref="name" onKeyPress={this.handleKeyPress} />
@@ -103,9 +105,10 @@ var NameInputForm = React.createClass({
           <input className ="btn btn-primary submit-btn" type="submit" />
           <div className="errorBox"> {this.state.errMessage}</div>
         </form>
+        
       </div>
 
-      <div className="marketing extendfull bringItDown">
+      <div className="marketing bringItDown">
         <div className="row">
           <div className="col-md-6 darken marketingWords">
             <h1>Take a Picture</h1>
@@ -118,8 +121,8 @@ var NameInputForm = React.createClass({
             unnecessary stress when it came time to divide up 
             the bill at large dinner parties. Why not tap into 
             a resource that all of us carry around twenty-four
-            seven? Whenever you're out eating dinner with your 
-            friends, just remember: keep it Even Stevens</p>
+            seven? Whenever you&#39;re out eating dinner with your 
+            friends, just remember: keep it Even Stevens </p>
           </div>
           <div className="col-md-12">
             <div className="row marketingPhones">

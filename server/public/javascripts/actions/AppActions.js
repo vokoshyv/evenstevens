@@ -1,27 +1,30 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
-* @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-06-13 16:41:10
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-13 17:40:18
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
-
-var socket;
+var socket; // holds the socket instance
 
 var AppActions = {
+  // Dispatches action to set userName
   addUser: function(userName) {
     AppDispatcher.dispatch({
       actionType: 'ADD_USER',
       payload: userName
     });
   },
+  // Dispatches action to set tip percent
   addTipPercent: function(tipPercent) {
     AppDispatcher.dispatch({
       actionType: 'ADD_TIP_PERCENT',
       payload: tipPercent
     })
   },
+  // Processes initial data from server. This method sets up
+  // the initial data data structures for a user
   processDataFromServer: function(data, userName, billName) {
     var receipt = JSON.parse(data.receipt);
     var items = receipt.items;
@@ -37,7 +40,7 @@ var AppActions = {
       populateWithFalse = true;
     }
 
-    // primes data structures 
+    // prepares data structures 
     for(var i = 0; i < itemCount; i++) {
       if (populateWithFalse) {
         diners[userName].push(false);
@@ -50,7 +53,7 @@ var AppActions = {
     for(var diner in diners){
       for(var i = 0; i < diners[diner].length; i++){
         if(diners[diner][i]) {
-           itemToDiner[i].push(diner);
+          itemToDiner[i].push(diner);
         }
       }
     }   
@@ -68,10 +71,8 @@ var AppActions = {
       socket:socket
     });
   },
+  // This method connects the client to the socket room 
   joinSocketRoom : function(billName, userName) {
-
-
-
 
     // grabs current url for socket connection
     var url = window.location.href.split('/');  
@@ -82,7 +83,6 @@ var AppActions = {
 
     // Processes data from server
     socket.on('fromServerInitialData', function (data) {
-      console.log("DATA ", data);
       AppActions.processDataFromServer(data, userName, billName );
     });
 
@@ -98,38 +98,45 @@ var AppActions = {
     socket.emit('userJoin', {billName: billName});
 
   },
+  // This method emits an item toggle event to trigger
+  // UI and item total recalculations
   toggleClaimed: function(itemIndex){
     AppDispatcher.dispatch({
       actionType: 'ITEM_TOGGLE',
       payload:itemIndex
     });
   },
+  // This method accepts the receipt image and sends
+  // it to the server for OCR processing
   handleImage: function(userFile) {
     var file = userFile.file;
     var name = userFile.userName;
     var tipPercent = userFile.tipPercent;
+
+    // prepares the form for posting
     var formData = new FormData();
     var xhr = new XMLHttpRequest();
-
     formData.append('file', file);
     formData.append('billName', name);
     formData.append('tipPercent', tipPercent);
 
     xhr.open('POST', '/api/bills/' + name); 
+
+    // Accepts the response from the server and triggers
+    // the client to join the web socket instance associated
+    // with the receipt
     xhr.onload = function () {
       if (xhr.status === 201) {
-        console.log('response ' + xhr.status);
-
         var billName = JSON.parse(xhr.responseText).billName;
-        
+      
         // Join socket
         AppActions.joinSocketRoom(billName, name);
-
       } else {
         console.log('Something went terribly wrong...');
       }
     };
 
+    // Send form with receipt image
     xhr.send(formData);
     
     // This triggers a loading animation

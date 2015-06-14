@@ -2,13 +2,13 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-29 16:00:24
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-13 11:42:28
+* @Last Modified time: 2015-06-13 16:20:30
 */
 
 var React = require('react');
 var AppActions = require('../actions/AppActions');
 
-
+// This component is used to render receipt items
 var ReceiptItem = React.createClass({
   getInitialState: function() {
     React.initializeTouchEvents(true);
@@ -19,7 +19,6 @@ var ReceiptItem = React.createClass({
     },
 
   claimItem: function() {
-     // React.findDOMNode(this.refs.listItem).focus();
      AppActions.toggleClaimed(this.props.index);
   },
   splitItem: function() {
