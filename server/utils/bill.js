@@ -134,7 +134,8 @@ exports.postProcess = function(bill, text) {
 
     // at this point the line of text is assumed to be a 
     // total/subtotal
-    exports.parseTotals(bill, item, cost);
+    // exports.parseTotals(bill, item, cost);
+    exports.calculateTotals(bill, item, cost);
   }
 
   exports.checkTotals(bill);
@@ -200,6 +201,26 @@ exports.parseTotals = function(bill, item, cost) {
     bill.receipt.tax = stringMath.sum(cost);
   }
 };
+
+/**
+ * Instead of parseTotals(), totals can also be calculated by 
+ * adding all the items. This methodology may cause totals to be 
+ * incorrect when compared to the original receipt if item costs
+ * are processed incorrectly. However, this will make a more
+ * consistent experience.
+ * @param {Object} bill Bill object
+ * @param {Array}  item Line item of bill text
+ * @param {Float}  cost Cost of line item
+ */
+exports.calculateTotals = function(bill, item, cost) {
+  var receipt = bill.receipt;
+  var subTotal = receipt.items.reduce(function(prev, curr) {
+    return stringMath.sum(prev, curr.cost);
+  }, 0);
+
+  bill.receipt.subTotal = subTotal;
+  bill.receipt.total = stringMath.sum(bill.receipt.subTotal, bill.receipt.tax);
+}
 
 /**
  * Check for totals before returning the constructed bill object. 
