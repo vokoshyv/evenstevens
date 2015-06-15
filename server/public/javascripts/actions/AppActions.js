@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
-* @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-13 17:40:18
+* @Last Modified by:   vokoshyv
+* @Last Modified time: 2015-06-15 11:45:40
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
@@ -147,4 +147,10 @@ var AppActions = {
   }
 };
 
+/**
+ * [exports description]
+ * @type {[type]}
+ * This code block exports AppActions to be required in 
+ * other portions of the project files
+ */
 module.exports = AppActions;
