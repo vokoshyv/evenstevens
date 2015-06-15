@@ -1,12 +1,15 @@
 /* 
 * @Author: Johnny Nguyen
 * @Date:   2015-05-27 19:34:23
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-03 15:57:44
+* @Last Modified by:   vokoshyv
+* @Last Modified time: 2015-06-15 11:18:01
 */
 
 'use strict';
-
+/**
+ * [billModel description]
+ * @return {[type]} [description]
+ */
 exports.billModel = function() {
   return {
     billName: '',
