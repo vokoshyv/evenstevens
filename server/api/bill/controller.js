@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-* @Last Modified by:   hal
-* @Last Modified time: 2015-06-13 15:13:43
+* @Last Modified by:   vokoshyv
+* @Last Modified time: 2015-06-15 11:40:55
 */
 
 'use strict';
@@ -77,11 +77,22 @@ exports.create = function(req, res) {
         return res.status(202).json({});
       }
 
+
       redisDB.keys("*", function(err, availKeys) {
         if (err) {
           throw err;
         }
 
+        /**
+         * [if description]
+         * @param  {[type]} availKeys.indexOf(billName) >             -1 [description]
+         * @return {[type]}                             [description]
+         *
+         * This if block checks if the user-supplied 
+         * billname already exists in the database. If it 
+         * does, a number is appended to the billname in 
+         * order to make it unique. 
+         */
         if (availKeys.indexOf(billName) > -1) {
           var counter = 0;
           var work = billName + counter.toString();
@@ -93,12 +104,25 @@ exports.create = function(req, res) {
           billName = work;
         }
 
+        /**
+         * This code block inserts the party object into the
+         * redis database under the billname key
+         */
         redisDB.hmset(billName, {
           "billName": finalBill.billName,
           "receipt": JSON.stringify(finalBill.receipt),
           "diners": JSON.stringify(finalBill.diners)
         }, redis.print);
 
+        /**
+         * [billName description]
+         * @type {[type]}
+         *
+         * This res.status being sent back provides the 
+         * billname to redirect the user to in order to 
+         * access his own bill. Other users will also go to 
+         * the same url in order to interact with the
+         */
         return res.status(201).json({billName: billName});
       });
     })
@@ -120,16 +144,33 @@ exports.update = function(socket, clientData) {
   var dinersName = clientData.userName;
   var dinersArray = clientData.array;
 
+  /**
+   * [description]
+   * @param  {[type]} err     [description]
+   * @param  {[type]} data){                 if (err) {      throw err;    }     else {      var parsedData [description]
+   * @return {[type]}         [description]
+   *
+   * This code block will update the party object inside the
+   * redis database
+   */
   redisDB.hget(billName, 'diners', function(err, data){
     if (err) {
       throw err;
     } 
     else {
 
+
       var parsedData = JSON.parse(data);
       parsedData[dinersName] = dinersArray;
       var dataToBeInserted = JSON.stringify(parsedData);
       redisDB.hset(billName, 'diners', dataToBeInserted, redis.print);
+
+      /**
+       * This socket emission is sent out to all the users; 
+       * it tells them to update the current state of their
+       * own party objects. In this way, everybody will 
+       * have the most up-to-date state of the party object
+       */
       socket.to(billName).broadcast.emit('fromServerUpdate', clientData);
 
     }
