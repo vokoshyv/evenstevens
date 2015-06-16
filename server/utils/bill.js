@@ -118,14 +118,15 @@ exports.postProcess = function(bill, text) {
 
     var cost = item.pop();
     
-    // check if last item is a cost value to determine
+    // check if last element is a cost value to determine
     // if the line needs to be parsed 
     if (cost.search(costRegex) < 0) {
       continue;
     }
 
-    // at this point the line of text is assumed to be a 
-    // either an ordered item or total/subtotal, determine
+    // at this point the line of text is assumed to be a either 
+    // an ordered item or subtotal/tax/total, an ordered item 
+    // is determined by a quanity value in the first element
     // ordered item if quantity is at first element
     if (!isNaN(item[0])) {
       exports.parseItems(bill, item, cost);
@@ -133,10 +134,13 @@ exports.postProcess = function(bill, text) {
     } 
 
     // at this point the line of text is assumed to be a 
-    // total/subtotal
-    exports.parseTotals(bill, item, cost);
+    // subtotal/tax/total, subtotal is calcualted by summing 
+    // parsed line items, so only tax is parsed from the receipt
+    // to calcuate total.
+    exports.parseTax(bill, item, cost);
   }
 
+  exports.calculateTotals(bill);
   exports.checkTotals(bill);
 
   return bill;
@@ -179,27 +183,42 @@ exports.parseItems = function(bill, item, cost) {
 };
 
 /**
- * Decorator to parse receipt for subTotal, tax, and total.
+ * Decorator to parse receipt for tax.
  * @param {Object} bill Bill object
  * @param {Array}  item Line item of bill text
  * @param {Float}  cost Cost of line item
  */
-exports.parseTotals = function(bill, item, cost) {
+exports.parseTax = function(bill, item, cost) {
+  // join array in case parsing contains artifacts, this way
+  // searching for substring 'tax' will allow for more lenient
+  // 
   var itemString = item.join('').toLowerCase();
   
   // check for subtotal, must come before checking total
-  if (itemString.indexOf('sub') !== -1) {
-    bill.receipt.subTotal = stringMath.sum(cost);
-  }
-
-  if (itemString.indexOf('total') !== -1) {
-    bill.receipt.total = stringMath.sum(cost);
-  }
-
   if (itemString.indexOf('tax') !== -1) {
     bill.receipt.tax = stringMath.sum(cost);
   }
 };
+
+/**
+ * Instead of parseTotals(), totals can also be calculated by 
+ * adding all the items. This methodology may cause totals to be 
+ * incorrect when compared to the original receipt if item costs
+ * are processed incorrectly. However, this will make a more
+ * consistent experience.
+ * @param {Object} bill Bill object
+ * @param {Array}  item Line item of bill text
+ * @param {Float}  cost Cost of line item
+ */
+exports.calculateTotals = function(bill, item, cost) {
+  var receipt = bill.receipt;
+  var subTotal = receipt.items.reduce(function(prev, curr) {
+    return stringMath.sum(prev, curr.cost);
+  }, 0);
+
+  bill.receipt.subTotal = subTotal;
+  bill.receipt.total = stringMath.sum(bill.receipt.subTotal, bill.receipt.tax);
+}
 
 /**
  * Check for totals before returning the constructed bill object. 
