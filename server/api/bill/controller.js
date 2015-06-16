@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
 * @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-06-15 11:40:55
+* @Last Modified time: 2015-06-16 13:10:58
 */
 
 'use strict';
@@ -21,11 +21,10 @@ Promise.promisifyAll(fs);
 Promise.promisifyAll(tesseract);
 
 /**
- * [show description]
- * 
- * @param  {[type]} req [description]
- * @param  {[type]} res [description]
- * @return {[type]}     [description]
+ * When the secondary users first connect to the Even
+ * Stevens site, this show controller function is run to 
+ * extract the designated party object out of the Redis
+ * datastore. 
  */
 exports.show = function(socket, data) {
   // send the full data object to the clients via sockets
@@ -42,10 +41,6 @@ exports.show = function(socket, data) {
  * 3. Parse items from bill
  * 4. Save to Redis
  * 5. Return saved object/emmit socket event
- *
- * @param  {[type]} req [description]
- * @param  {[type]} res [description]
- * @return {[type]}     [description]
  */
 exports.create = function(req, res) {
   var billName = req.params.billName.toLowerCase();
@@ -84,10 +79,6 @@ exports.create = function(req, res) {
         }
 
         /**
-         * [if description]
-         * @param  {[type]} availKeys.indexOf(billName) >             -1 [description]
-         * @return {[type]}                             [description]
-         *
          * This if block checks if the user-supplied 
          * billname already exists in the database. If it 
          * does, a number is appended to the billname in 
@@ -115,9 +106,6 @@ exports.create = function(req, res) {
         }, redis.print);
 
         /**
-         * [billName description]
-         * @type {[type]}
-         *
          * This res.status being sent back provides the 
          * billname to redirect the user to in order to 
          * access his own bill. Other users will also go to 
@@ -133,10 +121,11 @@ exports.create = function(req, res) {
 };
 
 /**
- * [update description]
- * @param  {[type]} req [description]
- * @param  {[type]} res [description]
- * @return {[type]}     [description]
+ * This update controller function is run whenever the any 
+ * of the users make any interaction with the application. 
+ * The socket is the socket that has been created between
+ * the server and client. The clientData is the data that's 
+ * been passed in. 
  */
 exports.update = function(socket, clientData) {
 
@@ -145,11 +134,6 @@ exports.update = function(socket, clientData) {
   var dinersArray = clientData.array;
 
   /**
-   * [description]
-   * @param  {[type]} err     [description]
-   * @param  {[type]} data){                 if (err) {      throw err;    }     else {      var parsedData [description]
-   * @return {[type]}         [description]
-   *
    * This code block will update the party object inside the
    * redis database
    */
