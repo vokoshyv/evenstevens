@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
 * @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-06-16 13:10:58
+* @Last Modified time: 2015-06-16 14:43:36
 */
 
 'use strict';
@@ -25,6 +25,12 @@ Promise.promisifyAll(tesseract);
  * Stevens site, this show controller function is run to 
  * extract the designated party object out of the Redis
  * datastore. 
+ * @param  {socket} socket connection between server and 
+ *   client
+ * @param  {object} data data object that holds info about
+ *   the billName to extract data from the RedisDB with
+ * @return {socket emission} sends the party object back out
+ *   to the clients in the same room. 
  */
 exports.show = function(socket, data) {
   // send the full data object to the clients via sockets
@@ -126,6 +132,13 @@ exports.create = function(req, res) {
  * The socket is the socket that has been created between
  * the server and client. The clientData is the data that's 
  * been passed in. 
+ * @param  {socket connection} socket   Designated socket
+ *   for passing in updated user information
+ * @param  {object} clientData object that is to be updated 
+ *   in the RedisDB store
+ * @return {object}   emits update object to all clients
+ *   in the same room in order for them to update their own
+ *   party object
  */
 exports.update = function(socket, clientData) {
 
