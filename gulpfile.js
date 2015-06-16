@@ -2,7 +2,7 @@
 * @Author: vokoshyv
 * @Date:   2015-05-26 17:12:39
 * @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-06-15 11:30:32
+* @Last Modified time: 2015-06-16 13:03:54
 */
 
 'use strict';
@@ -24,9 +24,6 @@ var gulp = require('gulp'),
     wait = require('gulp-wait');
 
 /**
- * [paths description]
- * @type {Object}
- * 
  * Provides all of the routes that gulp will use to watch 
  * files and to perform operations
  */
@@ -40,10 +37,6 @@ var paths = {
 }
 
 /**
- * [description]
- * @param  {[type]} ) {             var b [description]
- * @return {[type]}   [description]
- * 
  * When run, this task takes the files that have been 
  * required for react.js files and combines them all into a 
  * single file titled "bundle.js" - allows for faster page
@@ -60,10 +53,6 @@ gulp.task('browserify', function() {
 });
 
 /**
- * [description]
- * @param  {[type]} ){               return gulp.src(    paths.scripts  )  .pipe(jshint())  .pipe(jshint.reporter(stylish))  .pipe(wait(4000))  .pipe(livereload());} [description]
- * @return {[type]}     [description]
- *
  * When run, this task performs jshint on the files in the 
  * 'scripts' path. The results will be displayed in the 
  * terminal
@@ -79,10 +68,6 @@ gulp.task('scripts', function(){
 });
 
 /**
- * [description]
- * @param  {[type]} ){               return gulp.src([    paths.server  ])  .pipe(jshint())  .pipe(jshint.reporter(stylish));} [description]
- * @return {[type]}     [description]
- *
  * When run, this task performs jshint on the files in the 
  * 'server' path. The results will be displayed in the 
  * terminal
@@ -96,10 +81,6 @@ gulp.task('server', function(){
 });
 
 /**
- * [description]
- * @param  {[type]} ){               return gulp.src([    paths.styles  ])  .pipe(livereload());} [description]
- * @return {[type]}     [description]
- *
  * When run, this task performs jshint on the files in the 
  * 'styles' path. The results will be displayed in the 
  * terminal
@@ -112,10 +93,6 @@ gulp.task('styles', function(){
 });
 
 /**
- * [description]
- * @param  {[type]} ){               return gulp.src([    paths.billRoute  ])  .pipe(jshint())  .pipe(jshint.reporter(stylish))  .pipe(livereload());} [description]
- * @return {[type]}     [description]
- *
  * When run, this task performs jshint on the files in the 
  * 'billRoute' path. The results will be displayed in the 
  * terminal
@@ -130,10 +107,6 @@ gulp.task('billRoute', function(){
 });
 
 /**
- * [description]
- * @param  {[type]} ){               return gulp.src([    paths.utils  ])  .pipe(jshint())  .pipe(jshint.reporter(stylish))  .pipe(livereload());} [description]
- * @return {[type]}     [description]
- *
  * When run, this task performs jshint on the files in the 
  * 'utils' path. The results will be displayed in the 
  * terminal
@@ -148,10 +121,6 @@ gulp.task('utils', function(){
 });
 
 /**
- * [description]
- * @param  {[type]} ){               return gulp.src([    paths.html  ])  .pipe(livereload());} [description]
- * @return {[type]}     [description]
- *
  * When run, this task will reload the web page
  */
 gulp.task('html', function(){
@@ -182,11 +151,6 @@ gulp.task('test', shell.task([
 ]));
 
 /**
- * [description]
- * @param  {Object} ){                   var options [description]
- * @param  {[type]} 7000)} [description]
- * @return {[type]}         [description]
- *
  * When run, this task opens up a localhost:3000 url in the 
  * browser. 
  */
@@ -201,10 +165,6 @@ gulp.task('openInBrowser', function(){
 });
 
 /**
- * [description]
- * @param  {[type]} cb){               del([    'server/public/dist/bundle.js'    ], cb)} [description]
- * @return {[type]}       [description]
- *
  * When run, this task deletes the bundle.js file. It is 
  * used before browserifying is run in order to delete the
  * previous bundle.js file. 
@@ -216,10 +176,6 @@ gulp.task('clearDist', function(cb){
 });
 
 /**
- * [description]
- * @param  {[type]} ){               livereload.listen();  gulp.watch(paths.server, ['server']);  gulp.watch(paths.styles, ['styles']);  gulp.watch(paths.billRoute, ['billRoute']);  gulp.watch(paths.utils, ['utils']);  gulp.watch(paths.html, ['html']);  gulp.watch(paths.scripts, ['clearDist', 'browserify', 'scripts']);} [description]
- * @return {[type]}     [description]
- *
  * This task is a watcher for all of the different files 
  * along the different paths of the project. When any 
  * changes are made in the particular files, the watcher 
@@ -245,10 +201,6 @@ gulp.task('watch', function(){
 gulp.task('default', ['clearDist', 'browserify', 'watch', 'startServer', 'openInBrowser']);
 
 /**
- * [description]
- * @param  {[type]} ) {             return gulp.src(paths.scripts)    .pipe(jshint())    .pipe(jshint.reporter('default'))    .pipe(jshint.reporter('fail'));} [description]
- * @return {[type]}   [description]
- *
  * When run, this task will perform linting of the files in 
  * the 'paths.scripts' location
  */
