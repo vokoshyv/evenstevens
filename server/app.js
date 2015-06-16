@@ -1,8 +1,8 @@
 /*
 * @Author: hal
 * @Date:   2015-05-22 10:53:35
-* @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-05 11:40:21
+* @Last Modified by:   vokoshyv
+* @Last Modified time: 2015-06-16 13:13:18
 */
 
 // set up server variables
@@ -96,4 +96,10 @@ var onUserUpdate = function (socket, data) {
 var onDisconnect = function (socket) {
 };
 
+/**
+ * Here, we are exporting the Node/Express app to be used 
+ * within other files in this project
+ * @type {Node/Express object}
+ * Export app in order to be used across project files
+ */
 module.exports = app;
