@@ -7,23 +7,6 @@
 'use strict';
 // This file is the main entry point for browserify
 
-// var socket = io.connect('localhost:3000');
-// var url = window.location.href.split('/');
-// var billName = url[url.length-1];
-// socket.on('fromServerInitialData', function (data) {});
-
-// // once data is updated on the server,
-// // the update data gets broadcasted to all clients, handled here
-// socket.on('fromServerUpdate', function (data) {});
-// socket.emit('userJoin', {billName: billName});
-
-
-// -----------------------------------------------
-// Expected format for update event
-// socket.emit('userUpdate', {billName: 'tomsparty', userName: 'bob', array: [true, false, false, false, false, false] } );
-// -----------------------------------------------
-
-
 // React requires
 var React = require('react');
 var Router = require('react-router');
