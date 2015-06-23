@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
 * @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-24 13:12:25
+* @Last Modified time: 2015-06-24 13:13:11
 */
 
 'use strict';
@@ -62,7 +62,7 @@ exports.create = function(req, res) {
 
     bill.parse(billPath, filePath, fields)
     .then(function(finalBill) {
-      deleteBill(randBillId);
+      deleteBillImage(randBillId);
       save(res, finalBill, billName);
     })
     .catch(function(err) {
@@ -119,7 +119,7 @@ exports.update = function(socket, clientData) {
   });
 };
 
-function deleteBill(randBillId) {
+function deleteBillImage(randBillId) {
   fs.unlink(path.join(__dirname, '../../.temp/' + randBillId + '.jpg'), function(err) {
     if (err) {
       throw err;
