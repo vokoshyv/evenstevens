@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-* @Last Modified by:   vokoshyv
-* @Last Modified time: 2015-06-16 14:43:36
+* @Last Modified by:   Johnny Nguyen
+* @Last Modified time: 2015-06-24 13:13:11
 */
 
 'use strict';
@@ -58,67 +58,12 @@ exports.create = function(req, res) {
   // block below parses uploaded receipt image  //
   ////////////////////////////////////////////////
   form.parse(req, function(err, fields, files) {
-    bill.parse(billPath, files.file.path, fields)
+    var filePath = files.file.path || path.join(__dirname, './pakwan.jpg');
+
+    bill.parse(billPath, filePath, fields)
     .then(function(finalBill) {
-      console.log('/**');
-      console.log(' * /////////////////');
-      console.log(' * // parsed text //');
-      console.log(' * /////////////////');
-      console.log(' */')
-      console.log(require('util').inspect(finalBill, false, null));
-      console.log('\n');
-
-      fs.unlink(path.join(__dirname, '../../.temp/' + randBillId + '.jpg'), function(err) {
-        if (err) {
-          throw err;
-        }
-      });
-
-      if (!Object.keys(finalBill).length) {
-        return res.status(202).json({});
-      }
-
-
-      redisDB.keys("*", function(err, availKeys) {
-        if (err) {
-          throw err;
-        }
-
-        /**
-         * This if block checks if the user-supplied 
-         * billname already exists in the database. If it 
-         * does, a number is appended to the billname in 
-         * order to make it unique. 
-         */
-        if (availKeys.indexOf(billName) > -1) {
-          var counter = 0;
-          var work = billName + counter.toString();
-
-          while (availKeys.indexOf(work) > -1) {
-            counter++;
-            work = billName + counter.toString();
-          }
-          billName = work;
-        }
-
-        /**
-         * This code block inserts the party object into the
-         * redis database under the billname key
-         */
-        redisDB.hmset(billName, {
-          "billName": finalBill.billName,
-          "receipt": JSON.stringify(finalBill.receipt),
-          "diners": JSON.stringify(finalBill.diners)
-        }, redis.print);
-
-        /**
-         * This res.status being sent back provides the 
-         * billname to redirect the user to in order to 
-         * access his own bill. Other users will also go to 
-         * the same url in order to interact with the
-         */
-        return res.status(201).json({billName: billName});
-      });
+      deleteBillImage(randBillId);
+      save(res, finalBill, billName);
     })
     .catch(function(err) {
       handleError(res, err);
@@ -173,6 +118,53 @@ exports.update = function(socket, clientData) {
     }
   });
 };
+
+function deleteBillImage(randBillId) {
+  fs.unlink(path.join(__dirname, '../../.temp/' + randBillId + '.jpg'), function(err) {
+    if (err) {
+      throw err;
+    }
+  });  
+}
+
+function save(res, finalBill, billName) {
+  console.log('/**');
+  console.log(' * /////////////////');
+  console.log(' * // parsed text //');
+  console.log(' * /////////////////');
+  console.log(' */')
+  console.log(require('util').inspect(finalBill, false, null));
+  console.log('\n');
+
+  if (!Object.keys(finalBill).length) {
+    return res.status(202).json({});
+  }
+
+  redisDB.keys("*", function(err, availKeys) {
+    if (err) {
+      throw err;
+    }
+
+    if (availKeys.indexOf(billName) > -1) {
+      var counter = 0;
+      var work = billName + counter.toString();
+
+      while (availKeys.indexOf(work) > -1) {
+        counter++;
+        work = billName + counter.toString();
+      }
+      billName = work;
+    }
+
+    redisDB.hmset(billName, {
+      "billName": finalBill.billName,
+      "receipt": JSON.stringify(finalBill.receipt),
+      "diners": JSON.stringify(finalBill.diners)
+    }, redis.print);
+
+    return res.status(201).json({billName: billName});
+  });
+}
 
 /**
  * Error handling for all bill REST actions
