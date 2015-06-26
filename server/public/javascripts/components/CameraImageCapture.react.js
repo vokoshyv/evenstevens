@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 10:52:07
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-13 16:07:15
+* @Last Modified time: 2015-06-26 15:43:48
 */
 
 var React = require('react');
@@ -15,11 +15,12 @@ var CameraImageCapture = React.createClass({
 
   // Initiates image handler action, passing file and userName
   _handleImage: function (e) {
-    AppActions.handleImage({ 
-      file:e.target.files[0], 
-      userName: this.props.userName,
-      tipPercent: this.props.tipPercent
-    });
+    console.log(e);
+    // AppActions.handleImage({ 
+    //   file:e.target.files[0], 
+    //   userName: this.props.userName,
+    //   tipPercent: this.props.tipPercent
+    // });
   },
   render: function() {
     var image;
@@ -36,6 +37,7 @@ var CameraImageCapture = React.createClass({
       <div className = "image-input-wrapper">
         <p className="image-prompt"> Take a picture of your bill or use a saved image</p>
         <input className="custom-file-input" ref="upload" type="file" capture="camera" accept="image/*" onChange={ this._handleImage } />
+        <button className="test-button btn btn-primary " onClick={ this._handleImage }>Use demo receipt</button>
       </div>
     );
   }
