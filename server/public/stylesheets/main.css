@@ -2,7 +2,7 @@
 * @Author: hal
 * @Date:   2015-05-22 13:19:09
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-13 17:34:25
+* @Last Modified time: 2015-06-26 16:06:11
 */
 
 @font-face {
@@ -335,7 +335,7 @@ input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focu
   width:100%;
 }
 
-.name-form, .custom-file-input::before, .tip-input-wrapper {
+.name-form, .custom-file-input::before, .tip-input-wrapper, .demo-btn {
   max-width: 420px;
   margin: 0px auto;
   text-align: center;
@@ -346,13 +346,8 @@ input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focu
   border-color: white;
 }
 
-.btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open>.dropdown-toggle.btn-primary {
-  color: #fff;
-  background-color: #3D86EA;
-  border-color: rgba(32, 77, 116, 0.17);
-  }
 
-.submit-btn {
+.submit-btn{
   width:100%;
   margin-top:20px;
   margin-bottom:20px;
@@ -374,7 +369,7 @@ input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focu
   content: 'Use our test receipt!';
 }
 
-.custom-file-input::before, .custom-file-input2::before {
+.custom-file-input::before, .demo-btn {
   display: inline-block;
   background: #5298FC;
   border: 1px solid #FFF;
@@ -384,11 +379,15 @@ input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focu
   white-space: nowrap;
   -webkit-user-select: none;
   cursor: pointer;
-  width:100%;
+  width: 269px;
   color:white;
   text-align:center;
   height: 46px;
   line-height: 31px;
+}
+
+.demo-btn {
+  display:block;
 }
 .custom-file-input:hover::before {
   border-color: #FFF;
@@ -396,6 +395,13 @@ input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focu
 .custom-file-input:active::before {
   background: #5298FC;
 }
+
+.btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open>.dropdown-toggle.btn-primary, .demo-btn:hover, .custom-file-input:hover::before   {
+  color: #fff;
+  background-color: #3D86EA;
+  border-color: rgba(32, 77, 116, 0.17);
+  }
+
 
 input[type=file] {
   display: block;
@@ -407,7 +413,6 @@ input[type=file]:focus {
   outline:none;
 }
 
-<<<<<<< HEAD
 
 /*Styling for marketing page below landing page*/
 body {

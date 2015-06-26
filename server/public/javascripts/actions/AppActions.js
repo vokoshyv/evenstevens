@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-27 15:02:47
 * @Last Modified by:   nathanbailey
-* @Last Modified time: 2015-06-26 15:30:05
+* @Last Modified time: 2015-06-26 16:32:43
 */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher'); 
@@ -75,7 +75,6 @@ var AppActions = {
   joinSocketRoom : function(billName, userName) {
 
     socket = io.connect('http://evenstevens.co/');
-    // socket = io.connect('localhost:3000');
 
     // Processes data from server
     socket.on('fromServerInitialData', function (data) {
@@ -112,7 +111,12 @@ var AppActions = {
     // prepares the form for posting
     var formData = new FormData();
     var xhr = new XMLHttpRequest();
-    formData.append('file', file);
+
+    // appends file if one is submitted
+    if(file){
+      formData.append('file', file);
+    }
+
     formData.append('billName', name);
     formData.append('tipPercent', tipPercent);
 
