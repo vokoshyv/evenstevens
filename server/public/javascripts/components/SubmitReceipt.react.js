@@ -2,7 +2,7 @@
 * @Author: Nathan Bailey
 * @Date:   2015-05-29 10:19:44
 * @Last Modified by:   Nathan Bailey
-* @Last Modified time: 2015-06-09 16:35:14
+* @Last Modified time: 2015-06-16 12:15:58
 */
 
 var React = require('react');
@@ -39,7 +39,6 @@ var SubmitReceipt = React.createClass({
   componentWillUnmount: function() {
     AppStore.removeChangeListener(this._onChange);
   },
-  // Render the row!
   render: function(){
     return (
       <div className="submitReceipt">

@@ -1,8 +1,8 @@
 /* 
 * @Author: Nathan Bailey
 * @Date:   2015-05-28 15:08:02
-* @Last Modified by:   hal
-* @Last Modified time: 2015-06-16 09:05:25
+* @Last Modified by:   Nathan Bailey
+* @Last Modified time: 2015-06-16 14:36:42
 */
 
 var React = require('react');
@@ -16,6 +16,10 @@ var LoadingView = require('./LoadingView.react');
 var addons =require('react/addons');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
+// This function pulls the app state from the store
+// It is called when the ReceiptList function is initially
+// loaded and also when ever there is a change to the
+// data in the store
 var getReceiptState = function() {
   return {
     billName: AppStore.getBillName(),
@@ -29,6 +33,9 @@ var getReceiptState = function() {
   }
 };
 
+// This component represents the receipt view. It is 
+// composed of three lists: the receipt items list,
+// the diner total list, and the receipt totals list
 var ReceiptList = React.createClass({
   getInitialState: function() {
     return getReceiptState();
@@ -57,10 +64,14 @@ var ReceiptList = React.createClass({
     var currentUserName = this.state.currentUserName
     var userTotals = [];
     
+    // Iterates over the receipt totals object and creates
+    // a list item component for each
     for(var key in this.state.totals) {
       totalListItems.push(<TotalsItem key={key} title={key} item={this.state.totals[key]} tipValue={this.state.tipValue} />);
     }   
 
+    // Iterates over the diner totals object and creates
+    // a list item component for each
     for(var name in this.state.userTotals) {
       userTotals.push(<TotalsItem key ={name} title={name} item={this.state.userTotals[name]} />);
     }

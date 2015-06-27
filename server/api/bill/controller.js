@@ -1,8 +1,8 @@
 /* 
 * @Author: hal
 * @Date:   2015-05-22 15:10:00
-* @Last Modified by:   Johnny Nguyen
-* @Last Modified time: 2015-06-24 13:13:11
+* @Last Modified by:   nathanbailey
+* @Last Modified time: 2015-06-26 16:32:23
 */
 
 'use strict';
@@ -58,7 +58,15 @@ exports.create = function(req, res) {
   // block below parses uploaded receipt image  //
   ////////////////////////////////////////////////
   form.parse(req, function(err, fields, files) {
-    var filePath = files.file.path || path.join(__dirname, './pakwan.jpg');
+    var formFile = files.file;
+    var filePath;
+
+    // if no image is included in form, uses demo bill instead 
+    if (formFile) {
+      filePath = formFile.path;
+    } else {
+      filePath = path.join(__dirname, './pakwan.jpg');
+    }
 
     bill.parse(billPath, filePath, fields)
     .then(function(finalBill) {
