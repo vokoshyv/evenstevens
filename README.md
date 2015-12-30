@@ -8,7 +8,7 @@ Even Stevens is a web service that provides a bill summary to the table, allows 
 
 Just take a picture of the bill with your smart phone and send the image off to Even Stevens. We'll take this image, parse out the text, and send you a unique URL to share with your table. 
 
-Once everyone goes to the the URL, they can claim their entree, appetizer, and/or dessert. But wait, there's more!! With Even Stevens, dinner members can even split shared items! 
+Once everyone goes to the the URL, they can claim their entree, appetizer, and/or dessert. But wait, there's more!! With Even Stevens, dinner members can even split shared items!
 
 Even Stevens calculates the amount owed for each person at the table including tax and tip! 
 
